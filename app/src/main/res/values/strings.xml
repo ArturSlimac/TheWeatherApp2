@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">TheWeatherApp</string>
+
+    <!--    temperature description-->
+    <string name="very_super_mega_cold">It\'s fucking cold outside</string>
+    <string name="very_super_cold">Cold enough to make a penguin jealous</string>
+    <string name="very_cold">Grab a sweater, it\'s chilly</string>
+    <string name="cold">Cold, but not enough to freeze your smile</string>
+    <string name="cold_ok">Just your average cold day, carry on</string>
+    <string name="warm_spring">Spring vibes, not too hot, not too cold</string>
+    <string name="warm">Warm and cozy, like a cup of hot cocoa</string>
+    <string name="warm_summer">Summer warmth, time to hit the beach</string>
+    <string name="hot">It\'s getting hot in here, stay cool!</string>
+    <string name="very_hot">Pretty hot, maybe it\'s time for some ice cream</string>
+    <string name="very_super_hot">Hotter than a jalapeño on a summer day</string>
+    <string name="very_super_mega_hot">You gonna burn, baby</string>
+    <string name="default_expression">Temperature unknown or not defined in the range</string>
+
+
+    <!--    weather type-->
+    <string name="clear_sky">Clear sky</string>
+    <string name="mainly_clear">Mainly clear</string>
+    <string name="partly_cloudy">Partly cloudy</string>
+    <string name="overcast">Overcast</string>
+    <string name="foggy">Foggy</string>
+    <string name="depositing_rime_fog">Depositing rime fog</string>
+    <string name="light_drizzle">Light drizzle</string>
+    <string name="moderate_drizzle">Moderate drizzle</string>
+    <string name="dense_drizzle">Dense drizzle</string>
+    <string name="light_freezing_drizzle">Slight freezing drizzle</string>
+    <string name="dense_freezing_drizzle">Dense freezing drizzle</string>
+    <string name="slight_rain">Slight rain</string>
+    <string name="moderate_rain">Rainy</string>
+    <string name="heavy_rain">Heavy rain</string>
+    <string name="heavy_freezing_rain">Heavy freezing rain</string>
+    <string name="slight_snow_fall">Slight snow fall</string>
+    <string name="moderate_snow_fall">Moderate snow fall</string>
+    <string name="heavy_snow_fall">Heavy snow fall</string>
+    <string name="snow_grains">Snow grains</string>
+    <string name="slight_rain_showers">Slight rain showers</string>
+    <string name="moderate_rain_showers">Moderate rain showers</string>
+    <string name="violent_rain_showers">Violent rain showers</string>
+    <string name="slight_snow_showers">Light snow showers</string>
+    <string name="heavy_snow_showers">Heavy snow showers</string>
+    <string name="moderate_thunderstorm">Moderate thunderstorm</string>
+    <string name="slight_hail_thunderstorm">Thunderstorm with slight hail</string>
+    <string name="heavy_hail_thunderstorm">Thunderstorm with heavy hail</string>
+</resources>

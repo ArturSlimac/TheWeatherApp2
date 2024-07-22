@@ -82,4 +82,7 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.navigation.compose)
     ksp(libs.dagger.hilt.compiler)
+
+    implementation(libs.play.services.location)
+    implementation(libs.accompanist.permission)
 }

@@ -25,8 +25,8 @@ class WeatherRepositoryImpl
             timezone: String,
         ): Flow<Response<WeatherModel>> =
             flow {
+                emit(Response.Loading)
                 try {
-                    emit(Response.Loading)
                     val responseApi =
                         weatherService.getWeather(
                             latitude,

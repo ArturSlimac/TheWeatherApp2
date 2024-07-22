@@ -1,12 +1,16 @@
 package com.example.theweatherapp.di
 
+import android.content.Context
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.network.repository.WeatherRepositoryImpl
 import com.example.theweatherapp.network.service.WeatherService
 import com.example.theweatherapp.utils.Const.WEB_API
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,4 +49,9 @@ class AppModules {
 
     @Provides
     fun provideWeatherRepository(weatherService: WeatherService): WeatherRepository = WeatherRepositoryImpl(weatherService = weatherService)
+
+    @Provides
+    fun provideLocationProvider(
+        @ApplicationContext context: Context,
+    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
 }

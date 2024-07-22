@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.theweatherapp.fragment.home.screen.HomeScreen
-import com.example.theweatherapp.utils.Const
+import com.example.theweatherapp.ui.components.RequestLocationPermission
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.HomeViewModel
 
@@ -19,17 +19,15 @@ fun HomeFragment(
     modifier: Modifier = Modifier,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
-    fun launch() {
-        homeViewModel.getWeather(
-            latitude = 14.25,
-            longitude = 12.12,
-            windSpeedUnit = Const.WindSpeedUnit.MS,
-            timezone = "Europe/London",
-            temperatureUnit = Const.TemperatureUnit.C,
-        )
-    }
+    val onPermissionGranted = { homeViewModel.fetchWeather() }
+    val onPermissionDenied = { homeViewModel.onPermissionDenied() }
+    val onPermissionsRevoked = { homeViewModel.onPermissionsRevoked() }
 
-    launch()
+    RequestLocationPermission(
+        onPermissionGranted = onPermissionGranted,
+        onPermissionDenied = onPermissionDenied,
+        onPermissionsRevoked = onPermissionsRevoked,
+    )
 
     Surface(modifier = modifier.fillMaxSize()) {
         when (val weatherResponse = homeViewModel.weatherState.value) {

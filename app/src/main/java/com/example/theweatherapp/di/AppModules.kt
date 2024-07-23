@@ -1,6 +1,9 @@
 package com.example.theweatherapp.di
 
 import android.content.Context
+import androidx.room.Room
+import com.example.theweatherapp.domain.repository.WeatherDao
+import com.example.theweatherapp.domain.repository.WeatherDatabase
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.network.repository.WeatherRepositoryImpl
 import com.example.theweatherapp.network.service.WeatherService
@@ -45,10 +48,27 @@ class AppModules {
     }
 
     @Provides
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+    ): WeatherDatabase =
+        Room
+            .databaseBuilder(
+                context,
+                WeatherDatabase::class.java,
+                "weather_database",
+            ).build()
+
+    @Provides
     fun provideWeatherService(retrofit: Retrofit): WeatherService = retrofit.create(WeatherService::class.java)
 
     @Provides
-    fun provideWeatherRepository(weatherService: WeatherService): WeatherRepository = WeatherRepositoryImpl(weatherService = weatherService)
+    fun provideWeatherDao(database: WeatherDatabase): WeatherDao = database.weatherDao()
+
+    @Provides
+    fun provideWeatherRepository(
+        weatherService: WeatherService,
+        weatherDao: WeatherDao,
+    ): WeatherRepository = WeatherRepositoryImpl(weatherService = weatherService, weatherDao = weatherDao)
 
     @Provides
     fun provideLocationProvider(

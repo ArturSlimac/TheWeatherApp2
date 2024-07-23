@@ -2,6 +2,11 @@ package com.example.theweatherapp.domain.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.theweatherapp.domain.model.weather.CurrentEntity
+import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
+import com.example.theweatherapp.domain.model.weather.HourlyEntity
+import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
+import com.example.theweatherapp.domain.model.weather.WeatherEntity
 
 data class WeatherWithDetails(
     @Embedded val weather: WeatherEntity,

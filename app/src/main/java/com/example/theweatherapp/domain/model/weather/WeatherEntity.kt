@@ -1,4 +1,4 @@
-package com.example.theweatherapp.domain.model
+package com.example.theweatherapp.domain.model.weather
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,6 +9,7 @@ data class WeatherEntity(
     val id: Int = 0,
     val latitude: Double?,
     val longitude: Double?,
+    val city: String?,
     val timezone: String?,
     val timezoneAbbreviation: String?,
     val utcOffsetSeconds: Int?,

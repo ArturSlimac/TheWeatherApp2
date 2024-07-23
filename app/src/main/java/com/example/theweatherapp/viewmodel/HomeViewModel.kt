@@ -7,7 +7,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.theweatherapp.domain.model.WeatherModel
+import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.utils.Const
 import com.example.theweatherapp.utils.Response

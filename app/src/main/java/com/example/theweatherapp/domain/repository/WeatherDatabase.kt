@@ -3,11 +3,11 @@ package com.example.theweatherapp.domain.repository
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.theweatherapp.domain.model.CurrentEntity
-import com.example.theweatherapp.domain.model.CurrentUnitsEntity
-import com.example.theweatherapp.domain.model.HourlyEntity
-import com.example.theweatherapp.domain.model.HourlyUnitsEntity
-import com.example.theweatherapp.domain.model.WeatherEntity
+import com.example.theweatherapp.domain.model.weather.CurrentEntity
+import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
+import com.example.theweatherapp.domain.model.weather.HourlyEntity
+import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
+import com.example.theweatherapp.domain.model.weather.WeatherEntity
 import com.example.theweatherapp.utils.Converters
 
 @Database(
@@ -18,7 +18,7 @@ import com.example.theweatherapp.utils.Converters
         CurrentEntity::class,
         CurrentUnitsEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 @TypeConverters(Converters::class)

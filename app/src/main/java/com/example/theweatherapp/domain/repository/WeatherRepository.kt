@@ -1,6 +1,6 @@
 package com.example.theweatherapp.domain.repository
 
-import com.example.theweatherapp.domain.model.WeatherModel
+import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.utils.Response
 import kotlinx.coroutines.flow.Flow
 

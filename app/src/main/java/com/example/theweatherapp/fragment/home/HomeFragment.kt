@@ -34,7 +34,7 @@ fun HomeFragment(
             is Response.Loading -> CircularProgressIndicator()
             is Response.Success ->
                 HomeScreen(modifier = Modifier.padding(horizontal = 16.dp))
-            is Response.Failure -> Text(text = "ERROR")
+            is Response.Failure -> Text(text = "ERROR ${weatherResponse.e}")
         }
     }
 }

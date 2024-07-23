@@ -5,12 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.theweatherapp.domain.model.CurrentEntity
-import com.example.theweatherapp.domain.model.CurrentUnitsEntity
-import com.example.theweatherapp.domain.model.HourlyEntity
-import com.example.theweatherapp.domain.model.HourlyUnitsEntity
-import com.example.theweatherapp.domain.model.WeatherEntity
 import com.example.theweatherapp.domain.model.WeatherWithDetails
+import com.example.theweatherapp.domain.model.weather.CurrentEntity
+import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
+import com.example.theweatherapp.domain.model.weather.HourlyEntity
+import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
+import com.example.theweatherapp.domain.model.weather.WeatherEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

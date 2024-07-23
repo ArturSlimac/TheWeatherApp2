@@ -1,4 +1,16 @@
-package com.example.theweatherapp.domain.model
+package com.example.theweatherapp.domain.mappers
+
+import com.example.theweatherapp.domain.model.WeatherWithDetails
+import com.example.theweatherapp.domain.model.weather.Current
+import com.example.theweatherapp.domain.model.weather.CurrentEntity
+import com.example.theweatherapp.domain.model.weather.CurrentUnits
+import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
+import com.example.theweatherapp.domain.model.weather.Hourly
+import com.example.theweatherapp.domain.model.weather.HourlyEntity
+import com.example.theweatherapp.domain.model.weather.HourlyUnits
+import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
+import com.example.theweatherapp.domain.model.weather.WeatherEntity
+import com.example.theweatherapp.domain.model.weather.WeatherModel
 
 fun WeatherModel.toEntity(): WeatherEntity =
     WeatherEntity(
@@ -9,6 +21,7 @@ fun WeatherModel.toEntity(): WeatherEntity =
         utcOffsetSeconds = this.utc_offset_seconds,
         elevation = this.elevation,
         generationTimeMs = this.generationtime_ms,
+        city = this.city,
     )
 
 fun WeatherModel.toHourlyUnitsEntity(weatherId: Int): HourlyUnitsEntity? =
@@ -65,6 +78,7 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
     WeatherModel(
         latitude = this.weather.latitude,
         longitude = this.weather.longitude,
+        city = this.weather.city,
         timezone = this.weather.timezone,
         timezone_abbreviation = this.weather.timezoneAbbreviation,
         elevation = this.weather.elevation,

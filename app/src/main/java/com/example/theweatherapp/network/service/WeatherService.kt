@@ -1,6 +1,6 @@
 package com.example.theweatherapp.network.service
 
-import com.example.theweatherapp.domain.model.WeatherModel
+import com.example.theweatherapp.domain.model.weather.WeatherModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

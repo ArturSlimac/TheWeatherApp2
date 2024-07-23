@@ -1,4 +1,4 @@
-package com.example.theweatherapp.domain.model
+package com.example.theweatherapp.domain.model.weather
 
 data class CurrentUnits(
     val apparent_temperature: String? = null,

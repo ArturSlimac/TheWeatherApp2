@@ -117,11 +117,13 @@ class AppModules {
         weatherService: WeatherService,
         weatherDao: WeatherDao,
         cityRepository: CityRepository,
+        locationProviderClient: FusedLocationProviderClient,
     ): WeatherRepository =
         WeatherRepositoryImpl(
             weatherService = weatherService,
             weatherDao = weatherDao,
             cityRepository = cityRepository,
+            locationProviderClient = locationProviderClient,
         )
 
     @Provides

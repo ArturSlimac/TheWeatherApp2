@@ -3,6 +3,7 @@ package com.example.theweatherapp.ui.components
 import android.Manifest
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -15,26 +16,19 @@ fun RequestLocationPermission(
     onPermissionDenied: () -> Unit,
     onPermissionsRevoked: () -> Unit,
 ) {
-    val permissionState =
-        rememberPermissionState(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
+    val permissionState = rememberPermissionState(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-    LaunchedEffect(key1 = permissionState) {
-        val isPermissionRevoked =
-            !permissionState.status.isGranted && !permissionState.status.shouldShowRationale
+    LaunchedEffect(key1 = permissionState.status) {
+        when {
+            permissionState.status.isGranted -> onPermissionGranted()
+            !permissionState.status.shouldShowRationale -> onPermissionsRevoked()
+            else -> onPermissionDenied()
+        }
+    }
 
-        val isPermissionGranted =
-            permissionState.status.isGranted
-
-        if (!isPermissionGranted) permissionState.launchPermissionRequest()
-
-        if (isPermissionRevoked) {
-            onPermissionsRevoked()
-        } else if (isPermissionGranted) {
-            onPermissionGranted()
-        } else {
-            onPermissionDenied()
+    SideEffect {
+        if (!permissionState.status.isGranted) {
+            permissionState.launchPermissionRequest()
         }
     }
 }

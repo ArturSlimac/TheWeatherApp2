@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
     fun getWeather(
-        latitude: Double,
-        longitude: Double,
+        latitude: Double? = null,
+        longitude: Double? = null,
         temperatureUnit: String,
         windSpeedUnit: String,
         timezone: String,

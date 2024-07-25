@@ -1,25 +1,19 @@
 package com.example.theweatherapp.viewmodel
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Context
-import android.location.Location
+import android.content.pm.PackageManager
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.utils.Const
 import com.example.theweatherapp.utils.Response
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.Tasks
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,72 +21,56 @@ class HomeViewModel
     @Inject
     constructor(
         private val weatherRepository: WeatherRepository,
-        private val locationProviderClient: FusedLocationProviderClient,
-        @ApplicationContext private val context: Context,
     ) : ViewModel() {
-        private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Success(null))
+        private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
 
+        private val _permissionGranted = mutableStateOf(false)
+        val permissionGranted: State<Boolean> = _permissionGranted
+
+        private val _showSearchBar = mutableStateOf(false)
+        val showSearchBar: State<Boolean> = _showSearchBar
+
+        fun checkLocationPermission(context: Context) {
+            val permission =
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                )
+            _permissionGranted.value = permission == PackageManager.PERMISSION_GRANTED
+            _showSearchBar.value = !_permissionGranted.value
+        }
+
         fun fetchWeather() {
-            viewModelScope.launch {
-                val location = getCurrentLocation()
-                if (location == null) {
-                    _weatherState.value = Response.Failure(Exception("Location not available"))
-                } else {
-                    getWeather(
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                        windSpeedUnit = Const.WindSpeedUnit.MS,
-                        timezone = "Europe/London",
-                        temperatureUnit = Const.TemperatureUnit.C,
-                    )
+            if (_permissionGranted.value) {
+                viewModelScope.launch {
+                    weatherRepository
+                        .getWeather(
+                            windSpeedUnit = Const.WindSpeedUnit.MS,
+                            timezone = "Europe/London",
+                            temperatureUnit = Const.TemperatureUnit.C,
+                        ).collect { response ->
+                            _weatherState.value = response
+                        }
                 }
+            } else {
+                _showSearchBar.value = true
             }
+        }
+
+        fun onPermissionGranted() {
+            _permissionGranted.value = true
+            _showSearchBar.value = false
+            fetchWeather()
         }
 
         fun onPermissionDenied() {
-            _weatherState.value = Response.Failure(Exception("Permission denied"))
+            _permissionGranted.value = false
+            _showSearchBar.value = true
         }
 
         fun onPermissionsRevoked() {
-            _weatherState.value = Response.Failure(Exception("Permissions revoked"))
+            _permissionGranted.value = false
+            _showSearchBar.value = true
         }
-
-        private fun getWeather(
-            latitude: Double,
-            longitude: Double,
-            temperatureUnit: String,
-            windSpeedUnit: String,
-            timezone: String,
-        ) {
-            viewModelScope.launch {
-                weatherRepository
-                    .getWeather(
-                        latitude,
-                        longitude,
-                        temperatureUnit,
-                        windSpeedUnit,
-                        timezone,
-                    ).collect { response ->
-                        _weatherState.value = response
-                    }
-            }
-        }
-
-        @SuppressLint("MissingPermission")
-        private suspend fun getCurrentLocation(): Location? =
-            withContext(Dispatchers.IO) {
-                val accuracy = Priority.PRIORITY_BALANCED_POWER_ACCURACY
-                try {
-                    val locationResult =
-                        locationProviderClient.getCurrentLocation(
-                            accuracy,
-                            CancellationTokenSource().token,
-                        )
-                    Tasks.await(locationResult)
-                    locationResult.result
-                } catch (e: Exception) {
-                    null
-                }
-            }
     }

@@ -22,6 +22,10 @@ interface WeatherDao {
         longitude: Double,
     ): Flow<WeatherWithDetails?>
 
+    @Transaction
+    @Query("SELECT * FROM weather LIMIT 1")
+    fun getAllWeather(): Flow<WeatherWithDetails?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeather(weather: WeatherEntity): Long
 
@@ -36,4 +40,19 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHourlyUnits(hourlyUnits: HourlyUnitsEntity)
+
+    @Query("DELETE FROM weather")
+    suspend fun deleteAllWeather()
+
+    @Query("DELETE FROM current_weather")
+    suspend fun deleteAllCurrentWeather()
+
+    @Query("DELETE FROM current_units_weather")
+    suspend fun deleteAllCurrentUnits()
+
+    @Query("DELETE FROM hourly_weather")
+    suspend fun deleteAllHourlyWeather()
+
+    @Query("DELETE FROM hourly_units_weather")
+    suspend fun deleteAllHourlyUnits()
 }

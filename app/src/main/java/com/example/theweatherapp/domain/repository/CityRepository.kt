@@ -9,4 +9,6 @@ interface CityRepository {
         latitude: Double,
         longitude: Double,
     ): Flow<Response<CityModel>>
+
+    fun getCitiesByName(name: String): Flow<Response<CityModel>>
 }

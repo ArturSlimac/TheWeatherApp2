@@ -14,6 +14,5 @@ fun HomeScreen(
     Column(modifier = modifier) {
         Text(text = "City: ${weatherModel.city}")
         Text(text = "Temperature: ${weatherModel.current?.temperature_2m}")
-        // Display other weather details
     }
 }

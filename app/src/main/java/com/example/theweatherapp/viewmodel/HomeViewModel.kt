@@ -8,7 +8,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.theweatherapp.domain.model.city.CityModel
 import com.example.theweatherapp.domain.model.weather.WeatherModel
+import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.utils.Const
 import com.example.theweatherapp.utils.Response
@@ -21,6 +23,7 @@ class HomeViewModel
     @Inject
     constructor(
         private val weatherRepository: WeatherRepository,
+        private val cityRepository: CityRepository,
     ) : ViewModel() {
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
@@ -28,8 +31,11 @@ class HomeViewModel
         private val _permissionGranted = mutableStateOf(false)
         val permissionGranted: State<Boolean> = _permissionGranted
 
-        private val _showSearchBar = mutableStateOf(false)
-        val showSearchBar: State<Boolean> = _showSearchBar
+        private val _searchText = mutableStateOf("")
+        val searchText: State<String> = _searchText
+
+        private val _foundCitiesState = mutableStateOf<Response<CityModel>>(Response.Loading)
+        val foundCitiesState: State<Response<CityModel>> = _foundCitiesState
 
         fun checkLocationPermission(context: Context) {
             val permission =
@@ -38,7 +44,17 @@ class HomeViewModel
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                 )
             _permissionGranted.value = permission == PackageManager.PERMISSION_GRANTED
-            _showSearchBar.value = !_permissionGranted.value
+        }
+
+        fun onSearchTextChange(text: String) {
+            _searchText.value = text
+            if (text.length > 2) {
+                viewModelScope.launch {
+                    cityRepository.getCitiesByName(text).collect { response ->
+                        _foundCitiesState.value = response
+                    }
+                }
+            }
         }
 
         fun fetchWeather() {
@@ -53,24 +69,20 @@ class HomeViewModel
                             _weatherState.value = response
                         }
                 }
-            } else {
-                _showSearchBar.value = true
             }
         }
 
         fun onPermissionGranted() {
             _permissionGranted.value = true
-            _showSearchBar.value = false
+
             fetchWeather()
         }
 
         fun onPermissionDenied() {
             _permissionGranted.value = false
-            _showSearchBar.value = true
         }
 
         fun onPermissionsRevoked() {
             _permissionGranted.value = false
-            _showSearchBar.value = true
         }
     }

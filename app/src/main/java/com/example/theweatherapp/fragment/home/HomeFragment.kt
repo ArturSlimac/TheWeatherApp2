@@ -1,7 +1,12 @@
 package com.example.theweatherapp.fragment.home
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,7 +30,8 @@ fun HomeFragment(
 ) {
     val weatherState by homeViewModel.weatherState
     val permissionGranted by homeViewModel.permissionGranted
-    val showSearchBar by homeViewModel.showSearchBar
+    val searchedCity by homeViewModel.searchText
+    val foundCitiesState by homeViewModel.foundCitiesState
 
     val context = LocalContext.current
 
@@ -46,9 +52,37 @@ fun HomeFragment(
     )
 
     Surface(modifier = modifier.fillMaxSize()) {
-        if (showSearchBar) {
-            SearchBar(modifier = Modifier.padding(horizontal = 16.dp))
-        } else {
+        Column {
+            SearchBar(
+                searchText = searchedCity,
+                onSearchTextChange = { homeViewModel.onSearchTextChange(it) },
+            )
+
+            when (val citiesResponse = foundCitiesState) {
+                is Response.Loading -> CircularProgressIndicator()
+                is Response.Success -> {
+                    val cities = citiesResponse.data
+                    if (!cities.isNullOrEmpty()) {
+                        LazyColumn {
+                            items(cities) { city ->
+                                Text(
+                                    text = "${city.name!!}, ${city.country}",
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .clickable {
+                                                // homeViewModel.searchWeatherByCity(city)
+                                            }.padding(8.dp),
+                                )
+                            }
+                        }
+                    } else {
+                        Text("No cities found")
+                    }
+                }
+                is Response.Failure -> Text(text = "ERROR: ${citiesResponse.e?.message}")
+            }
+
             when (val response = weatherState) {
                 is Response.Loading -> CircularProgressIndicator()
                 is Response.Success -> {
@@ -59,7 +93,7 @@ fun HomeFragment(
                         Text("No weather data available")
                     }
                 }
-                is Response.Failure -> Text(text = "ERROR: ${response.e}")
+                is Response.Failure -> Text(text = "ERROR: ${response.e?.message}")
             }
         }
     }

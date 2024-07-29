@@ -12,4 +12,10 @@ interface CityService {
         @Query("lon") longitude: Double,
         @Header("X-Api-Key") apiKey: String,
     ): CityModel
+
+    @GET("v1/geocoding")
+    suspend fun getCitiesByName(
+        @Query("city") name: String,
+        @Header("X-Api-Key") apiKey: String,
+    ): CityModel
 }

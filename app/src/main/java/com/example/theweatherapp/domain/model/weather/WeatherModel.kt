@@ -1,12 +1,12 @@
 package com.example.theweatherapp.domain.model.weather
 
 data class WeatherModel(
-    val current: Current?,
-    val current_units: CurrentUnits?,
+    val current: CurrentModel?,
+    val current_units: CurrentUnitsModel?,
     val elevation: Int?,
     val generationtime_ms: Double?,
-    val hourly: Hourly?,
-    val hourly_units: HourlyUnits?,
+    val hourly: HourlyModel?,
+    val hourly_units: HourlyUnitsModel?,
     val latitude: Double?,
     val longitude: Double?,
     val city: String?,

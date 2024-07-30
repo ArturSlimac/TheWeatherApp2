@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.theweatherapp.domain.model.city.CityModel
+import com.example.theweatherapp.domain.model.city.CityModelItem
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
@@ -57,11 +58,12 @@ class HomeViewModel
             }
         }
 
-        fun fetchWeather() {
+        fun fetchWeather(city: CityModelItem? = null) {
             if (_permissionGranted.value) {
                 viewModelScope.launch {
                     weatherRepository
                         .getWeather(
+                            city = city,
                             windSpeedUnit = Const.WindSpeedUnit.MS,
                             timezone = "Europe/London",
                             temperatureUnit = Const.TemperatureUnit.C,

@@ -71,7 +71,7 @@ fun HomeFragment(
                                         Modifier
                                             .fillMaxWidth()
                                             .clickable {
-                                                // homeViewModel.searchWeatherByCity(city)
+                                                homeViewModel.fetchWeather(city)
                                             }.padding(8.dp),
                                 )
                             }

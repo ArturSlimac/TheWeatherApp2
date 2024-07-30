@@ -1,14 +1,14 @@
 package com.example.theweatherapp.domain.mappers
 
 import com.example.theweatherapp.domain.model.WeatherWithDetails
-import com.example.theweatherapp.domain.model.weather.Current
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
-import com.example.theweatherapp.domain.model.weather.CurrentUnits
+import com.example.theweatherapp.domain.model.weather.CurrentModel
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
-import com.example.theweatherapp.domain.model.weather.Hourly
+import com.example.theweatherapp.domain.model.weather.CurrentUnitsModel
 import com.example.theweatherapp.domain.model.weather.HourlyEntity
-import com.example.theweatherapp.domain.model.weather.HourlyUnits
+import com.example.theweatherapp.domain.model.weather.HourlyModel
 import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
+import com.example.theweatherapp.domain.model.weather.HourlyUnitsModel
 import com.example.theweatherapp.domain.model.weather.WeatherEntity
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 
@@ -86,7 +86,7 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
         utc_offset_seconds = this.weather.utcOffsetSeconds,
         current =
             this.currentWeather?.let {
-                Current(
+                CurrentModel(
                     weather_code = it.weather_code,
                     pressure_msl = it.pressure_msl,
                     time = it.time,
@@ -99,7 +99,7 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
             },
         current_units =
             this.currentUnits?.let {
-                CurrentUnits(
+                CurrentUnitsModel(
                     weather_code = it.weather_code,
                     pressure_msl = it.pressure_msl,
                     time = it.time,
@@ -112,7 +112,7 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
             },
         hourly =
             this.hourlyWeather?.let {
-                Hourly(
+                HourlyModel(
                     weather_code = it.weather_code,
                     time = it.time,
                     temperature_2m = it.temperature_2m,
@@ -120,7 +120,7 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
             },
         hourly_units =
             this.hourlyUnits?.let {
-                HourlyUnits(
+                HourlyUnitsModel(
                     weather_code = it.weather_code,
                     time = it.time,
                     temperature_2m = it.temperature_2m,

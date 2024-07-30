@@ -1,6 +1,6 @@
 package com.example.theweatherapp.domain.model.weather
 
-data class CurrentUnits(
+data class CurrentUnitsModel(
     val apparent_temperature: String? = null,
     val interval: String? = null,
     val pressure_msl: String? = null,

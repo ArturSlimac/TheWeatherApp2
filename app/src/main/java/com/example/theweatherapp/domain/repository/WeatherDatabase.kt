@@ -18,8 +18,10 @@ import com.example.theweatherapp.utils.Converters
         CurrentEntity::class,
         CurrentUnitsEntity::class,
     ],
-    version = 2,
-    exportSchema = false,
+    version = 1,
+    // autoMigrations = [
+    //   AutoMigration(from = 2, to = 3),
+    // ],
 )
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase : RoomDatabase() {

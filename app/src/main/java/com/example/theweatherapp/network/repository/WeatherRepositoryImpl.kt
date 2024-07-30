@@ -56,12 +56,11 @@ class WeatherRepositoryImpl
                     val location = getLocation(city?.latitude, city?.longitude)
                     val cityName =
                         if (city?.name.isNullOrEmpty()) {
-                            getCityName(location!!.latitude, location.longitude)
+                            getCityName(location.latitude, location.longitude)
                         } else {
                             city!!.name!!
                         }
 
-                    getCityName(location!!.latitude, location.longitude)
                     val responseApi =
                         fetchWeatherFromApi(
                             location.latitude,
@@ -72,7 +71,7 @@ class WeatherRepositoryImpl
                             cityName,
                         )
 
-                    clearOldWeatherData()
+                    clearOldWeatherData(cityName)
                     saveWeatherData(responseApi)
 
                     emit(Response.Success(responseApi))
@@ -85,7 +84,7 @@ class WeatherRepositoryImpl
         private suspend fun getLocation(
             latitude: Double?,
             longitude: Double?,
-        ): Location? =
+        ): Location =
             if (latitude == null || longitude == null) {
                 getCurrentLocation()
             } else {
@@ -126,12 +125,8 @@ class WeatherRepositoryImpl
                 .getWeather(latitude, longitude, temperatureUnit, windSpeedUnit, timezone)
                 .copy(city = cityName)
 
-        private suspend fun clearOldWeatherData() {
-            weatherDao.deleteAllWeather()
-            weatherDao.deleteAllCurrentWeather()
-            weatherDao.deleteAllCurrentUnits()
-            weatherDao.deleteAllHourlyWeather()
-            weatherDao.deleteAllHourlyUnits()
+        private suspend fun clearOldWeatherData(cityName: String) {
+            weatherDao.deleteOldWeather(cityName)
         }
 
         private suspend fun saveWeatherData(weatherModel: WeatherModel) {
@@ -175,7 +170,7 @@ class WeatherRepositoryImpl
         private suspend fun getCachedWeather(): WeatherModel? = weatherDao.getAllWeather().firstOrNull()?.toWeatherModel()
 
         @SuppressLint("MissingPermission")
-        private suspend fun getCurrentLocation(): Location? =
+        private suspend fun getCurrentLocation(): Location =
             withContext(Dispatchers.IO) {
                 val accuracy = Priority.PRIORITY_BALANCED_POWER_ACCURACY
                 try {

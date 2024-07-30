@@ -10,6 +10,7 @@ import com.example.theweatherapp.domain.mappers.toEntity
 import com.example.theweatherapp.domain.mappers.toHourlyEntity
 import com.example.theweatherapp.domain.mappers.toHourlyUnitsEntity
 import com.example.theweatherapp.domain.mappers.toWeatherModel
+import com.example.theweatherapp.domain.model.city.CityModelItem
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.domain.repository.WeatherDao
@@ -44,8 +45,7 @@ class WeatherRepositoryImpl
         private val locationProviderClient: FusedLocationProviderClient,
     ) : WeatherRepository {
         override fun getWeather(
-            latitude: Double?,
-            longitude: Double?,
+            city: CityModelItem?,
             temperatureUnit: String,
             windSpeedUnit: String,
             timezone: String,
@@ -53,8 +53,15 @@ class WeatherRepositoryImpl
             flow {
                 emit(Response.Loading)
                 try {
-                    val location = getLocation(latitude, longitude)
-                    val cityName = getCityName(location!!.latitude, location.longitude)
+                    val location = getLocation(city?.latitude, city?.longitude)
+                    val cityName =
+                        if (city?.name.isNullOrEmpty()) {
+                            getCityName(location!!.latitude, location.longitude)
+                        } else {
+                            city!!.name!!
+                        }
+
+                    getCityName(location!!.latitude, location.longitude)
                     val responseApi =
                         fetchWeatherFromApi(
                             location.latitude,

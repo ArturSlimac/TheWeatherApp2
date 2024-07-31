@@ -12,10 +12,11 @@ import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.city.CityModel
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.CityRepository
+import com.example.theweatherapp.domain.repository.SettingsRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
-import com.example.theweatherapp.utils.Const
 import com.example.theweatherapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,6 +26,7 @@ class HomeViewModel
     constructor(
         private val weatherRepository: WeatherRepository,
         private val cityRepository: CityRepository,
+        private val settingsRepository: SettingsRepository,
     ) : ViewModel() {
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
@@ -58,15 +60,17 @@ class HomeViewModel
             }
         }
 
-        fun fetchWeather(city: CityItemModel? = null) {
+        suspend fun fetchWeather(city: CityItemModel? = null) {
+            val windSpeedUnit = settingsRepository.getWindSpeedUnit().first()
+            val temperatureUnit = settingsRepository.getTemperatureUnit().first()
             if (_permissionGranted.value) {
                 viewModelScope.launch {
                     weatherRepository
                         .getWeather(
                             city = city,
-                            windSpeedUnit = Const.WindSpeedUnit.MS,
+                            windSpeedUnit = windSpeedUnit.unit,
                             timezone = "Europe/London",
-                            temperatureUnit = Const.TemperatureUnit.C,
+                            temperatureUnit = temperatureUnit.unit,
                         ).collect { response ->
                             _weatherState.value = response
                         }
@@ -74,9 +78,8 @@ class HomeViewModel
             }
         }
 
-        fun onPermissionGranted() {
+        suspend fun onPermissionGranted() {
             _permissionGranted.value = true
-
             fetchWeather()
         }
 

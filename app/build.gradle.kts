@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
+    implementation(libs.datastore.preferences)
 
     implementation(libs.dagger.hilt.android)
     implementation(libs.dagger.hilt.navigation.compose)

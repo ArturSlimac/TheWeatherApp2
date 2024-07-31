@@ -1,8 +1,13 @@
 package com.example.theweatherapp.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.room.Room
 import com.example.theweatherapp.data.device.LocationRepositoryImpl
+import com.example.theweatherapp.data.device.SettingsRepositoryImpl
 import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.data.local.WeatherDao
 import com.example.theweatherapp.data.local.WeatherDatabase
@@ -10,6 +15,7 @@ import com.example.theweatherapp.data.repository.CityRepositoryImpl
 import com.example.theweatherapp.data.repository.WeatherRepositoryImpl
 import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.domain.repository.LocationRepository
+import com.example.theweatherapp.domain.repository.SettingsRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.network.service.CityService
 import com.example.theweatherapp.network.service.WeatherService
@@ -142,4 +148,17 @@ class AppModules {
     fun provideLocationProvider(
         @ApplicationContext context: Context,
     ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+
+    @Provides
+    @Singleton
+    fun provideDataStore(
+        @ApplicationContext context: Context,
+    ): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create(
+            produceFile = { context.preferencesDataStoreFile("settings_prefs") },
+        )
+
+    @Provides
+    @Singleton
+    fun SettingsRepository(dataStore: DataStore<Preferences>): SettingsRepository = SettingsRepositoryImpl(dataStore)
 }

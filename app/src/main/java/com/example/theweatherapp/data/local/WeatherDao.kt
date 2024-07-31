@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.theweatherapp.domain.model.WeatherWithDetails
-import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
 import com.example.theweatherapp.domain.model.weather.HourlyEntity
@@ -41,9 +40,6 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHourlyUnits(hourlyUnits: HourlyUnitsEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCityItem(cityItem: CityItemEntity)
 
     @Transaction
     @Query("DELETE FROM weather WHERE id IN (SELECT weatherId FROM city WHERE name = :cityName AND country = :cityCountry)")

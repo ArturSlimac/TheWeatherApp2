@@ -3,6 +3,7 @@ package com.example.theweatherapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.theweatherapp.data.device.LocationRepositoryImpl
+import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.data.local.WeatherDao
 import com.example.theweatherapp.data.local.WeatherDatabase
 import com.example.theweatherapp.data.repository.CityRepositoryImpl
@@ -109,6 +110,9 @@ class AppModules {
     fun provideWeatherDao(database: WeatherDatabase): WeatherDao = database.weatherDao()
 
     @Provides
+    fun provideCityDao(database: WeatherDatabase): CityDao = database.cityDao()
+
+    @Provides
     fun provideCityRepository(
         @Named("NINJAS_API_KEY") apiKey: String,
         cityService: CityService,
@@ -118,12 +122,14 @@ class AppModules {
     fun provideWeatherRepository(
         weatherService: WeatherService,
         weatherDao: WeatherDao,
+        cityDao: CityDao,
         cityRepository: CityRepository,
         locationRepository: LocationRepository,
     ): WeatherRepository =
         WeatherRepositoryImpl(
             weatherService = weatherService,
             weatherDao = weatherDao,
+            cityDao = cityDao,
             cityRepository = cityRepository,
             locationRepository = locationRepository,
         )

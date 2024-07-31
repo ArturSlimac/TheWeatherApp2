@@ -1,5 +1,6 @@
 package com.example.theweatherapp.data.repository
 
+import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.data.local.WeatherDao
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
@@ -37,6 +38,7 @@ class WeatherRepositoryImpl
     constructor(
         private val weatherService: WeatherService,
         private val weatherDao: WeatherDao,
+        private val cityDao: CityDao,
         private val cityRepository: CityRepository,
         private val locationRepository: LocationRepository,
     ) : WeatherRepository {
@@ -79,7 +81,6 @@ class WeatherRepositoryImpl
         ): CityItemModel =
             withContext(Dispatchers.IO) {
                 try {
-                    // Create a variable to hold the city data
                     var cityItem =
                         CityItemModel(
                             country = "Unknown",
@@ -88,8 +89,6 @@ class WeatherRepositoryImpl
                             latitude = latitude,
                             longitude = longitude,
                         )
-
-                    // Collect the flow and process the response
                     cityRepository
                         .getCity(latitude, longitude)
                         .collect { response ->
@@ -99,7 +98,6 @@ class WeatherRepositoryImpl
                         }
                     cityItem
                 } catch (e: Exception) {
-                    // Handle any other exceptions
                     throw CustomError.CityNotFound
                 }
             }
@@ -124,7 +122,7 @@ class WeatherRepositoryImpl
             val weatherId = weatherDao.insertWeather(weatherModel.toEntity()).toInt()
 
             weatherModel.city?.let {
-                weatherDao.insertCityItem(weatherModel.toCityItemEntity(weatherId)!!)
+                cityDao.insertCityItem(weatherModel.toCityItemEntity(weatherId)!!)
             }
             weatherModel.current?.let {
                 weatherDao.insertCurrentWeather(weatherModel.toCurrentEntity(weatherId)!!)

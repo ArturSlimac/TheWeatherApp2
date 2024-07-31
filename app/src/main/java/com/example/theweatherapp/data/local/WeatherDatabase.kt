@@ -28,4 +28,6 @@ import com.example.theweatherapp.utils.Converters
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun weatherDao(): WeatherDao
+
+    abstract fun cityDao(): CityDao
 }

@@ -1,5 +1,7 @@
 package com.example.theweatherapp.domain.model.weather
 
+import com.example.theweatherapp.domain.model.city.CityItemModel
+
 data class WeatherModel(
     val current: CurrentModel?,
     val current_units: CurrentUnitsModel?,
@@ -9,7 +11,7 @@ data class WeatherModel(
     val hourly_units: HourlyUnitsModel?,
     val latitude: Double?,
     val longitude: Double?,
-    val city: String?,
+    val city: CityItemModel?,
     val timezone: String?,
     val timezone_abbreviation: String?,
     val utc_offset_seconds: Int?,

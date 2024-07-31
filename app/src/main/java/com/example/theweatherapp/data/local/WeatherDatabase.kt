@@ -1,8 +1,9 @@
-package com.example.theweatherapp.domain.repository
+package com.example.theweatherapp.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
 import com.example.theweatherapp.domain.model.weather.HourlyEntity
@@ -17,6 +18,7 @@ import com.example.theweatherapp.utils.Converters
         HourlyUnitsEntity::class,
         CurrentEntity::class,
         CurrentUnitsEntity::class,
+        CityItemEntity::class,
     ],
     version = 1,
     // autoMigrations = [

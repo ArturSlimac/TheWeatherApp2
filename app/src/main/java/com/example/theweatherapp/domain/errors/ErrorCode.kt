@@ -7,4 +7,5 @@ enum class ErrorCode(
     API_ERROR("There was a problem getting your request."),
     NETWORK_ERROR("Couldn't complete this request; is your Internet connected?"),
     LOCATION_ERROR("Current location is not available"),
+    CITY_ERROR("City is not found"),
 }

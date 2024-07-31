@@ -1,3 +1,3 @@
 package com.example.theweatherapp.domain.model.city
 
-class CityModel : ArrayList<CityModelItem>()
+class CityModel : ArrayList<CityItemModel>()

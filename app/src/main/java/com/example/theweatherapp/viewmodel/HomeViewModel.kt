@@ -8,8 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.city.CityModel
-import com.example.theweatherapp.domain.model.city.CityModelItem
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
@@ -58,7 +58,7 @@ class HomeViewModel
             }
         }
 
-        fun fetchWeather(city: CityModelItem? = null) {
+        fun fetchWeather(city: CityItemModel? = null) {
             if (_permissionGranted.value) {
                 viewModelScope.launch {
                     weatherRepository

@@ -9,4 +9,9 @@ sealed class CustomError : Exception() {
     data class ApiError(
         override val message: String,
     ) : CustomError()
+
+    object CityNotFound : CustomError() {
+        override val message: String
+            get() = ErrorCode.CITY_ERROR.message
+    }
 }

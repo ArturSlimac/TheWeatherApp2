@@ -1,26 +1,22 @@
-package com.example.theweatherapp.network.repository
+package com.example.theweatherapp.data.repository
 
-import android.annotation.SuppressLint
-import android.location.Location
+import com.example.theweatherapp.data.local.WeatherDao
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
+import com.example.theweatherapp.domain.mappers.toCityItemEntity
 import com.example.theweatherapp.domain.mappers.toCurrentEntity
 import com.example.theweatherapp.domain.mappers.toCurrentUnitsEntity
 import com.example.theweatherapp.domain.mappers.toEntity
 import com.example.theweatherapp.domain.mappers.toHourlyEntity
 import com.example.theweatherapp.domain.mappers.toHourlyUnitsEntity
 import com.example.theweatherapp.domain.mappers.toWeatherModel
-import com.example.theweatherapp.domain.model.city.CityModelItem
+import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.CityRepository
-import com.example.theweatherapp.domain.repository.WeatherDao
+import com.example.theweatherapp.domain.repository.LocationRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.network.service.WeatherService
 import com.example.theweatherapp.utils.Response
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Priority
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.Tasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
@@ -42,10 +38,10 @@ class WeatherRepositoryImpl
         private val weatherService: WeatherService,
         private val weatherDao: WeatherDao,
         private val cityRepository: CityRepository,
-        private val locationProviderClient: FusedLocationProviderClient,
+        private val locationRepository: LocationRepository,
     ) : WeatherRepository {
         override fun getWeather(
-            city: CityModelItem?,
+            city: CityItemModel?,
             temperatureUnit: String,
             windSpeedUnit: String,
             timezone: String,
@@ -53,13 +49,9 @@ class WeatherRepositoryImpl
             flow {
                 emit(Response.Loading)
                 try {
-                    val location = getLocation(city?.latitude, city?.longitude)
-                    val cityName =
-                        if (city?.name.isNullOrEmpty()) {
-                            getCityName(location.latitude, location.longitude)
-                        } else {
-                            city!!.name!!
-                        }
+                    val location = locationRepository.getLocation(city?.latitude, city?.longitude)
+                    val gottenCity =
+                        city ?: getCity(location.latitude, location.longitude)
 
                     val responseApi =
                         fetchWeatherFromApi(
@@ -68,10 +60,10 @@ class WeatherRepositoryImpl
                             temperatureUnit,
                             windSpeedUnit,
                             timezone,
-                            cityName,
+                            gottenCity,
                         )
 
-                    clearOldWeatherData(cityName)
+                    clearOldWeatherData(gottenCity)
                     saveWeatherData(responseApi)
 
                     emit(Response.Success(responseApi))
@@ -81,35 +73,34 @@ class WeatherRepositoryImpl
                 }
             }.flowOn(Dispatchers.IO)
 
-        private suspend fun getLocation(
-            latitude: Double?,
-            longitude: Double?,
-        ): Location =
-            if (latitude == null || longitude == null) {
-                getCurrentLocation()
-            } else {
-                Location("").apply {
-                    this.latitude = latitude
-                    this.longitude = longitude
-                }
-            }
-
-        private suspend fun getCityName(
+        private suspend fun getCity(
             latitude: Double,
             longitude: Double,
-        ): String =
+        ): CityItemModel =
             withContext(Dispatchers.IO) {
                 try {
-                    var cityName = "Unknown"
-                    cityRepository.getCity(latitude, longitude).collect { response ->
+                    // Create a variable to hold the city data
+                    var cityItem =
+                        CityItemModel(
+                            country = "Unknown",
+                            name = "Unknown",
+                            state = "Unknown",
+                            latitude = latitude,
+                            longitude = longitude,
+                        )
 
-                        if (response is Response.Success) {
-                            cityName = response.data?.firstOrNull()?.name ?: "Unknown"
+                    // Collect the flow and process the response
+                    cityRepository
+                        .getCity(latitude, longitude)
+                        .collect { response ->
+                            if (response is Response.Success) {
+                                cityItem = response.data?.firstOrNull() ?: cityItem
+                            }
                         }
-                    }
-                    cityName
+                    cityItem
                 } catch (e: Exception) {
-                    "Unknown"
+                    // Handle any other exceptions
+                    throw CustomError.CityNotFound
                 }
             }
 
@@ -119,18 +110,22 @@ class WeatherRepositoryImpl
             temperatureUnit: String,
             windSpeedUnit: String,
             timezone: String,
-            cityName: String,
+            city: CityItemModel,
         ): WeatherModel =
             weatherService
                 .getWeather(latitude, longitude, temperatureUnit, windSpeedUnit, timezone)
-                .copy(city = cityName)
+                .copy(city = city)
 
-        private suspend fun clearOldWeatherData(cityName: String) {
-            weatherDao.deleteOldWeather(cityName)
+        private suspend fun clearOldWeatherData(city: CityItemModel) {
+            weatherDao.deleteOldWeather(city.name!!, city.country!!)
         }
 
         private suspend fun saveWeatherData(weatherModel: WeatherModel) {
             val weatherId = weatherDao.insertWeather(weatherModel.toEntity()).toInt()
+
+            weatherModel.city?.let {
+                weatherDao.insertCityItem(weatherModel.toCityItemEntity(weatherId)!!)
+            }
             weatherModel.current?.let {
                 weatherDao.insertCurrentWeather(weatherModel.toCurrentEntity(weatherId)!!)
             }
@@ -168,21 +163,4 @@ class WeatherRepositoryImpl
         }
 
         private suspend fun getCachedWeather(): WeatherModel? = weatherDao.getAllWeather().firstOrNull()?.toWeatherModel()
-
-        @SuppressLint("MissingPermission")
-        private suspend fun getCurrentLocation(): Location =
-            withContext(Dispatchers.IO) {
-                val accuracy = Priority.PRIORITY_BALANCED_POWER_ACCURACY
-                try {
-                    val locationResult =
-                        locationProviderClient.getCurrentLocation(
-                            accuracy,
-                            CancellationTokenSource().token,
-                        )
-                    Tasks.await(locationResult)
-                    locationResult.result
-                } catch (e: Exception) {
-                    throw CustomError.LocationUnavailable
-                }
-            }
     }

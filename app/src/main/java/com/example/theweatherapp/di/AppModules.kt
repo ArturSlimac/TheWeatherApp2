@@ -2,12 +2,14 @@ package com.example.theweatherapp.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.theweatherapp.data.device.LocationRepositoryImpl
+import com.example.theweatherapp.data.local.WeatherDao
+import com.example.theweatherapp.data.local.WeatherDatabase
+import com.example.theweatherapp.data.repository.CityRepositoryImpl
+import com.example.theweatherapp.data.repository.WeatherRepositoryImpl
 import com.example.theweatherapp.domain.repository.CityRepository
-import com.example.theweatherapp.domain.repository.WeatherDao
-import com.example.theweatherapp.domain.repository.WeatherDatabase
+import com.example.theweatherapp.domain.repository.LocationRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
-import com.example.theweatherapp.network.repository.CityRepositoryImpl
-import com.example.theweatherapp.network.repository.WeatherRepositoryImpl
 import com.example.theweatherapp.network.service.CityService
 import com.example.theweatherapp.network.service.WeatherService
 import com.example.theweatherapp.utils.Const.CITY_API
@@ -117,14 +119,18 @@ class AppModules {
         weatherService: WeatherService,
         weatherDao: WeatherDao,
         cityRepository: CityRepository,
-        locationProviderClient: FusedLocationProviderClient,
+        locationRepository: LocationRepository,
     ): WeatherRepository =
         WeatherRepositoryImpl(
             weatherService = weatherService,
             weatherDao = weatherDao,
             cityRepository = cityRepository,
-            locationProviderClient = locationProviderClient,
+            locationRepository = locationRepository,
         )
+
+    @Provides
+    fun provideLocationRepository(locationProviderClient: FusedLocationProviderClient): LocationRepository =
+        LocationRepositoryImpl(locationProviderClient = locationProviderClient)
 
     @Provides
     fun provideLocationProvider(

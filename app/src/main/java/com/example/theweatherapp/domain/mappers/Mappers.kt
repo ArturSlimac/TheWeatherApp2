@@ -1,6 +1,8 @@
 package com.example.theweatherapp.domain.mappers
 
 import com.example.theweatherapp.domain.model.WeatherWithDetails
+import com.example.theweatherapp.domain.model.city.CityItemEntity
+import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentModel
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
@@ -21,7 +23,6 @@ fun WeatherModel.toEntity(): WeatherEntity =
         utcOffsetSeconds = this.utc_offset_seconds,
         elevation = this.elevation,
         generationTimeMs = this.generationtime_ms,
-        city = this.city,
     )
 
 fun WeatherModel.toHourlyUnitsEntity(weatherId: Int): HourlyUnitsEntity? =
@@ -74,11 +75,22 @@ fun WeatherModel.toCurrentEntity(weatherId: Int): CurrentEntity? =
         )
     }
 
+fun WeatherModel.toCityItemEntity(weatherId: Int): CityItemEntity? =
+    this.city?.let {
+        CityItemEntity(
+            weatherId = weatherId,
+            latitude = it.latitude,
+            longitude = it.longitude,
+            name = it.name!!,
+            state = it.state,
+            country = it.country!!,
+        )
+    }
+
 fun WeatherWithDetails.toWeatherModel(): WeatherModel =
     WeatherModel(
         latitude = this.weather.latitude,
         longitude = this.weather.longitude,
-        city = this.weather.city,
         timezone = this.weather.timezone,
         timezone_abbreviation = this.weather.timezoneAbbreviation,
         elevation = this.weather.elevation,
@@ -116,6 +128,16 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
                     weather_code = it.weather_code,
                     time = it.time,
                     temperature_2m = it.temperature_2m,
+                )
+            },
+        city =
+            this.city?.let {
+                CityItemModel(
+                    name = it.name,
+                    country = it.country,
+                    state = it.state,
+                    latitude = it.latitude,
+                    longitude = it.longitude,
                 )
             },
         hourly_units =

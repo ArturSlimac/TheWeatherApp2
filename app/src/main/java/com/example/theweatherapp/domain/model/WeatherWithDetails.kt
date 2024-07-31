@@ -2,6 +2,7 @@ package com.example.theweatherapp.domain.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
 import com.example.theweatherapp.domain.model.weather.HourlyEntity
@@ -30,4 +31,9 @@ data class WeatherWithDetails(
         entityColumn = "weatherId",
     )
     val hourlyUnits: HourlyUnitsEntity?,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "weatherId",
+    )
+    val city: CityItemEntity?,
 )

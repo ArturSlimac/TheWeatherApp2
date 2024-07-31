@@ -1,4 +1,4 @@
-package com.example.theweatherapp.network.repository
+package com.example.theweatherapp.data.repository
 
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
@@ -25,23 +25,20 @@ class CityRepositoryImpl
             longitude: Double,
         ): Flow<Response<CityModel>> =
             flow {
+                emit(Response.Loading)
                 try {
-                    emit(Response.Loading)
                     val city = cityService.getCity(latitude, longitude, apiKey)
                     emit(Response.Success(city))
                 } catch (e: Exception) {
-                    when (e) {
-                        is SocketTimeoutException ->
-                            emit(Response.Failure(CustomError.ApiError(ErrorCode.API_TIMEOUT.message)))
-                        is HttpException ->
-                            emit(Response.Failure(CustomError.ApiError(ErrorCode.NETWORK_ERROR.message)))
-                        is UnknownHostException, is IOException ->
-                            emit(Response.Failure(CustomError.ApiError(ErrorCode.NETWORK_ERROR.message)))
-                        is CustomError ->
-                            emit(Response.Failure(e))
-                        else ->
-                            emit(Response.Failure(CustomError.ApiError(ErrorCode.API_ERROR.message)))
-                    }
+                    val errorResponse =
+                        when (e) {
+                            is SocketTimeoutException -> CustomError.ApiError(ErrorCode.API_TIMEOUT.message)
+                            is HttpException -> CustomError.ApiError(ErrorCode.NETWORK_ERROR.message)
+                            is UnknownHostException, is IOException -> CustomError.ApiError(ErrorCode.NETWORK_ERROR.message)
+                            is CustomError -> e
+                            else -> CustomError.ApiError(ErrorCode.API_ERROR.message)
+                        }
+                    emit(Response.Failure(errorResponse))
                 }
             }
 

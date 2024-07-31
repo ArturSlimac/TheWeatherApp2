@@ -1,6 +1,6 @@
 package com.example.theweatherapp.domain.model.city
 
-data class CityModelItem(
+data class CityItemModel(
     val country: String?,
     val name: String?,
     val state: String?,

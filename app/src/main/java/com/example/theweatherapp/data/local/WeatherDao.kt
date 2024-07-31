@@ -1,4 +1,4 @@
-package com.example.theweatherapp.domain.repository
+package com.example.theweatherapp.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.theweatherapp.domain.model.WeatherWithDetails
+import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
 import com.example.theweatherapp.domain.model.weather.HourlyEntity
@@ -41,6 +42,13 @@ interface WeatherDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHourlyUnits(hourlyUnits: HourlyUnitsEntity)
 
-    @Query("DELETE FROM weather WHERE city = :cityName")
-    suspend fun deleteOldWeather(cityName: String)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCityItem(cityItem: CityItemEntity)
+
+    @Transaction
+    @Query("DELETE FROM weather WHERE id IN (SELECT weatherId FROM city WHERE name = :cityName AND country = :cityCountry)")
+    suspend fun deleteOldWeather(
+        cityName: String,
+        cityCountry: String,
+    )
 }

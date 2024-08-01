@@ -1,4 +1,4 @@
-package com.example.theweatherapp.fragment.home.screen
+package com.example.theweatherapp.fragment.local_weather.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

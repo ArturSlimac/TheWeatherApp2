@@ -1,4 +1,4 @@
-package com.example.theweatherapp.fragment.home
+package com.example.theweatherapp.fragment.local_weather
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -17,9 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.theweatherapp.fragment.home.screen.HomeScreen
-import com.example.theweatherapp.ui.components.RequestLocationPermission
+import com.example.theweatherapp.fragment.local_weather.screen.HomeScreen
 import com.example.theweatherapp.ui.components.SearchBar
+import com.example.theweatherapp.ui.permissions.RequestLocationPermission
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.HomeViewModel
 
@@ -41,7 +41,9 @@ fun HomeFragment(
             homeViewModel.fetchWeather()
         }
     }
-    val onPermissionGranted = { homeViewModel.onPermissionGranted() }
+    val onPermissionGranted = {
+        //    homeViewModel.onPermissionGranted()
+    }
     val onPermissionDenied = { homeViewModel.onPermissionDenied() }
     val onPermissionsRevoked = { homeViewModel.onPermissionsRevoked() }
 
@@ -71,7 +73,7 @@ fun HomeFragment(
                                         Modifier
                                             .fillMaxWidth()
                                             .clickable {
-                                                homeViewModel.fetchWeather(city)
+                                                //    homeViewModel.fetchWeather(city)
                                             }.padding(8.dp),
                                 )
                             }

@@ -1,4 +1,4 @@
-package com.example.theweatherapp.ui.components
+package com.example.theweatherapp.ui.permissions
 
 import android.Manifest
 import androidx.compose.runtime.Composable

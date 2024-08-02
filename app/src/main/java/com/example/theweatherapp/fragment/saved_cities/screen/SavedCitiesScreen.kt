@@ -1,11 +1,11 @@
-package com.example.theweatherapp.fragment.all_cities.screen
+package com.example.theweatherapp.fragment.saved_cities.screen
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.theweatherapp.domain.model.city.CityModel
-import com.example.theweatherapp.ui.components.TopBar
+import com.example.theweatherapp.ui.components.TopSearchBar
 import com.example.theweatherapp.utils.Response
 
 @Composable
@@ -20,7 +20,7 @@ fun SavedCitiesScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopBar(
+            TopSearchBar(
                 searchText = searchText,
                 onSearchTextChange = onSearchTextChange,
                 isSearching = isSearching,

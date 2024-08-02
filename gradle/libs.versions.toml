@@ -18,6 +18,8 @@ playServicesLocation = "21.3.0"
 permissionV="0.35.1-alpha"
 uiTextGoogleFonts = "1.6.8"
 dataStore="1.1.1"
+composeNavigation = "2.8.0-alpha08"
+serializationJson = "1.6.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,8 +63,15 @@ androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text
 #DataStore
 datastore-preferences = {group="androidx.datastore",name="datastore-preferences", version.ref="dataStore"}
 
+#Nav
+navigation-compose = {module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation"}
+kotlinx-serialization-json={module="org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref="serializationJson"}
+
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 dagger = {id= "com.google.dagger.hilt.android", version.ref = "daggerV"}
+kotlin-serialization = {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}

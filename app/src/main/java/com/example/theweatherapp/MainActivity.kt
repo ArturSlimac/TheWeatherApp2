@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
-import com.example.theweatherapp.fragment.all_cities.SavedCitiesFragment
+import androidx.navigation.compose.rememberNavController
+import com.example.theweatherapp.fragment.main.MainFragment
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,9 +16,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TheWeatherAppTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    SavedCitiesFragment()
-                }
+                val navController = rememberNavController()
+                MainFragment(navController)
             }
         }
     }

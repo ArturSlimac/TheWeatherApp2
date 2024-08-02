@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.dagger)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -90,4 +91,7 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.accompanist.permission)
     implementation(kotlin("script-runtime"))
+
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 }

@@ -20,6 +20,7 @@ uiTextGoogleFonts = "1.6.8"
 dataStore="1.1.1"
 composeNavigation = "2.8.0-alpha08"
 serializationJson = "1.6.3"
+composeAnimation = "1.7.0-alpha07"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -67,6 +68,8 @@ datastore-preferences = {group="androidx.datastore",name="datastore-preferences"
 navigation-compose = {module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation"}
 kotlinx-serialization-json={module="org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref="serializationJson"}
 
+#Animation
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeAnimation" }
 
 
 [plugins]

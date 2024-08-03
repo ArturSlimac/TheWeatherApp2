@@ -27,15 +27,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.theweatherapp.domain.model.helpers.TemperatureDescription
+import com.example.theweatherapp.domain.model.helpers.TemperatureUiDetails
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
 @Composable
 fun CurrentTemperatureCard(
-    temperature: Int,
+    temperature2m: Int,
+    apparentTemperature: Int,
     tempUnit: String,
+    temperatureUiDetails: TemperatureUiDetails,
 ) {
-    val temperatureDescription = TemperatureDescription.tempDescription(temperature)
+    val temperatureDescription = stringResource(id = temperatureUiDetails.tempDescription)
     val gradientOffset = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
@@ -50,7 +52,7 @@ fun CurrentTemperatureCard(
             )
         }
     }
-    val colors = temperatureDescription.colors
+    val colors = temperatureUiDetails.colors
 
     val animatedGradient =
         Brush.verticalGradient(
@@ -76,19 +78,30 @@ fun CurrentTemperatureCard(
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = stringResource(id = temperatureDescription.tempDescription),
+                text = temperatureDescription,
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 textAlign = TextAlign.End,
-                modifier = Modifier.padding(16.dp),
-            )
-            Text(
-                text = "$temperature°$tempUnit",
-                style = MaterialTheme.typography.displayLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                textAlign = TextAlign.Start,
                 modifier = Modifier.padding(32.dp),
             )
+
+            Column(
+                modifier = Modifier.padding(32.dp),
+            ) {
+                Text(
+                    text = "$temperature2m°$tempUnit",
+                    style = MaterialTheme.typography.displayLarge,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    textAlign = TextAlign.Start,
+                )
+
+                Text(
+                    text = "feels like $apparentTemperature°",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    textAlign = TextAlign.Start,
+                )
+            }
         }
     }
 }
@@ -97,6 +110,6 @@ fun CurrentTemperatureCard(
 @Preview
 fun CurrentTemperatureCardPreview() {
     TheWeatherAppTheme {
-        CurrentTemperatureCard(32, "C")
+        CurrentTemperatureCard(32, 31, "C", TemperatureUiDetails.tempUiDetails(32))
     }
 }

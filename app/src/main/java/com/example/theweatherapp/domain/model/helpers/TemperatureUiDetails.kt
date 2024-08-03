@@ -4,77 +4,77 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import com.example.theweatherapp.R
 
-sealed class TemperatureDescription(
+sealed class TemperatureUiDetails(
     @StringRes val tempDescription: Int,
     val colors: List<Color>,
 ) {
-    object VerySuperMegaCold : TemperatureDescription(
+    object VerySuperMegaCold : TemperatureUiDetails(
         R.string.very_super_mega_cold,
         (listOf(Color(0xFF3499FF), Color(0xFF3A3985))),
     )
 
-    object VerySuperCold : TemperatureDescription(
+    object VerySuperCold : TemperatureUiDetails(
         R.string.very_super_cold,
         (listOf(Color(0xFF6EE2F5), Color(0xFF6454F0))),
     )
 
-    object VeryCold : TemperatureDescription(
+    object VeryCold : TemperatureUiDetails(
         R.string.very_cold,
         (listOf(Color(0xFF64E8DE), Color(0xFF8A64EB))),
     )
 
-    object Cold : TemperatureDescription(
+    object Cold : TemperatureUiDetails(
         R.string.cold,
         (listOf(Color(0xFF7BF2E9), Color(0xFFB65EBA))),
     )
 
-    data object ColdOk : TemperatureDescription(
+    data object ColdOk : TemperatureUiDetails(
         R.string.cold_ok,
         (listOf(Color(0xFFB65EBA), Color(0xFF2E8DE1))),
     )
 
-    object WarmSpring : TemperatureDescription(
+    object WarmSpring : TemperatureUiDetails(
         R.string.warm_spring,
         (listOf(Color(0xFFFF6CAB), Color(0xFF7366FF))),
     )
 
-    object Warm : TemperatureDescription(
+    object Warm : TemperatureUiDetails(
         R.string.warm,
         (listOf(Color(0xFFff9897), Color(0xFFf650A0))),
     )
 
-    object WarmSummer : TemperatureDescription(
+    object WarmSummer : TemperatureUiDetails(
         R.string.warm_summer,
         (listOf(Color(0xFFFFCDA5), Color(0xFFEE4D5F))),
     )
 
-    object Hot : TemperatureDescription(
+    object Hot : TemperatureUiDetails(
         R.string.hot,
         (listOf(Color(0xFFffcf1b), Color(0xFFff881b))),
     )
 
-    object VeryHot : TemperatureDescription(
+    object VeryHot : TemperatureUiDetails(
         R.string.very_hot,
         (listOf(Color(0xFFffa62e), Color(0xFFea4d2c))),
     )
 
-    object VerySuperHot : TemperatureDescription(
+    object VerySuperHot : TemperatureUiDetails(
         R.string.very_super_hot,
         (listOf(Color(0xFFf00B51), Color(0xFF7366ff))),
     )
 
-    object VerySuperMegaHot : TemperatureDescription(
+    object VerySuperMegaHot : TemperatureUiDetails(
         R.string.very_super_mega_hot,
         (listOf(Color(0xFFf00B51), Color(0xFF7366ff))),
     )
 
-    object DefaultExpression : TemperatureDescription(
+    object DefaultExpression : TemperatureUiDetails(
         R.string.default_expression,
         (listOf(Color(0xFF00FFED), Color(0xFF00b8ba))),
     )
 
     companion object {
-        fun tempDescription(temp: Int?): TemperatureDescription =
+        fun tempUiDetails(temp: Int?): TemperatureUiDetails =
             when {
                 (temp in -100..-31) -> VerySuperMegaCold
                 (temp in -30..-21) -> VerySuperCold

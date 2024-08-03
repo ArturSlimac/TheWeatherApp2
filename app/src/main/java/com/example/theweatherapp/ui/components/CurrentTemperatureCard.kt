@@ -8,6 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -32,9 +34,8 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
 @Composable
 fun CurrentTemperatureCard(
-    temperature2m: Int,
-    apparentTemperature: Int,
-    tempUnit: String,
+    temperature2m: Pair<Int, String>,
+    apparentTemperature: Pair<Int, String>,
     temperatureUiDetails: TemperatureUiDetails,
 ) {
     val temperatureDescription = stringResource(id = temperatureUiDetails.tempDescription)
@@ -89,18 +90,26 @@ fun CurrentTemperatureCard(
                 modifier = Modifier.padding(32.dp),
             ) {
                 Text(
-                    text = "$temperature2m°$tempUnit",
+                    text = "${temperature2m.first}°${temperature2m.second}",
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     textAlign = TextAlign.Start,
                 )
 
-                Text(
-                    text = "feels like $apparentTemperature°",
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    textAlign = TextAlign.Start,
-                )
+                Row(verticalAlignment = Alignment.Bottom) {
+                    Text(
+                        text = "feels like ",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        textAlign = TextAlign.Start,
+                    )
+                    Text(
+                        text = "${apparentTemperature.first}°",
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        textAlign = TextAlign.Start,
+                    )
+                }
             }
         }
     }
@@ -110,6 +119,6 @@ fun CurrentTemperatureCard(
 @Preview
 fun CurrentTemperatureCardPreview() {
     TheWeatherAppTheme {
-        CurrentTemperatureCard(32, 31, "C", TemperatureUiDetails.tempUiDetails(32))
+        CurrentTemperatureCard(Pair(32, "C"), Pair(31, "C"), TemperatureUiDetails.tempUiDetails(32))
     }
 }

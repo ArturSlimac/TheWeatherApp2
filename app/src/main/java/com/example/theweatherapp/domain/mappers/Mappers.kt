@@ -1,5 +1,6 @@
 package com.example.theweatherapp.domain.mappers
 
+import com.example.theweatherapp.domain.model.WeatherForecastItem
 import com.example.theweatherapp.domain.model.WeatherWithDetails
 import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.city.CityItemModel
@@ -86,6 +87,23 @@ fun WeatherModel.toCityItemEntity(weatherId: Int): CityItemEntity? =
             country = it.country!!,
         )
     }
+
+fun WeatherModel.toWeatherForecastItems(): List<WeatherForecastItem> {
+    val temperatures = this.hourly?.temperature_2m ?: emptyList()
+    val times = this.hourly?.time ?: emptyList()
+    val weatherTypes = this.hourly?.weather_code ?: emptyList()
+    val tempUnit = this.hourly_units?.temperature_2m ?: ""
+    val timeUnit = this.hourly_units?.time ?: ""
+
+    return temperatures.zip(times).zip(weatherTypes).map { (tempTime, weatherType) ->
+        val (temp, time) = tempTime
+        WeatherForecastItem(
+            temperature = Pair(temp.toInt(), tempUnit),
+            time = Pair(time, timeUnit),
+            weatherIcon = weatherType,
+        )
+    }
+}
 
 fun WeatherWithDetails.toWeatherModel(): WeatherModel =
     WeatherModel(

@@ -1,6 +1,7 @@
 package com.example.theweatherapp.domain.model.weather
 
-import com.example.theweatherapp.domain.model.helpers.TemperatureDescription
+import com.example.theweatherapp.domain.model.helpers.TemperatureUiDetails
+import com.example.theweatherapp.domain.model.helpers.WeatherType
 
 data class CurrentModel(
     val apparent_temperature: Double? = null,
@@ -12,6 +13,9 @@ data class CurrentModel(
     val weather_code: Int? = null,
     val wind_speed_10m: Double? = null,
 ) {
-    val temperature_2mDescription: Int
-        get() = TemperatureDescription.tempDescription(temperature_2m?.toInt()).tempDescription
+    val temperature_details: TemperatureUiDetails
+        get() = TemperatureUiDetails.tempUiDetails(temperature_2m?.toInt())
+
+    val weatherType: WeatherType
+        get() = WeatherType.fromWmoStandard(weather_code)
 }

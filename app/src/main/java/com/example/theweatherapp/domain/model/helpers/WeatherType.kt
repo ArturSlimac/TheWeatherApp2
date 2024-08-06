@@ -172,7 +172,7 @@ sealed class WeatherType(
     )
 
     companion object {
-        fun fromWmoStandard(code: Int): WeatherType =
+        fun fromWmoStandard(code: Int?): WeatherType =
             when (code) {
                 0 -> ClearSky
                 1 -> MainlyClear

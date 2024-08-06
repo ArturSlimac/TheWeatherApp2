@@ -16,13 +16,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WeatherDao {
     @Transaction
-    @Query("SELECT * FROM weather WHERE latitude = :latitude AND longitude = :longitude")
-    fun getWeather(
-        latitude: Double,
-        longitude: Double,
-    ): Flow<WeatherWithDetails?>
-
-    @Transaction
     @Query("SELECT * FROM weather LIMIT 1")
     fun getAllWeather(): Flow<WeatherWithDetails?>
 

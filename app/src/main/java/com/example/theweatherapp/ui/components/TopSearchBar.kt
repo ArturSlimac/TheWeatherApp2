@@ -84,9 +84,16 @@ fun TopSearchBar(
             )
         },
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            if (isSearching) {
+                Modifier
+                    .fillMaxWidth()
+            } else {
+                Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                    )
+            },
     ) {
         if (searchText.isEmpty()) {
             Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {

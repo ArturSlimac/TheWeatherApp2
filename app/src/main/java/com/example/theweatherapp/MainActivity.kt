@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
-import com.example.theweatherapp.fragment.main.MainFragment
+import com.example.theweatherapp.ui.navigation.AppNavHost
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TheWeatherAppTheme {
                 val navController = rememberNavController()
-                MainFragment(navController)
+                AppNavHost(navController = navController)
             }
         }
     }

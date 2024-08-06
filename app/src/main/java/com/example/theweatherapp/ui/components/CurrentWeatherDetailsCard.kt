@@ -16,23 +16,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.theweatherapp.domain.model.helpers.CurrentWeatherItem
 import com.example.theweatherapp.domain.model.helpers.WeatherType
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
 @Composable
-fun CurrentWeatherDetailsCard(
-    pressure: Pair<Double, String>,
-    humidity: Pair<Double, String>,
-    windSpeed: Pair<Double, String>,
-    weatherType: WeatherType,
-) {
+fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
     Card(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp).padding(bottom = 16.dp),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -46,59 +43,61 @@ fun CurrentWeatherDetailsCard(
                 modifier = Modifier.weight(1f).padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Icon(painterResource(weatherType.dayWeatherIcon),
-                    contentDescription = null)
+                Icon(
+                    painterResource(currentWeatherItem.weatherType.dayWeatherIcon),
+                    contentDescription = null,
+                )
                 Text(
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-
-                    text = stringResource(weatherType.weatherTitle,
-
+                    textAlign = TextAlign.Center,
+                    text =
+                        stringResource(
+                            currentWeatherItem.weatherType.weatherTitle,
                         ),
                 )
             }
 
             Column(
-                modifier = Modifier.weight(2f).padding(8.dp).fillMaxHeight(),
+                modifier = Modifier.weight(2f).padding(8.dp),
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
-                Row (verticalAlignment = Alignment.Bottom){
+                Row(verticalAlignment = Alignment.Bottom) {
                     Text(
                         text = "humidity: ",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                     Text(
-                        text = "${humidity.first} ${humidity.second}",
+                        text = "${currentWeatherItem.humidity.first} ${currentWeatherItem.humidity.second}",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
-                Row (verticalAlignment = Alignment.Bottom){
+                Row(verticalAlignment = Alignment.Bottom) {
                     Text(
                         text = "pressure: ",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                     Text(
-                        text = "${pressure.first} ${pressure.second}",
+                        text = "${currentWeatherItem.pressure.first} ${currentWeatherItem.pressure.second}",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
-                Row (verticalAlignment = Alignment.Bottom){
+                Row(verticalAlignment = Alignment.Bottom) {
                     Text(
                         text = "wind speed: ",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                     Text(
-                        text = "${windSpeed.first} ${windSpeed.second}",
+                        text = "${currentWeatherItem.windSpeed.first} ${currentWeatherItem.windSpeed.second}",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                 }
-
             }
         }
     }
@@ -109,10 +108,13 @@ fun CurrentWeatherDetailsCard(
 fun CurrentWeatherDetailsCardPreview() {
     TheWeatherAppTheme {
         CurrentWeatherDetailsCard(
+            CurrentWeatherItem(
+
             Pair(555.0, "ddd"),
             Pair(44.0, "%"),
             Pair(5.0, "m/s"),
-            WeatherType.fromWmoStandard(4),
+            WeatherType.fromWmoStandard(3),
+            )
         )
     }
 }

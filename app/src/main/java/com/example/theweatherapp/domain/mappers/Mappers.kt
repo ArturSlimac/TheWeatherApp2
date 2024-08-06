@@ -1,9 +1,13 @@
 package com.example.theweatherapp.domain.mappers
 
-import com.example.theweatherapp.domain.model.WeatherForecastItem
 import com.example.theweatherapp.domain.model.WeatherWithDetails
 import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.city.CityItemModel
+import com.example.theweatherapp.domain.model.helpers.CurrentTemperatureItem
+import com.example.theweatherapp.domain.model.helpers.CurrentWeatherItem
+import com.example.theweatherapp.domain.model.helpers.TemperatureUiDetails
+import com.example.theweatherapp.domain.model.helpers.WeatherForecastItem
+import com.example.theweatherapp.domain.model.helpers.WeatherType
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentModel
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
@@ -14,6 +18,8 @@ import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
 import com.example.theweatherapp.domain.model.weather.HourlyUnitsModel
 import com.example.theweatherapp.domain.model.weather.WeatherEntity
 import com.example.theweatherapp.domain.model.weather.WeatherModel
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 fun WeatherModel.toEntity(): WeatherEntity =
     WeatherEntity(
@@ -94,15 +100,54 @@ fun WeatherModel.toWeatherForecastItems(): List<WeatherForecastItem> {
     val weatherTypes = this.hourly?.weather_code ?: emptyList()
     val tempUnit = this.hourly_units?.temperature_2m ?: ""
     val timeUnit = this.hourly_units?.time ?: ""
+    val currentTime = LocalTime.now()
 
-    return temperatures.zip(times).zip(weatherTypes).map { (tempTime, weatherType) ->
+    return temperatures.zip(times).zip(weatherTypes).mapNotNull { (tempTime, weatherType) ->
         val (temp, time) = tempTime
-        WeatherForecastItem(
-            temperature = Pair(temp.toInt(), tempUnit),
-            time = Pair(time, timeUnit),
-            weatherIcon = weatherType,
-        )
+        val timeOnlyString = time.substringAfter('T')
+        val timeOnly = LocalTime.parse(timeOnlyString, DateTimeFormatter.ofPattern("HH:mm"))
+        val dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+        if (timeOnly.isAfter(currentTime)) {
+            WeatherForecastItem(
+                temperature = Pair(temp.toInt(), tempUnit),
+                time = Pair(timeOnly.format(dateTimeFormatter), timeUnit),
+                weatherIcon = WeatherType.fromWmoStandard(weatherType).dayWeatherIcon,
+            )
+        } else {
+            null
+        }
     }
+}
+
+fun WeatherModel.toCurrentTemperatureItem(): CurrentTemperatureItem {
+    val temp = this.current?.temperature_2m?.toInt() ?: 0
+    val tempUnit = this.current_units?.temperature_2m ?: ""
+    val apparentTemp = this.current?.apparent_temperature?.toInt() ?: 0
+    val apparentTempUnit = this.current_units?.apparent_temperature ?: ""
+    val tempDetails = TemperatureUiDetails.tempUiDetails(temp)
+
+    return CurrentTemperatureItem(
+        temperature2m = Pair(temp, tempUnit),
+        apparentTemperature = Pair(apparentTemp, apparentTempUnit),
+        temperatureUiDetails = tempDetails,
+    )
+}
+
+fun WeatherModel.toCurrentWeatherItem(): CurrentWeatherItem {
+    val windSpeed = this.current?.wind_speed_10m ?: 0.0
+    val windSpeedUnit = this.current_units?.wind_speed_10m ?: ""
+    val humidity = this.current?.relative_humidity_2m ?: 0.0
+    val humidityUnit = this.current_units?.wind_speed_10m ?: ""
+    val pressure = this.current?.pressure_msl ?: 0.0
+    val pressureUnit = this.current_units?.pressure_msl ?: ""
+    val wt = this.current?.weather_code
+
+    return CurrentWeatherItem(
+        pressure = Pair(pressure, pressureUnit),
+        humidity = Pair(humidity, humidityUnit),
+        windSpeed = Pair(windSpeed, windSpeedUnit),
+        weatherType = WeatherType.fromWmoStandard(wt),
+    )
 }
 
 fun WeatherWithDetails.toWeatherModel(): WeatherModel =

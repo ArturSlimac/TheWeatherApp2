@@ -7,6 +7,9 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.example.theweatherapp.ui.navigation.NavigationDestination
+import com.example.theweatherapp.ui.navigation.NavigationDestination.LocalWeather
+import com.example.theweatherapp.ui.navigation.NavigationDestination.SavedCities
+import com.example.theweatherapp.ui.navigation.NavigationDestination.UserSettings
 
 @Composable
 fun BottomNavigationBar(
@@ -14,7 +17,9 @@ fun BottomNavigationBar(
     onNavigate: (NavigationDestination) -> Unit,
 ) {
     NavigationBar {
-        NavigationDestination.values.forEach { destination ->
+        val destinations = listOf(LocalWeather, SavedCities, UserSettings)
+
+        destinations.forEach { destination ->
             NavigationBarItem(
                 icon = {
                     val icon =

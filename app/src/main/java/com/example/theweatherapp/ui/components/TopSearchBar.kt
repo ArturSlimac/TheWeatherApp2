@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,6 +44,11 @@ fun TopSearchBar(
         onSearch = onSearchTextChange,
         active = isSearching,
         onActiveChange = { onToggleSearch() },
+        colors =
+            SearchBarDefaults.colors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                dividerColor = MaterialTheme.colorScheme.outline,
+            ),
         leadingIcon = {
             IconButton(
                 onClick = {
@@ -53,11 +59,13 @@ fun TopSearchBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Closes the search bar",
+                        tint = MaterialTheme.colorScheme.onSurface,
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Opens the search bar",
+                        tint = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }
@@ -72,6 +80,7 @@ fun TopSearchBar(
                     Icon(
                         imageVector = Icons.Filled.Clear,
                         contentDescription = "Clears the search query",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
@@ -79,7 +88,7 @@ fun TopSearchBar(
         placeholder = {
             Text(
                 text = "Search",
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyLarge,
             )
         },
@@ -99,8 +108,8 @@ fun TopSearchBar(
             Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                 Text(
                     text = "Start typing to find cities",
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }
@@ -119,7 +128,7 @@ fun TopSearchBar(
             is Response.Success -> {
                 val cities = foundCitiesState.data
                 if (!cities.isNullOrEmpty()) {
-                    LazyColumn(modifier = Modifier.fillMaxSize().padding(top = 16.dp)) {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(cities) { city ->
                             FoundListItem(
                                 city,
@@ -132,8 +141,8 @@ fun TopSearchBar(
                     Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
                         Text(
                             text = "No cities found",
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
-                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.bodyLarge,
                         )
                     }
                 }

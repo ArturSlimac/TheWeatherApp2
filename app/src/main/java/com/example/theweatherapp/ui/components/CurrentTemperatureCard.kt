@@ -65,7 +65,7 @@ fun CurrentTemperatureCard(currentTemperatureItem: CurrentTemperatureItem) {
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .padding(16.dp)
-                .background(brush = animatedGradient, shape = RoundedCornerShape(15.dp)),
+                .background(brush = animatedGradient, shape = RoundedCornerShape(12.dp)),
         colors =
             CardDefaults.cardColors(
                 containerColor = Color.Transparent,

@@ -13,15 +13,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -43,19 +40,17 @@ fun UserSettingsScreen(
                 modifier = Modifier.fillMaxWidth(),
                 scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
                 colors =
-                    TopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        scrolledContainerColor = Color.Transparent,
-                        navigationIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                        actionIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        titleContentColor = MaterialTheme.colorScheme.onSurface,
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        scrolledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                        actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     ),
                 title = {
                     Text(
                         text = "Settings",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        textAlign = TextAlign.Center,
                     )
                 },
             )

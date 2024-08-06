@@ -4,8 +4,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import com.example.theweatherapp.ui.navigation.NavigationDestination
 import com.example.theweatherapp.ui.navigation.NavigationDestination.LocalWeather
 import com.example.theweatherapp.ui.navigation.NavigationDestination.SavedCities
@@ -16,7 +18,9 @@ fun BottomNavigationBar(
     currentDestination: NavigationDestination,
     onNavigate: (NavigationDestination) -> Unit,
 ) {
-    NavigationBar {
+    NavigationBar(
+        containerColor = Color.Transparent,
+    ) {
         val destinations = listOf(LocalWeather, SavedCities, UserSettings)
 
         destinations.forEach { destination ->
@@ -33,12 +37,19 @@ fun BottomNavigationBar(
                 label = {
                     Text(
                         text = destination.label,
-                        color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.labelMedium,
                     )
                 },
                 selected = currentDestination == destination,
                 onClick = { onNavigate(destination) },
+                colors =
+                    NavigationBarItemDefaults.colors(
+                        selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        selectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unselectedIconColor = MaterialTheme.colorScheme.onSurface,
+                        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        indicatorColor = MaterialTheme.colorScheme.secondaryContainer,
+                    ),
             )
         }
     }

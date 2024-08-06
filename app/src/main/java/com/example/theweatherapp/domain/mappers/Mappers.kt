@@ -137,7 +137,7 @@ fun WeatherModel.toCurrentWeatherItem(): CurrentWeatherItem {
     val windSpeed = this.current?.wind_speed_10m ?: 0.0
     val windSpeedUnit = this.current_units?.wind_speed_10m ?: ""
     val humidity = this.current?.relative_humidity_2m ?: 0.0
-    val humidityUnit = this.current_units?.wind_speed_10m ?: ""
+    val humidityUnit = this.current_units?.relative_humidity_2m ?: ""
     val pressure = this.current?.pressure_msl ?: 0.0
     val pressureUnit = this.current_units?.pressure_msl ?: ""
     val wt = this.current?.weather_code

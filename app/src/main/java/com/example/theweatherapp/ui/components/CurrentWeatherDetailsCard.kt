@@ -32,7 +32,7 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                 .padding(horizontal = 16.dp).padding(bottom = 16.dp),
         colors =
             CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
             ),
     ) {
         Row(
@@ -46,10 +46,11 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                 Icon(
                     painterResource(currentWeatherItem.weatherType.dayWeatherIcon),
                     contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
                     style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     text =
                         stringResource(
@@ -71,7 +72,7 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                     Text(
                         text = "${currentWeatherItem.humidity.first} ${currentWeatherItem.humidity.second}",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
                 Row(verticalAlignment = Alignment.Bottom) {
@@ -83,7 +84,7 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                     Text(
                         text = "${currentWeatherItem.pressure.first} ${currentWeatherItem.pressure.second}",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
                 Row(verticalAlignment = Alignment.Bottom) {
@@ -95,7 +96,7 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                     Text(
                         text = "${currentWeatherItem.windSpeed.first} ${currentWeatherItem.windSpeed.second}",
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }

@@ -30,7 +30,7 @@ fun WeatherForecastCard(
     Card(modifier = Modifier.padding(end = 8.dp),
         colors =
             CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
             ),
 
     ) {
@@ -42,10 +42,11 @@ fun WeatherForecastCard(
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.tertiary,)
             Icon(painterResource(weatherIcon), contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.height(124.dp))
             Text(text = "${temperature.first}°",
                 style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                color = MaterialTheme.colorScheme.onSurface,
 
                 )
         }

@@ -62,6 +62,7 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
             Column(
                 modifier = Modifier.weight(2f).padding(8.dp),
                 verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.End
             ) {
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(

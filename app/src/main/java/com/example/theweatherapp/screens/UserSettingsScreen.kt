@@ -11,6 +11,7 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -68,29 +70,52 @@ fun UserSettingsScreen(
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column(modifier = Modifier.padding(16.dp)) {
-                // Wind Speed Unit Setting
-                Text("Wind Speed Unit")
-                Row {
+                Text("Wind Speed Unit", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
+                Column {
                     settingsViewModel.windSpeedUnits.forEach { unit ->
-                        RadioButton(
-                            selected = (unit == windSpeedUnit),
-                            onClick = { settingsViewModel.changeWindSpeedUnit(unit) },
-                        )
-                        Text(unit.unit, modifier = Modifier.padding(start = 8.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            RadioButton(
+                                selected = (unit == windSpeedUnit),
+                                onClick = { settingsViewModel.changeWindSpeedUnit(unit) },
+                                colors =
+                                    RadioButtonDefaults.colors(
+                                        selectedColor = MaterialTheme.colorScheme.primary,
+                                        unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    ),
+                            )
+                            Text(
+                                unit.unit,
+                                modifier = Modifier.padding(start = 8.dp),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Temperature Unit Setting
-                Text("Temperature Unit")
-                Row {
+                Text("Temperature Unit", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
+                Column {
                     settingsViewModel.temperatureUnits.forEach { unit ->
-                        RadioButton(
-                            selected = (unit == temperatureUnit),
-                            onClick = { settingsViewModel.changeTemperatureUnit(unit) },
-                        )
-                        Text(unit.unit, modifier = Modifier.padding(start = 8.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            RadioButton(
+                                selected = (unit == temperatureUnit),
+                                onClick = { settingsViewModel.changeTemperatureUnit(unit) },
+                                colors =
+                                    RadioButtonDefaults.colors(
+                                        selectedColor = MaterialTheme.colorScheme.primary,
+                                        unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    ),
+                            )
+                            Text(
+                                unit.unit,
+                                modifier = Modifier.padding(start = 8.dp),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
                     }
                 }
             }

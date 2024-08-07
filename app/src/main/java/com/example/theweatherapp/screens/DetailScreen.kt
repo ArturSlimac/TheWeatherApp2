@@ -93,6 +93,7 @@ fun DetailScreen(
                     } else {
                         IconButton(onClick = {
                             savedCitiesViewModel.onSaveCity()
+                            savedCitiesViewModel.onToggleSearch()
                             navController.popBackStack()
                         }) {
                             Icon(Icons.Outlined.Add, contentDescription = "Saves current city in the application")

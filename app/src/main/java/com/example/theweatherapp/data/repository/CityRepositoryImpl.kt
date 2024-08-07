@@ -1,5 +1,6 @@
 package com.example.theweatherapp.data.repository
 
+import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
 import com.example.theweatherapp.domain.model.city.CityModel
@@ -18,6 +19,7 @@ class CityRepositoryImpl
     @Inject
     constructor(
         private val cityService: CityService,
+        private val cityDao: CityDao,
         private val apiKey: String,
     ) : CityRepository {
         override fun getCity(
@@ -63,4 +65,18 @@ class CityRepositoryImpl
                     }
                 }
             }
+
+       /* override fun getAllSavedCities(): Flow<Response<CityModel>> =
+            flow {
+                emit(Response.Loading) // Emit loading state
+                try {
+                    cityDao
+                        .getAllCities()
+                        .collect { cityModel ->
+                            emit(Response.Success(cityModel))
+                        }
+                } catch (e: Exception) {
+                    emit(Response.Failure(e))
+                }
+            }*/
     }

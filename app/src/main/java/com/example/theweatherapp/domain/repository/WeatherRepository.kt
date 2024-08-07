@@ -12,4 +12,6 @@ interface WeatherRepository {
         windSpeedUnit: String,
         timezone: String,
     ): Flow<Response<WeatherModel>>
+
+    suspend fun saveWeather(weatherModel: WeatherModel)
 }

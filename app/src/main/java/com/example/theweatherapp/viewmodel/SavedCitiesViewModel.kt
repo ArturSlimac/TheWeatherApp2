@@ -26,6 +26,7 @@ class SavedCitiesViewModel
         private val weatherRepository: WeatherRepository,
         private val settingsRepository: SettingsRepository,
     ) : ViewModel() {
+        // Top search bar
         private val _isSearching = mutableStateOf(false)
         val isSearching: State<Boolean> = _isSearching
 
@@ -38,6 +39,10 @@ class SavedCitiesViewModel
         private val _selectedCity = MutableStateFlow<CityItemModel?>(null)
         val selectedCity: StateFlow<CityItemModel?> get() = _selectedCity
 
+        private val _savedCitiesWeatherState = mutableStateOf<Response<List<WeatherModel>>>(Response.Loading)
+        val savedCitiesWeatherState: State<Response<List<WeatherModel>>> = _savedCitiesWeatherState
+
+        // Detail screen
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
 
@@ -73,6 +78,13 @@ class SavedCitiesViewModel
             if (!_isSearching.value) {
                 onSearchTextChange("")
                 _foundCitiesState.value = Response.Loading
+            }
+        }
+
+        fun onSaveCity() {
+            val weatherModel = (weatherState.value as? Response.Success<WeatherModel>)?.data
+            viewModelScope.launch {
+                weatherModel?.let { weatherRepository.saveWeather(it) }
             }
         }
 

@@ -122,7 +122,8 @@ class AppModules {
     fun provideCityRepository(
         @Named("NINJAS_API_KEY") apiKey: String,
         cityService: CityService,
-    ): CityRepository = CityRepositoryImpl(apiKey = apiKey, cityService = cityService)
+        cityDao: CityDao,
+    ): CityRepository = CityRepositoryImpl(apiKey = apiKey, cityService = cityService, cityDao = cityDao)
 
     @Provides
     fun provideWeatherRepository(

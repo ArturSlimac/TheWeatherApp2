@@ -65,15 +65,31 @@ class WeatherRepositoryImpl
                             gottenCity,
                         )
 
-                    clearOldWeatherData(gottenCity)
-                    saveWeatherData(responseApi)
-
                     emit(Response.Success(responseApi))
                 } catch (e: Exception) {
                     handleException(e)
                     emitCachedWeatherIfAvailable()
                 }
             }.flowOn(Dispatchers.IO)
+
+        override suspend fun saveWeather(weatherModel: WeatherModel) {
+            val cityId = cityDao.insertCityItem(weatherModel.toCityItemEntity()!!).toInt()
+
+            val weatherId = weatherDao.insertWeather(weatherModel.toEntity(cityId)).toInt()
+
+            weatherModel.current?.let {
+                weatherDao.insertCurrentWeather(weatherModel.toCurrentEntity(weatherId)!!)
+            }
+            weatherModel.current_units?.let {
+                weatherDao.insertCurrentUnits(weatherModel.toCurrentUnitsEntity(weatherId)!!)
+            }
+            weatherModel.hourly?.let {
+                weatherDao.insertHourlyWeather(weatherModel.toHourlyEntity(weatherId)!!)
+            }
+            weatherModel.hourly_units?.let {
+                weatherDao.insertHourlyUnits(weatherModel.toHourlyUnitsEntity(weatherId)!!)
+            }
+        }
 
         private suspend fun getCity(
             latitude: Double,
@@ -113,30 +129,6 @@ class WeatherRepositoryImpl
             weatherService
                 .getWeather(latitude, longitude, temperatureUnit, windSpeedUnit, timezone)
                 .copy(city = city)
-
-        private suspend fun clearOldWeatherData(city: CityItemModel) {
-            weatherDao.deleteOldWeather(city.name!!, city.country!!)
-        }
-
-        private suspend fun saveWeatherData(weatherModel: WeatherModel) {
-            val weatherId = weatherDao.insertWeather(weatherModel.toEntity()).toInt()
-
-            weatherModel.city?.let {
-                cityDao.insertCityItem(weatherModel.toCityItemEntity(weatherId)!!)
-            }
-            weatherModel.current?.let {
-                weatherDao.insertCurrentWeather(weatherModel.toCurrentEntity(weatherId)!!)
-            }
-            weatherModel.current_units?.let {
-                weatherDao.insertCurrentUnits(weatherModel.toCurrentUnitsEntity(weatherId)!!)
-            }
-            weatherModel.hourly?.let {
-                weatherDao.insertHourlyWeather(weatherModel.toHourlyEntity(weatherId)!!)
-            }
-            weatherModel.hourly_units?.let {
-                weatherDao.insertHourlyUnits(weatherModel.toHourlyUnitsEntity(weatherId)!!)
-            }
-        }
 
         private suspend fun FlowCollector<Response<WeatherModel>>.handleException(e: Exception) {
             when (e) {

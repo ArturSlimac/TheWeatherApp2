@@ -32,8 +32,8 @@ data class WeatherWithDetails(
     )
     val hourlyUnits: HourlyUnitsEntity?,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "weatherId",
+        parentColumn = "cityId",
+        entityColumn = "id",
     )
     val city: CityItemEntity?,
 )

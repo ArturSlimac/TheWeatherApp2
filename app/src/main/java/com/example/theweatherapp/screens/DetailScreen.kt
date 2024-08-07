@@ -82,7 +82,10 @@ fun DetailScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        savedCitiesViewModel.onSaveCity()
+                        navController.popBackStack()
+                    }) {
                         Icon(Icons.Outlined.Add, contentDescription = "Saves current city in the application")
                     }
                 },

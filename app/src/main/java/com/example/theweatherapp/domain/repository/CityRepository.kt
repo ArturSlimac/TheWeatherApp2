@@ -11,4 +11,6 @@ interface CityRepository {
     ): Flow<Response<CityModel>>
 
     fun getCitiesByName(name: String): Flow<Response<CityModel>>
+
+    // fun getAllSavedCities(): Flow<Response<CityModel>>
 }

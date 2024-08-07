@@ -21,7 +21,7 @@ import com.example.theweatherapp.domain.model.weather.WeatherModel
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
-fun WeatherModel.toEntity(): WeatherEntity =
+fun WeatherModel.toEntity(cityId: Int): WeatherEntity =
     WeatherEntity(
         latitude = this.latitude,
         longitude = this.longitude,
@@ -30,6 +30,7 @@ fun WeatherModel.toEntity(): WeatherEntity =
         utcOffsetSeconds = this.utc_offset_seconds,
         elevation = this.elevation,
         generationTimeMs = this.generationtime_ms,
+        cityId = cityId,
     )
 
 fun WeatherModel.toHourlyUnitsEntity(weatherId: Int): HourlyUnitsEntity? =
@@ -82,10 +83,9 @@ fun WeatherModel.toCurrentEntity(weatherId: Int): CurrentEntity? =
         )
     }
 
-fun WeatherModel.toCityItemEntity(weatherId: Int): CityItemEntity? =
+fun WeatherModel.toCityItemEntity(): CityItemEntity? =
     this.city?.let {
         CityItemEntity(
-            weatherId = weatherId,
             latitude = it.latitude,
             longitude = it.longitude,
             name = it.name!!,

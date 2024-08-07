@@ -33,11 +33,4 @@ interface WeatherDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHourlyUnits(hourlyUnits: HourlyUnitsEntity)
-
-    @Transaction
-    @Query("DELETE FROM weather WHERE id IN (SELECT weatherId FROM city WHERE name = :cityName AND country = :cityCountry)")
-    suspend fun deleteOldWeather(
-        cityName: String,
-        cityCountry: String,
-    )
 }

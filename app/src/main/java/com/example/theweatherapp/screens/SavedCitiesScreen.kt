@@ -89,8 +89,10 @@ fun SavedCitiesScreen(
                         }
                         LazyColumn {
                             items(weatherModels) { weatherModel ->
-                                // Display each weatherModel
-                                CityCard(weatherModel.toShortWeatherOverview())
+                                CityCard(weatherModel.toShortWeatherOverview()) {
+                                    savedCitiesViewModel.onCitySelected(weatherModel.city!!)
+                                    navController.navigate(NavigationDestination.WeatherDetails.route)
+                                }
                             }
                         }
                     }

@@ -4,6 +4,7 @@ import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
 import com.example.theweatherapp.domain.mappers.toModel
+import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.city.CityModel
 import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.network.service.CityService
@@ -86,4 +87,8 @@ class CityRepositoryImpl
                     emit(Response.Failure(e))
                 }
             }
+
+        override suspend fun deleteCity(city: CityItemModel) {
+            cityDao.deleteCity(city.name!!, city.country!!)
+        }
     }

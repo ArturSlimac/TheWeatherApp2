@@ -95,6 +95,14 @@ class SavedCitiesViewModel
             }
         }
 
+        fun onDeleteCity() {
+            viewModelScope.launch {
+                selectedCity.value?.let {
+                    cityRepository.deleteCity(selectedCity.value!!)
+                }
+            }
+        }
+
         fun formatDate(date: Date?): String =
             if (date != null) {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
@@ -143,7 +151,7 @@ class SavedCitiesViewModel
             cities.forEach { city ->
                 weatherRepository
                     .getWeather(
-                        city = city,
+                        city = city.apply { this.isSaved = true },
                         windSpeedUnit = windSpeedUnit.unit,
                         timezone = "Europe/London",
                         temperatureUnit = temperatureUnit.unit,

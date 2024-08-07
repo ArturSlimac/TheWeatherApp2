@@ -11,6 +11,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -82,11 +83,20 @@ fun DetailScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {
-                        savedCitiesViewModel.onSaveCity()
-                        navController.popBackStack()
-                    }) {
-                        Icon(Icons.Outlined.Add, contentDescription = "Saves current city in the application")
+                    if (selectedCity!!.isSaved) {
+                        IconButton(onClick = {
+                            savedCitiesViewModel.onDeleteCity()
+                            navController.popBackStack()
+                        }) {
+                            Icon(Icons.Outlined.Delete, contentDescription = "Deletes current city from the list")
+                        }
+                    } else {
+                        IconButton(onClick = {
+                            savedCitiesViewModel.onSaveCity()
+                            navController.popBackStack()
+                        }) {
+                            Icon(Icons.Outlined.Add, contentDescription = "Saves current city in the application")
+                        }
                     }
                 },
             )

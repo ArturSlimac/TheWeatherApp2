@@ -14,4 +14,10 @@ interface CityDao {
 
     @Query("SELECT * FROM city")
     fun getAllCities(): Flow<List<CityItemEntity>>
+
+    @Query("DELETE FROM city WHERE name = :name AND country = :country")
+    suspend fun deleteCity(
+        name: String,
+        country: String,
+    )
 }

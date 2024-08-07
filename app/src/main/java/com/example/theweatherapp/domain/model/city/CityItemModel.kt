@@ -6,4 +6,5 @@ data class CityItemModel(
     val state: String?,
     val latitude: Double?,
     val longitude: Double?,
+    var isSaved: Boolean = false,
 )

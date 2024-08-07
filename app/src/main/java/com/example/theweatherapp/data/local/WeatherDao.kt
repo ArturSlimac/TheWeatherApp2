@@ -16,8 +16,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WeatherDao {
     @Transaction
-    @Query("SELECT * FROM weather LIMIT 1")
-    fun getAllWeather(): Flow<WeatherWithDetails?>
+    @Query("SELECT * FROM weather WHERE cityId IN (SELECT id FROM city WHERE name = :name AND country = :country)")
+    fun getCachedWeather(
+        name: String,
+        country: String,
+    ): Flow<WeatherWithDetails?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWeather(weather: WeatherEntity): Long

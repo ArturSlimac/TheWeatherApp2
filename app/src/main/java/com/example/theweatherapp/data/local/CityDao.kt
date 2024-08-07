@@ -13,5 +13,5 @@ interface CityDao {
     suspend fun insertCityItem(cityItem: CityItemEntity): Long
 
     @Query("SELECT * FROM city")
-    fun getAllCities(): Flow<CityItemEntity>
+    fun getAllCities(): Flow<List<CityItemEntity>>
 }

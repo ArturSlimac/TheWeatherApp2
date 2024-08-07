@@ -5,6 +5,7 @@ import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.helpers.CurrentTemperatureItem
 import com.example.theweatherapp.domain.model.helpers.CurrentWeatherItem
+import com.example.theweatherapp.domain.model.helpers.ShortWeatherOverview
 import com.example.theweatherapp.domain.model.helpers.TemperatureUiDetails
 import com.example.theweatherapp.domain.model.helpers.WeatherForecastItem
 import com.example.theweatherapp.domain.model.helpers.WeatherType
@@ -20,6 +21,7 @@ import com.example.theweatherapp.domain.model.weather.WeatherEntity
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Date
 
 fun WeatherModel.toEntity(cityId: Int): WeatherEntity =
     WeatherEntity(
@@ -150,8 +152,23 @@ fun WeatherModel.toCurrentWeatherItem(): CurrentWeatherItem {
     )
 }
 
+fun WeatherModel.toShortWeatherOverview(): ShortWeatherOverview {
+    val cityName = this.city?.name ?: ""
+    val temperature2m = this.current?.temperature_2m?.toInt() ?: 0
+    val temperature2mUnit = this.current_units?.temperature_2m ?: ""
+    val apparentTemperature = this.current?.apparent_temperature?.toInt() ?: 0
+    val apparentTemperatureUnit = this.current_units?.apparent_temperature ?: ""
+
+    return ShortWeatherOverview(
+        apparentTemperature = Pair(apparentTemperature, apparentTemperatureUnit),
+        temperature2m = Pair(temperature2m, temperature2mUnit),
+        cityName = cityName,
+    )
+}
+
 fun WeatherWithDetails.toWeatherModel(): WeatherModel =
     WeatherModel(
+        lastSync = Date(this.weather.createdAt),
         latitude = this.weather.latitude,
         longitude = this.weather.longitude,
         timezone = this.weather.timezone,
@@ -211,4 +228,13 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
                     temperature_2m = it.temperature_2m,
                 )
             },
+    )
+
+fun CityItemEntity.toModel() =
+    CityItemModel(
+        country = country,
+        name = name,
+        state = state,
+        latitude = latitude,
+        longitude = longitude,
     )

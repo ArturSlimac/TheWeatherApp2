@@ -1,6 +1,7 @@
 package com.example.theweatherapp.domain.model.weather
 
 import com.example.theweatherapp.domain.model.city.CityItemModel
+import java.util.Date
 
 data class WeatherModel(
     val current: CurrentModel?,
@@ -16,4 +17,5 @@ data class WeatherModel(
     val timezone_abbreviation: String?,
     val utc_offset_seconds: Int?,
     var cashed: Boolean = false,
+    val lastSync: Date?,
 )

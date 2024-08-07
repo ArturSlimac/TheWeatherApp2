@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,6 +48,10 @@ class SavedCitiesViewModel
         // Detail screen
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
+
+        init {
+            loadSavedCitiesWeather()
+        }
 
         suspend fun fetchWeather(city: CityItemModel) {
             val windSpeedUnit = settingsRepository.getWindSpeedUnit().first()
@@ -88,6 +95,14 @@ class SavedCitiesViewModel
             }
         }
 
+        fun formatDate(date: Date?): String =
+            if (date != null) {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                dateFormat.format(date)
+            } else {
+                "Unknown"
+            }
+
         private fun searchCitiesByName(name: String) {
             viewModelScope.launch {
                 _foundCitiesState.value = Response.Loading
@@ -97,5 +112,56 @@ class SavedCitiesViewModel
                     }
                 }
             }
+        }
+
+        private fun loadSavedCitiesWeather() {
+            viewModelScope.launch {
+                try {
+                    cityRepository.getAllSavedCities().collect { response ->
+                        when (response) {
+                            is Response.Success -> {
+                                val cities = response.data ?: emptyList()
+                                fetchWeatherForCities(cities)
+                            }
+                            is Response.Failure -> {
+                                _savedCitiesWeatherState.value = Response.Failure(response.e)
+                            }
+                            else -> {}
+                        }
+                    }
+                } catch (e: Exception) {
+                    _savedCitiesWeatherState.value = Response.Failure(e)
+                }
+            }
+        }
+
+        private suspend fun fetchWeatherForCities(cities: List<CityItemModel>) {
+            val windSpeedUnit = settingsRepository.getWindSpeedUnit().first()
+            val temperatureUnit = settingsRepository.getTemperatureUnit().first()
+
+            val weatherModels = mutableListOf<WeatherModel>()
+            cities.forEach { city ->
+                weatherRepository
+                    .getWeather(
+                        city = city,
+                        windSpeedUnit = windSpeedUnit.unit,
+                        timezone = "Europe/London",
+                        temperatureUnit = temperatureUnit.unit,
+                    ).collect { response ->
+                        when (response) {
+                            is Response.Success -> {
+                                response.data?.let { weatherModel ->
+                                    weatherModels.add(weatherModel)
+                                    weatherRepository.saveWeather(weatherModel)
+                                }
+                            }
+                            is Response.Failure -> {
+                                // Handle failure for specific city if needed
+                            }
+                            else -> {}
+                        }
+                    }
+            }
+            _savedCitiesWeatherState.value = Response.Success(weatherModels)
         }
     }

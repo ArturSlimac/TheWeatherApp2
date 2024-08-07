@@ -3,12 +3,15 @@ package com.example.theweatherapp.data.repository
 import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
+import com.example.theweatherapp.domain.mappers.toModel
 import com.example.theweatherapp.domain.model.city.CityModel
 import com.example.theweatherapp.domain.repository.CityRepository
 import com.example.theweatherapp.network.service.CityService
 import com.example.theweatherapp.utils.Response
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -66,17 +69,21 @@ class CityRepositoryImpl
                 }
             }
 
-       /* override fun getAllSavedCities(): Flow<Response<CityModel>> =
+        override fun getAllSavedCities(): Flow<Response<CityModel>> =
             flow {
-                emit(Response.Loading) // Emit loading state
                 try {
-                    cityDao
-                        .getAllCities()
-                        .collect { cityModel ->
-                            emit(Response.Success(cityModel))
+                    emit(Response.Loading)
+                    val cityEntities = cityDao.getAllCities().first()
+                    val cityModel =
+                        CityModel().apply {
+                            addAll(
+                                cityEntities.map { it.toModel() },
+                            )
                         }
+
+                    emit(Response.Success(cityModel))
                 } catch (e: Exception) {
                     emit(Response.Failure(e))
                 }
-            }*/
+            }
     }

@@ -68,7 +68,7 @@ class WeatherRepositoryImpl
                     emit(Response.Success(responseApi))
                 } catch (e: Exception) {
                     handleException(e)
-                    emitCachedWeatherIfAvailable()
+                    emitCachedWeatherIfAvailable(city)
                 }
             }.flowOn(Dispatchers.IO)
 
@@ -145,12 +145,16 @@ class WeatherRepositoryImpl
             }
         }
 
-        private suspend fun FlowCollector<Response<WeatherModel>>.emitCachedWeatherIfAvailable() {
-            val cachedWeather = getCachedWeather()
+        private suspend fun FlowCollector<Response<WeatherModel>>.emitCachedWeatherIfAvailable(city: CityItemModel?) {
+            if (city == null) {
+                return
+            }
+            val cachedWeather = getCachedWeather(city)
             if (cachedWeather != null) {
                 emit(Response.Success(cachedWeather.apply { this.cashed = true }))
             }
         }
 
-        private suspend fun getCachedWeather(): WeatherModel? = weatherDao.getAllWeather().firstOrNull()?.toWeatherModel()
+        private suspend fun getCachedWeather(city: CityItemModel): WeatherModel? =
+            weatherDao.getCachedWeather(city.name!!, city.country!!).firstOrNull()?.toWeatherModel()
     }

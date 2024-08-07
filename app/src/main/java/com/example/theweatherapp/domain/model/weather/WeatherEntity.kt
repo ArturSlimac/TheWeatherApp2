@@ -29,4 +29,5 @@ data class WeatherEntity(
     val utcOffsetSeconds: Int?,
     val elevation: Int?,
     val generationTimeMs: Double?,
+    val createdAt: Long = System.currentTimeMillis(),
 )

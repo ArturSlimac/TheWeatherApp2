@@ -12,56 +12,70 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.theweatherapp.domain.model.weather.WeatherModel
+import com.example.theweatherapp.domain.model.helpers.ShortWeatherOverview
+import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
 @Composable
-fun CityCard(weatherModel: WeatherModel) {
+fun CityCard(overview: ShortWeatherOverview) {
     Card(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 16.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
             ),
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Column(modifier = Modifier.weight(2f).padding(8.dp)) {
+            Column(modifier = Modifier.weight(2f)) {
                 Text(
-                    text = weatherModel.city!!.name!!,
-                    style = MaterialTheme.typography.headlineLarge,
+                    text = overview.cityName,
+                    style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
 
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
                         text = "feels like ",
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                     Text(
-                        text = "${weatherModel.current!!.temperature_2m}",
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = "${overview.apparentTemperature.first}",
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                 }
             }
             Column(
-                modifier = Modifier.weight(1f).padding(8.dp),
+                modifier = Modifier.weight(1f),
                 horizontalAlignment = Alignment.End,
             ) {
                 Text(
-                    "27",
-                    style = MaterialTheme.typography.displayLarge,
+                    text = "${overview.temperature2m.first}${overview.temperature2m.second}",
+                    style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun CityCardPreview() {
+    TheWeatherAppTheme {
+        CityCard(ShortWeatherOverview(
+            cityName = "Sint-Niklaas",
+            temperature2m = Pair(16,"C"),
+            apparentTemperature = Pair(17,"C")
+        ))
     }
 }

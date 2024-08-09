@@ -49,6 +49,8 @@ class SavedCitiesViewModel
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
 
+        var shouldFetchWeather = false
+
         init {
             loadSavedCitiesWeather()
         }
@@ -76,8 +78,18 @@ class SavedCitiesViewModel
             }
         }
 
-        fun onCitySelected(city: CityItemModel) {
+        fun onCitySelected(
+            city: CityItemModel,
+            weatherModel: WeatherModel,
+        ) {
             _selectedCity.value = city
+            _weatherState.value = Response.Success(weatherModel)
+            shouldFetchWeather = false
+        }
+
+        fun onSearchCitySelected(city: CityItemModel) {
+            _selectedCity.value = city
+            shouldFetchWeather = true
         }
 
         fun onToggleSearch() {

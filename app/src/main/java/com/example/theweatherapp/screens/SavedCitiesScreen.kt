@@ -1,5 +1,7 @@
 package com.example.theweatherapp.screens
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,8 +29,9 @@ import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SavedCitiesScreen(
+fun SharedTransitionScope.SavedCitiesScreen(
     savedCitiesViewModel: SavedCitiesViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
@@ -51,7 +54,7 @@ fun SavedCitiesScreen(
                 onToggleSearch = savedCitiesViewModel::onToggleSearch,
                 foundCitiesState = foundCitiesState,
                 onCitySelected = {
-                    savedCitiesViewModel.onCitySelected(it)
+                    savedCitiesViewModel.onSearchCitySelected(it)
                     navController.navigate(NavigationDestination.WeatherDetails.route)
                 },
             )
@@ -70,12 +73,11 @@ fun SavedCitiesScreen(
         Box(modifier = Modifier.fillMaxSize().padding(innerPadding).padding(top = 16.dp)) {
             when (savedCitiesWeatherState) {
                 is Response.Loading -> {
-                    // Show loading indicator
                     CircularIndicator()
                 }
                 is Response.Success -> {
                     val weatherModels = (savedCitiesWeatherState as Response.Success<List<WeatherModel>>).data
-                    // Display the list of cities with their weather data
+
                     weatherModels?.let {
                         if (weatherModels.firstOrNull()?.cashed == true) {
                             scope.launch {
@@ -90,7 +92,7 @@ fun SavedCitiesScreen(
                         LazyColumn {
                             items(weatherModels) { weatherModel ->
                                 CityCard(weatherModel.toShortWeatherOverview()) {
-                                    savedCitiesViewModel.onCitySelected(weatherModel.city!!)
+                                    savedCitiesViewModel.onCitySelected(weatherModel.city!!, weatherModel)
                                     navController.navigate(NavigationDestination.WeatherDetails.route)
                                 }
                             }

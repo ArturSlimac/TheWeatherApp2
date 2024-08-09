@@ -1,5 +1,7 @@
 package com.example.theweatherapp.screens
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,19 +43,20 @@ import com.example.theweatherapp.ui.components.WeatherForecastCarousel
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun DetailScreen(
+fun SharedTransitionScope.DetailScreen(
     navController: NavController,
     savedCitiesViewModel: SavedCitiesViewModel = hiltViewModel(),
 ) {
     val selectedCity by savedCitiesViewModel.selectedCity.collectAsState()
+    val weatherState by savedCitiesViewModel.weatherState
 
     LaunchedEffect(selectedCity) {
-        savedCitiesViewModel.fetchWeather(selectedCity!!)
+        if (savedCitiesViewModel.shouldFetchWeather) {
+            savedCitiesViewModel.fetchWeather(selectedCity!!)
+        }
     }
-
-    val weatherState by savedCitiesViewModel.weatherState
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

@@ -80,7 +80,7 @@ fun UserSettingsScreen(
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Wind Speed Unit", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text("Wind Speed Unit", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
                 Column {
                     settingsViewModel.windSpeedUnits.forEach { unit ->
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -112,7 +112,7 @@ fun UserSettingsScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Temperature Unit Setting
-                Text("Temperature Unit", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text("Temperature Unit", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
                 Column {
                     settingsViewModel.temperatureUnits.forEach { unit ->
                         Row(verticalAlignment = Alignment.CenterVertically) {

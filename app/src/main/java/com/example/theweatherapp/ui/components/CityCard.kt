@@ -53,7 +53,7 @@ fun CityCard(
                         color = MaterialTheme.colorScheme.tertiary,
                     )
                     Text(
-                        text = "${overview.apparentTemperature.first}",
+                        text = "${overview.apparentTemperature.first}°",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                     )

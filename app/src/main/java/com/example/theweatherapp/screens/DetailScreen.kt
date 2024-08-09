@@ -1,7 +1,9 @@
 package com.example.theweatherapp.screens
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -46,8 +46,10 @@ import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.DetailScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     navController: NavController,
     savedCitiesViewModel: SavedCitiesViewModel = hiltViewModel(),
+    key: Int,
 ) {
     val selectedCity by savedCitiesViewModel.selectedCity.collectAsState()
     val weatherState by savedCitiesViewModel.weatherState
@@ -75,9 +77,15 @@ fun SharedTransitionScope.DetailScreen(
                 title = {
                     Text(
                         text = selectedCity!!.name!!,
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         textAlign = TextAlign.Center,
+                        modifier =
+                            Modifier.sharedElement(
+                                state = rememberSharedContentState(key = "city/${selectedCity!!.name!!}/$key"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                            ),
                     )
                 },
                 navigationIcon = {
@@ -116,7 +124,11 @@ fun SharedTransitionScope.DetailScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         item {
-                            CurrentTemperatureCard(weatherModel!!.toCurrentTemperatureItem())
+                            CurrentTemperatureCard(
+                                currentTemperatureItem = weatherModel!!.toCurrentTemperatureItem(),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                key = key,
+                            )
                         }
                         item {
                             CurrentWeatherDetailsCard(weatherModel!!.toCurrentWeatherItem())

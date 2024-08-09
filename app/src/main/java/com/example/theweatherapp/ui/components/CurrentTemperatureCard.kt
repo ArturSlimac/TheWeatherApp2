@@ -1,5 +1,8 @@
 package com.example.theweatherapp.ui.components
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -30,11 +33,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.theweatherapp.domain.model.helpers.CurrentTemperatureItem
-import com.example.theweatherapp.domain.model.helpers.TemperatureUiDetails
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun CurrentTemperatureCard(currentTemperatureItem: CurrentTemperatureItem) {
+fun SharedTransitionScope.CurrentTemperatureCard(
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    currentTemperatureItem: CurrentTemperatureItem,
+    key: Int,
+) {
     val temperatureDescription = stringResource(id = currentTemperatureItem.temperatureUiDetails.tempDescription)
     val gradientOffset = remember { Animatable(0f) }
 
@@ -65,7 +72,12 @@ fun CurrentTemperatureCard(currentTemperatureItem: CurrentTemperatureItem) {
                 .fillMaxWidth()
                 .aspectRatio(1f)
                 .padding(16.dp)
-                .background(brush = animatedGradient, shape = RoundedCornerShape(12.dp)),
+                .background(brush = animatedGradient, shape = RoundedCornerShape(12.dp))
+                .sharedElement(
+                    state = rememberSharedContentState(key = "temp_card/$key"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                ),
         colors =
             CardDefaults.cardColors(
                 containerColor = Color.Transparent,
@@ -80,17 +92,23 @@ fun CurrentTemperatureCard(currentTemperatureItem: CurrentTemperatureItem) {
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
                 textAlign = TextAlign.End,
-                modifier = Modifier.padding(32.dp),
+                modifier = Modifier.padding(start = 32.dp, top = 32.dp, end = 32.dp),
             )
 
             Column(
-                modifier = Modifier.padding(32.dp),
+                modifier = Modifier.padding(start = 32.dp, bottom = 32.dp, end = 32.dp),
             ) {
                 Text(
                     text = "${currentTemperatureItem.temperature2m.first}${currentTemperatureItem.temperature2m.second}",
                     style = MaterialTheme.typography.displayLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     textAlign = TextAlign.Start,
+                    modifier =
+                        Modifier.sharedElement(
+                            state = rememberSharedContentState(key = "temp_2m/${currentTemperatureItem.temperature2m.first}/$key"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                        ),
                 )
 
                 Row(verticalAlignment = Alignment.Bottom) {
@@ -99,12 +117,24 @@ fun CurrentTemperatureCard(currentTemperatureItem: CurrentTemperatureItem) {
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.tertiary,
                         textAlign = TextAlign.Start,
+                        modifier =
+                            Modifier.sharedElement(
+                                state = rememberSharedContentState(key = "feels_like/$key"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                            ),
                     )
                     Text(
                         text = "${currentTemperatureItem.apparentTemperature.first}°",
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         textAlign = TextAlign.Start,
+                        modifier =
+                            Modifier.sharedElement(
+                                state = rememberSharedContentState(key = "feels_like/temp/$key"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                            ),
                     )
                 }
             }
@@ -116,9 +146,12 @@ fun CurrentTemperatureCard(currentTemperatureItem: CurrentTemperatureItem) {
 @Preview
 fun CurrentTemperatureCardPreview() {
     TheWeatherAppTheme {
-        CurrentTemperatureCard(
+        /*CurrentTemperatureCard(
             CurrentTemperatureItem(
-            Pair(32, "C"), Pair(31, "C"), TemperatureUiDetails.tempUiDetails(32))
-            )
+                Pair(32, "C"),
+                Pair(31, "C"),
+                TemperatureUiDetails.tempUiDetails(32),
+            ),
+        )*/
     }
 }

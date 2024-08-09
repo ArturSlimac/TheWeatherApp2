@@ -1,5 +1,9 @@
 package com.example.theweatherapp.ui.components
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,9 +22,12 @@ import androidx.compose.ui.unit.dp
 import com.example.theweatherapp.domain.model.helpers.ShortWeatherOverview
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun CityCard(
+fun SharedTransitionScope.CityCard(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     overview: ShortWeatherOverview,
+    key: Int,
     onClick: () -> Unit,
 ) {
     Card(
@@ -28,7 +35,11 @@ fun CityCard(
             Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                .clickable { onClick() },
+                .sharedElement(
+                    state = rememberSharedContentState(key = "temp_card/$key"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                ).clickable { onClick() },
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
@@ -44,6 +55,12 @@ fun CityCard(
                     text = overview.cityName,
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.onSurface,
+                    modifier =
+                        Modifier.sharedElement(
+                            state = rememberSharedContentState(key = "city/${overview.cityName}/$key"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                        ),
                 )
 
                 Row(verticalAlignment = Alignment.Bottom) {
@@ -51,11 +68,23 @@ fun CityCard(
                         text = "feels like ",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.tertiary,
+                        modifier =
+                            Modifier.sharedElement(
+                                state = rememberSharedContentState(key = "feels_like/$key"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                            ),
                     )
                     Text(
                         text = "${overview.apparentTemperature.first}°",
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
+                        modifier =
+                            Modifier.sharedElement(
+                                state = rememberSharedContentState(key = "feels_like/temp/$key"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                            ),
                     )
                 }
             }
@@ -67,6 +96,12 @@ fun CityCard(
                     text = "${overview.temperature2m.first}${overview.temperature2m.second}",
                     style = MaterialTheme.typography.displayMedium,
                     color = MaterialTheme.colorScheme.onSurface,
+                    modifier =
+                        Modifier.sharedElement(
+                            state = rememberSharedContentState(key = "temp_2m/${overview.temperature2m.first}/$key"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                        ),
                 )
             }
         }
@@ -77,12 +112,12 @@ fun CityCard(
 @Composable
 fun CityCardPreview() {
     TheWeatherAppTheme {
-        CityCard(
+        /*CityCard(
             ShortWeatherOverview(
                 cityName = "Sint-Niklaas",
                 temperature2m = Pair(16, "C"),
                 apparentTemperature = Pair(17, "C"),
             ),
-        ) {}
+        ) {}*/
     }
 }

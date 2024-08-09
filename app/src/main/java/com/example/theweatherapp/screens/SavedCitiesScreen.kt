@@ -1,12 +1,13 @@
 package com.example.theweatherapp.screens
 
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -32,6 +33,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.SavedCitiesScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     savedCitiesViewModel: SavedCitiesViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
@@ -90,10 +92,14 @@ fun SharedTransitionScope.SavedCitiesScreen(
                             }
                         }
                         LazyColumn {
-                            items(weatherModels) { weatherModel ->
-                                CityCard(weatherModel.toShortWeatherOverview()) {
+                            itemsIndexed(weatherModels) { key, weatherModel ->
+                                CityCard(
+                                    overview = weatherModel.toShortWeatherOverview(),
+                                    animatedVisibilityScope = animatedVisibilityScope,
+                                    key = key,
+                                ) {
                                     savedCitiesViewModel.onCitySelected(weatherModel.city!!, weatherModel)
-                                    navController.navigate(NavigationDestination.WeatherDetails.route)
+                                    navController.navigate("${NavigationDestination.WeatherDetails.route}/$key")
                                 }
                             }
                         }

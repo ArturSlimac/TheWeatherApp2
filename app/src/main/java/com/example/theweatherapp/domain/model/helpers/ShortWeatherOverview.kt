@@ -4,4 +4,5 @@ data class ShortWeatherOverview(
     val cityName: String,
     val temperature2m: Pair<Int, String>,
     val apparentTemperature: Pair<Int, String>,
+    val temperatureUiDetails: TemperatureUiDetails,
 )

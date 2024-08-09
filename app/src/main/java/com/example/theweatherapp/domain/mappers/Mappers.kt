@@ -158,11 +158,13 @@ fun WeatherModel.toShortWeatherOverview(): ShortWeatherOverview {
     val temperature2mUnit = this.current_units?.temperature_2m ?: ""
     val apparentTemperature = this.current?.apparent_temperature?.toInt() ?: 0
     val apparentTemperatureUnit = this.current_units?.apparent_temperature ?: ""
+    val tempDetails = TemperatureUiDetails.tempUiDetails(temperature2m)
 
     return ShortWeatherOverview(
         apparentTemperature = Pair(apparentTemperature, apparentTemperatureUnit),
         temperature2m = Pair(temperature2m, temperature2mUnit),
         cityName = cityName,
+        temperatureUiDetails = tempDetails,
     )
 }
 

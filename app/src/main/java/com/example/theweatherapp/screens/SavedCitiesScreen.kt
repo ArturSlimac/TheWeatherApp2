@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -44,6 +46,7 @@ fun SharedTransitionScope.SavedCitiesScreen(
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
+    val listState = rememberLazyListState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -93,7 +96,11 @@ fun SharedTransitionScope.SavedCitiesScreen(
                                     )
                             }
                         }
-                        LazyColumn {
+                        LaunchedEffect(weatherModels.size) {
+                            listState.animateScrollToItem(weatherModels.size - 1)
+                        }
+
+                        LazyColumn(state = listState) {
                             items(weatherModels) { weatherModel ->
                                 CityCard(
                                     overview = weatherModel.toShortWeatherOverview(),

@@ -1,5 +1,6 @@
 package com.example.theweatherapp.ui.components
 
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,13 +19,17 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 @Composable
 fun WeatherForecastCarousel(items: List<WeatherForecastItem>) {
     Card(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .aspectRatio(2f)
+                .padding(horizontal = 16.dp),
         colors =
             CardDefaults.cardColors(
                 containerColor = Color.Transparent,
             ),
     ) {
-        LazyRow() {
+        LazyRow {
             items(items) { item ->
                 WeatherForecastCard(
                     temperature = item.temperature,

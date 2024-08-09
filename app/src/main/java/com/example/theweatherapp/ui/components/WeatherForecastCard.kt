@@ -40,14 +40,16 @@ fun WeatherForecastCard(
         ) {
             Text(text = time.first,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.tertiary,)
+                color = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier.weight(2f)
+            )
             Icon(painterResource(weatherIcon), contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.height(124.dp))
+                modifier = Modifier.weight(5f))
             Text(text = "${temperature.first}°",
                 style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onSurface,
-
+                modifier = Modifier.weight(2f)
                 )
         }
     }

@@ -3,9 +3,11 @@ package com.example.theweatherapp.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -29,7 +31,9 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp).padding(bottom = 16.dp),
+                .aspectRatio( 2f)
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp),
         colors =
             CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
@@ -46,10 +50,11 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                 Icon(
                     painterResource(currentWeatherItem.weatherType.dayWeatherIcon),
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
+                    //modifier = Modifier.width(100.dp)
                 )
                 Text(
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center,
                     text =
@@ -60,9 +65,9 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
             }
 
             Column(
-                modifier = Modifier.weight(2f).padding(8.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.End
+                modifier = Modifier.weight(2f).fillMaxHeight().padding(8.dp),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.End,
             ) {
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
@@ -111,12 +116,11 @@ fun CurrentWeatherDetailsCardPreview() {
     TheWeatherAppTheme {
         CurrentWeatherDetailsCard(
             CurrentWeatherItem(
-
-            Pair(555.0, "ddd"),
-            Pair(44.0, "%"),
-            Pair(5.0, "m/s"),
-            WeatherType.fromWmoStandard(3),
-            )
+                Pair(555.0, "ddd"),
+                Pair(44.0, "%"),
+                Pair(5.0, "m/s"),
+                WeatherType.fromWmoStandard(3),
+            ),
         )
     }
 }

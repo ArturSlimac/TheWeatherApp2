@@ -47,6 +47,9 @@ class SavedCitiesViewModel
         private val _savedCitiesWeatherState = mutableStateOf<Response<List<WeatherModel>>>(Response.Loading)
         val savedCitiesWeatherState: State<Response<List<WeatherModel>>> = _savedCitiesWeatherState
 
+        private val _isScrolledToEnd = MutableStateFlow(false)
+        val isScrolledToEnd: StateFlow<Boolean> = _isScrolledToEnd
+
         // Detail screen
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
@@ -113,6 +116,7 @@ class SavedCitiesViewModel
 
         fun onSaveCity() {
             val weatherModel = (weatherState.value as? Response.Success<WeatherModel>)?.data
+            _isScrolledToEnd.value = true
             viewModelScope.launch {
                 weatherModel?.let {
                     weatherRepository.saveWeather(it)
@@ -144,6 +148,10 @@ class SavedCitiesViewModel
             } else {
                 "Unknown"
             }
+
+        fun setScrolledToEnd(value: Boolean) {
+            _isScrolledToEnd.value = value
+        }
 
         private fun searchCitiesByName(name: String) {
             viewModelScope.launch {

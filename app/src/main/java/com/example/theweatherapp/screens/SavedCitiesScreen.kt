@@ -7,13 +7,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -43,10 +44,18 @@ fun SharedTransitionScope.SavedCitiesScreen(
     val isSearchingState by savedCitiesViewModel.isSearching
     val searchText by savedCitiesViewModel.searchText
     val savedCitiesWeatherState by savedCitiesViewModel.savedCitiesWeatherState
+    val isScrolledToEnd by savedCitiesViewModel.isScrolledToEnd.collectAsState()
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val listState = rememberLazyListState()
+
+    LaunchedEffect(savedCitiesWeatherState) {
+        if (isScrolledToEnd) {
+            listState.animateScrollToItem((savedCitiesWeatherState as? Response.Success<List<WeatherModel>>)?.data?.size?.minus(1) ?: 0)
+            savedCitiesViewModel.setScrolledToEnd(false)
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -96,12 +105,9 @@ fun SharedTransitionScope.SavedCitiesScreen(
                                     )
                             }
                         }
-                        LaunchedEffect(weatherModels.size) {
-                            listState.animateScrollToItem(weatherModels.size - 1)
-                        }
 
                         LazyColumn(state = listState) {
-                            items(weatherModels) { weatherModel ->
+                            itemsIndexed(weatherModels) { index, weatherModel ->
                                 CityCard(
                                     overview = weatherModel.toShortWeatherOverview(),
                                     animatedVisibilityScope = animatedVisibilityScope,

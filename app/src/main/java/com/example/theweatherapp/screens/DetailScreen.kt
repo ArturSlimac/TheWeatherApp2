@@ -27,6 +27,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,6 +58,7 @@ fun SharedTransitionScope.DetailScreen(
     val selectedCity by savedCitiesViewModel.selectedCity.collectAsState()
     val weatherState by savedCitiesViewModel.weatherState
     val scope = rememberCoroutineScope()
+    val isScrolledToEnd = remember { mutableStateOf(false) }
 
     LaunchedEffect(selectedCity) {
         if (savedCitiesViewModel.shouldFetchWeather) {
@@ -112,6 +115,7 @@ fun SharedTransitionScope.DetailScreen(
                     } else {
                         IconButton(onClick = {
                             scope.launch {
+                                isScrolledToEnd.value = true
                                 savedCitiesViewModel.onToggleSearch()
                                 savedCitiesViewModel.onSaveCity()
                                 navController.popBackStack()

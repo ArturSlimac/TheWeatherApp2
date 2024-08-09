@@ -6,10 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.theweatherapp.screens.DetailScreen
 import com.example.theweatherapp.screens.LocalWeatherScreen
 import com.example.theweatherapp.screens.SavedCitiesScreen
@@ -36,13 +34,7 @@ fun AppNavHost(navController: NavHostController) {
             }
 
             composable(
-                route = "${NavigationDestination.WeatherDetails.route}/{key}",
-                arguments =
-                    listOf(
-                        navArgument("key") {
-                            type = NavType.IntType
-                        },
-                    ),
+                route = NavigationDestination.WeatherDetails.route,
             ) { backStackEntry ->
 
                 val parentEntry =
@@ -50,12 +42,10 @@ fun AppNavHost(navController: NavHostController) {
                         navController.getBackStackEntry(NavigationDestination.SavedCities.route)
                     }
                 val parentViewModel = hiltViewModel<SavedCitiesViewModel>(parentEntry)
-                val key = backStackEntry.arguments?.getInt("key") ?: 0
                 DetailScreen(
                     navController = navController,
                     savedCitiesViewModel = parentViewModel,
                     animatedVisibilityScope = this,
-                    key = key,
                 )
             }
         }

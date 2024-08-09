@@ -1,5 +1,6 @@
 package com.example.theweatherapp.ui.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,7 @@ import com.example.theweatherapp.domain.model.city.CityModel
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 import com.example.theweatherapp.utils.Response
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun TopSearchBar(
     searchText: String,
@@ -126,7 +127,7 @@ fun TopSearchBar(
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(cities) { city ->
                             FoundListItem(
-                                city,
+                                item = city,
                             ) {
                                 onCitySelected(city)
                             }

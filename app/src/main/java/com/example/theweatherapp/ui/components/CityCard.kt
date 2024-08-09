@@ -27,9 +27,10 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 fun SharedTransitionScope.CityCard(
     animatedVisibilityScope: AnimatedVisibilityScope,
     overview: ShortWeatherOverview,
-    key: Int,
     onClick: () -> Unit,
 ) {
+    val key = overview.cityName
+
     Card(
         modifier =
             Modifier

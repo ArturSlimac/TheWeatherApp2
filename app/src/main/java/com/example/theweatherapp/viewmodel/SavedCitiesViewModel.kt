@@ -12,10 +12,12 @@ import com.example.theweatherapp.domain.repository.SettingsRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
 import com.example.theweatherapp.utils.Response
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -87,9 +89,18 @@ class SavedCitiesViewModel
             shouldFetchWeather = false
         }
 
-        fun onSearchCitySelected(city: CityItemModel) {
-            _selectedCity.value = city
-            shouldFetchWeather = true
+        suspend fun onSearchCitySelected(city: CityItemModel) {
+            viewModelScope.launch {
+                _selectedCity.value = city
+                val isSaved =
+                    withContext(Dispatchers.IO) {
+                        cityRepository.isCitySaved(city)
+                    }
+                if (isSaved) {
+                    city.apply { this.isSaved = true }
+                }
+                shouldFetchWeather = true
+            }
         }
 
         fun onToggleSearch() {
@@ -103,7 +114,17 @@ class SavedCitiesViewModel
         fun onSaveCity() {
             val weatherModel = (weatherState.value as? Response.Success<WeatherModel>)?.data
             viewModelScope.launch {
-                weatherModel?.let { weatherRepository.saveWeather(it) }
+                weatherModel?.let {
+                    weatherRepository.saveWeather(it)
+                    if (weatherModel.city?.isSaved == true) {
+                        return@launch
+                    }
+                    weatherModel.city.apply { this?.isSaved = true }
+                    val currentWeatherModels =
+                        (_savedCitiesWeatherState.value as? Response.Success<List<WeatherModel>>)?.data?.toMutableList() ?: mutableListOf()
+                    currentWeatherModels.add(it)
+                    _savedCitiesWeatherState.value = Response.Success(currentWeatherModels)
+                }
             }
         }
 
@@ -112,6 +133,7 @@ class SavedCitiesViewModel
                 selectedCity.value?.let {
                     cityRepository.deleteCity(selectedCity.value!!)
                 }
+                loadSavedCitiesWeather()
             }
         }
 

@@ -40,7 +40,7 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 fun SharedTransitionScope.CurrentTemperatureCard(
     animatedVisibilityScope: AnimatedVisibilityScope,
     currentTemperatureItem: CurrentTemperatureItem,
-    key: Int,
+    key: String,
 ) {
     val temperatureDescription = stringResource(id = currentTemperatureItem.temperatureUiDetails.tempDescription)
     val gradientOffset = remember { Animatable(0f) }

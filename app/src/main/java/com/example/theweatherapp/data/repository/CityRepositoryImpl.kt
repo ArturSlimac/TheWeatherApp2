@@ -91,4 +91,6 @@ class CityRepositoryImpl
         override suspend fun deleteCity(city: CityItemModel) {
             cityDao.deleteCity(city.name!!, city.country!!)
         }
+
+        override suspend fun isCitySaved(city: CityItemModel): Boolean = cityDao.isCitySaved(city.name!!, city.country!!)
     }

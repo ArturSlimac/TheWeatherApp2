@@ -20,4 +20,10 @@ interface CityDao {
         name: String,
         country: String,
     )
+
+    @Query("SELECT EXISTS(SELECT 1 FROM city WHERE name = :name AND country = :country LIMIT 1)")
+    fun isCitySaved(
+        name: String,
+        country: String,
+    ): Boolean
 }

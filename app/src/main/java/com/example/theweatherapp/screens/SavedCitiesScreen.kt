@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -56,8 +56,10 @@ fun SharedTransitionScope.SavedCitiesScreen(
                 onToggleSearch = savedCitiesViewModel::onToggleSearch,
                 foundCitiesState = foundCitiesState,
                 onCitySelected = {
-                    savedCitiesViewModel.onSearchCitySelected(it)
-                    navController.navigate(NavigationDestination.WeatherDetails.route)
+                    scope.launch {
+                        savedCitiesViewModel.onSearchCitySelected(it)
+                        navController.navigate(NavigationDestination.WeatherDetails.route)
+                    }
                 },
             )
         },
@@ -92,14 +94,13 @@ fun SharedTransitionScope.SavedCitiesScreen(
                             }
                         }
                         LazyColumn {
-                            itemsIndexed(weatherModels) { key, weatherModel ->
+                            items(weatherModels) { weatherModel ->
                                 CityCard(
                                     overview = weatherModel.toShortWeatherOverview(),
                                     animatedVisibilityScope = animatedVisibilityScope,
-                                    key = key,
                                 ) {
                                     savedCitiesViewModel.onCitySelected(weatherModel.city!!, weatherModel)
-                                    navController.navigate("${NavigationDestination.WeatherDetails.route}/$key")
+                                    navController.navigate(NavigationDestination.WeatherDetails.route)
                                 }
                             }
                         }

@@ -1,5 +1,7 @@
 package com.example.theweatherapp.ui.components
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
@@ -14,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.theweatherapp.domain.model.city.CityItemModel
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun FoundListItem(
     item: CityItemModel,
@@ -38,6 +40,7 @@ fun FoundListItem(
             Text(
                 text = "${item.name}, ${item.country}",
                 style = MaterialTheme.typography.bodyLarge,
+
             )
         },
         leadingContent = {
@@ -52,7 +55,7 @@ fun FoundListItem(
 @Preview
 @Composable
 fun FoundListItemPreview() {
-    FoundListItem(
+ /*   FoundListItem(
         CityItemModel(
             "BE",
             "Sint-Niklaas",
@@ -61,5 +64,5 @@ fun FoundListItemPreview() {
             state = null,
         ),
         {},
-    )
+    )*/
 }

@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +43,8 @@ import com.example.theweatherapp.ui.components.CurrentWeatherDetailsCard
 import com.example.theweatherapp.ui.components.WeatherForecastCarousel
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
@@ -49,16 +52,18 @@ fun SharedTransitionScope.DetailScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     navController: NavController,
     savedCitiesViewModel: SavedCitiesViewModel = hiltViewModel(),
-    key: Int,
 ) {
     val selectedCity by savedCitiesViewModel.selectedCity.collectAsState()
     val weatherState by savedCitiesViewModel.weatherState
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(selectedCity) {
         if (savedCitiesViewModel.shouldFetchWeather) {
             savedCitiesViewModel.fetchWeather(selectedCity!!)
         }
     }
+
+    val key = selectedCity!!.name!!
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -96,16 +101,21 @@ fun SharedTransitionScope.DetailScreen(
                 actions = {
                     if (selectedCity!!.isSaved) {
                         IconButton(onClick = {
-                            savedCitiesViewModel.onDeleteCity()
-                            navController.popBackStack()
+                            scope.launch {
+                                navController.popBackStack()
+                                delay(1100)
+                                savedCitiesViewModel.onDeleteCity()
+                            }
                         }) {
                             Icon(Icons.Outlined.Delete, contentDescription = "Deletes current city from the list")
                         }
                     } else {
                         IconButton(onClick = {
-                            savedCitiesViewModel.onSaveCity()
-                            savedCitiesViewModel.onToggleSearch()
-                            navController.popBackStack()
+                            scope.launch {
+                                savedCitiesViewModel.onToggleSearch()
+                                savedCitiesViewModel.onSaveCity()
+                                navController.popBackStack()
+                            }
                         }) {
                             Icon(Icons.Outlined.Add, contentDescription = "Saves current city in the application")
                         }

@@ -16,4 +16,6 @@ interface CityRepository {
     fun getAllSavedCities(): Flow<Response<CityModel>>
 
     suspend fun deleteCity(city: CityItemModel)
+
+    suspend fun isCitySaved(city: CityItemModel): Boolean
 }

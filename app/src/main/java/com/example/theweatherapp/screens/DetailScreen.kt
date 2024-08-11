@@ -20,6 +20,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
@@ -40,6 +42,8 @@ import com.example.theweatherapp.domain.mappers.toCurrentTemperatureItem
 import com.example.theweatherapp.domain.mappers.toCurrentWeatherItem
 import com.example.theweatherapp.domain.mappers.toWeatherForecastItems
 import com.example.theweatherapp.domain.model.weather.WeatherModel
+import com.example.theweatherapp.ui.components.AbsolutErrorBox
+import com.example.theweatherapp.ui.components.CircularIndicator
 import com.example.theweatherapp.ui.components.weather_cards.CurrentTemperatureCard
 import com.example.theweatherapp.ui.components.weather_cards.CurrentWeatherDetailsCard
 import com.example.theweatherapp.ui.components.weather_cards.WeatherForecastCarousel
@@ -59,6 +63,7 @@ fun SharedTransitionScope.DetailScreen(
     val weatherState by savedCitiesViewModel.weatherState
     val scope = rememberCoroutineScope()
     val isScrolledToEnd = remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(selectedCity) {
         if (savedCitiesViewModel.shouldFetchWeather) {
@@ -70,6 +75,7 @@ fun SharedTransitionScope.DetailScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
                 modifier = Modifier.fillMaxWidth(),
@@ -130,6 +136,8 @@ fun SharedTransitionScope.DetailScreen(
         },
     ) { innerPadding ->
         when (weatherState) {
+            is Response.Loading ->
+                CircularIndicator()
             is Response.Success -> {
                 val weatherModel = (weatherState as Response.Success<WeatherModel>).data
                 Box(modifier = Modifier.padding(innerPadding)) {
@@ -155,7 +163,10 @@ fun SharedTransitionScope.DetailScreen(
                 }
             }
 
-            else -> {}
+            is Response.Failure -> {
+                val errorMessage = (weatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
+                AbsolutErrorBox(snackbarHostState, errorMessage)
+            }
         }
     }
 }

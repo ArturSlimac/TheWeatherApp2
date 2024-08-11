@@ -18,9 +18,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -140,14 +137,6 @@ class SavedCitiesViewModel
                 loadSavedCitiesWeather()
             }
         }
-
-        fun formatDate(date: Date?): String =
-            if (date != null) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                dateFormat.format(date)
-            } else {
-                "Unknown"
-            }
 
         fun setScrolledToEnd(value: Boolean) {
             _isScrolledToEnd.value = value

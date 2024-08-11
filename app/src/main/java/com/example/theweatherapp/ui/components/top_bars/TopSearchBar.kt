@@ -1,4 +1,4 @@
-package com.example.theweatherapp.ui.components
+package com.example.theweatherapp.ui.components.top_bars
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Box
@@ -25,6 +25,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.city.CityModel
+import com.example.theweatherapp.ui.components.CircularIndicator
+import com.example.theweatherapp.ui.components.FoundListItem
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 import com.example.theweatherapp.utils.Response
 

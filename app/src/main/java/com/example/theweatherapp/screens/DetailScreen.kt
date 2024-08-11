@@ -40,9 +40,9 @@ import com.example.theweatherapp.domain.mappers.toCurrentTemperatureItem
 import com.example.theweatherapp.domain.mappers.toCurrentWeatherItem
 import com.example.theweatherapp.domain.mappers.toWeatherForecastItems
 import com.example.theweatherapp.domain.model.weather.WeatherModel
-import com.example.theweatherapp.ui.components.CurrentTemperatureCard
-import com.example.theweatherapp.ui.components.CurrentWeatherDetailsCard
-import com.example.theweatherapp.ui.components.WeatherForecastCarousel
+import com.example.theweatherapp.ui.components.weather_cards.CurrentTemperatureCard
+import com.example.theweatherapp.ui.components.weather_cards.CurrentWeatherDetailsCard
+import com.example.theweatherapp.ui.components.weather_cards.WeatherForecastCarousel
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
 import kotlinx.coroutines.delay
@@ -107,6 +107,7 @@ fun SharedTransitionScope.DetailScreen(
                             scope.launch {
                                 navController.popBackStack()
                                 delay(1100)
+
                                 savedCitiesViewModel.onDeleteCity()
                             }
                         }) {

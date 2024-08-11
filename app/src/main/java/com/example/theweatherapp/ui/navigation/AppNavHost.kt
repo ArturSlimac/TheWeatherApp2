@@ -18,7 +18,7 @@ import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
 @Composable
 fun AppNavHost(navController: NavHostController) {
     SharedTransitionLayout {
-        NavHost(navController = navController, startDestination = NavigationDestination.SavedCities.route) {
+        NavHost(navController = navController, startDestination = NavigationDestination.LocalWeather.route) {
             composable(NavigationDestination.LocalWeather.route) {
                 LocalWeatherScreen(navController = navController)
             }

@@ -1,4 +1,4 @@
-package com.example.theweatherapp.ui.components
+package com.example.theweatherapp.ui.components.weather_cards
 
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -38,9 +38,9 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.CurrentTemperatureCard(
-    animatedVisibilityScope: AnimatedVisibilityScope,
+    animatedVisibilityScope: AnimatedVisibilityScope? = null,
     currentTemperatureItem: CurrentTemperatureItem,
-    key: String,
+    key: String? = null,
 ) {
     val temperatureDescription = stringResource(id = currentTemperatureItem.temperatureUiDetails.tempDescription)
     val gradientOffset = remember { Animatable(0f) }
@@ -73,11 +73,18 @@ fun SharedTransitionScope.CurrentTemperatureCard(
                 .aspectRatio(1f)
                 .padding(16.dp)
                 .background(brush = animatedGradient, shape = RoundedCornerShape(12.dp))
-                .sharedElement(
-                    state = rememberSharedContentState(key = "temp_card/$key"),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    boundsTransform = { _, _ -> tween(durationMillis = 1000) },
-                ),
+                .let {
+                    if (animatedVisibilityScope != null) {
+                        it
+                            .sharedElement(
+                                state = rememberSharedContentState(key = "temp_card/$key"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                            )
+                    } else {
+                        it
+                    }
+                },
         colors =
             CardDefaults.cardColors(
                 containerColor = Color.Transparent,
@@ -104,11 +111,22 @@ fun SharedTransitionScope.CurrentTemperatureCard(
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     textAlign = TextAlign.Start,
                     modifier =
-                        Modifier.sharedElement(
-                            state = rememberSharedContentState(key = "temp_2m/${currentTemperatureItem.temperature2m.first}/$key"),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            boundsTransform = { _, _ -> tween(durationMillis = 1000) },
-                        ),
+                        Modifier
+                            .let {
+                                if (animatedVisibilityScope != null) {
+                                    it
+                                        .sharedElement(
+                                            state =
+                                                rememberSharedContentState(
+                                                    key = "temp_2m/${currentTemperatureItem.temperature2m.first}/$key",
+                                                ),
+                                            animatedVisibilityScope = animatedVisibilityScope,
+                                            boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                                        )
+                                } else {
+                                    it
+                                }
+                            },
                 )
 
                 Row(verticalAlignment = Alignment.Bottom) {
@@ -118,11 +136,19 @@ fun SharedTransitionScope.CurrentTemperatureCard(
                         color = MaterialTheme.colorScheme.tertiary,
                         textAlign = TextAlign.Start,
                         modifier =
-                            Modifier.sharedElement(
-                                state = rememberSharedContentState(key = "feels_like/$key"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
-                            ),
+                            Modifier
+                                .let {
+                                    if (animatedVisibilityScope != null) {
+                                        it
+                                            .sharedElement(
+                                                state = rememberSharedContentState(key = "feels_like/$key"),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                                            )
+                                    } else {
+                                        it
+                                    }
+                                },
                     )
                     Text(
                         text = "${currentTemperatureItem.apparentTemperature.first}°",
@@ -130,11 +156,19 @@ fun SharedTransitionScope.CurrentTemperatureCard(
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         textAlign = TextAlign.Start,
                         modifier =
-                            Modifier.sharedElement(
-                                state = rememberSharedContentState(key = "feels_like/temp/$key"),
-                                animatedVisibilityScope = animatedVisibilityScope,
-                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
-                            ),
+                            Modifier
+                                .let {
+                                    if (animatedVisibilityScope != null) {
+                                        it
+                                            .sharedElement(
+                                                state = rememberSharedContentState(key = "feels_like/temp/$key"),
+                                                animatedVisibilityScope = animatedVisibilityScope,
+                                                boundsTransform = { _, _ -> tween(durationMillis = 1000) },
+                                            )
+                                    } else {
+                                        it
+                                    }
+                                },
                     )
                 }
             }

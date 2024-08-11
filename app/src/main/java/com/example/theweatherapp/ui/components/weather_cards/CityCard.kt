@@ -1,4 +1,4 @@
-package com.example.theweatherapp.ui.components
+package com.example.theweatherapp.ui.components.weather_cards
 
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi

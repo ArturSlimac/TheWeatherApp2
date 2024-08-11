@@ -1,4 +1,4 @@
-package com.example.theweatherapp.ui.components
+package com.example.theweatherapp.ui.components.weather_cards
 
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -22,12 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.example.theweatherapp.domain.formaters.formatDate
 import com.example.theweatherapp.domain.mappers.toShortWeatherOverview
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.ui.components.BottomNavigationBar
 import com.example.theweatherapp.ui.components.CircularIndicator
-import com.example.theweatherapp.ui.components.CityCard
-import com.example.theweatherapp.ui.components.TopSearchBar
+import com.example.theweatherapp.ui.components.weather_cards.CityCard
+import com.example.theweatherapp.ui.components.top_bars.TopSearchBar
 import com.example.theweatherapp.ui.navigation.NavigationDestination
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
@@ -99,9 +100,9 @@ fun SharedTransitionScope.SavedCitiesScreen(
                             scope.launch {
                                 snackbarHostState
                                     .showSnackbar(
-                                        "There is no internet connection. The weather was last updated at ${savedCitiesViewModel.formatDate(
-                                            weatherModels.first().lastSync,
-                                        )}",
+                                        "There is no internet connection. The weather was last updated at ${
+                                            weatherModels.first().formatDate()
+                                        }",
                                     )
                             }
                         }

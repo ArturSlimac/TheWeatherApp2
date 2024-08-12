@@ -74,22 +74,31 @@ sealed class TemperatureUiDetails(
     )
 
     companion object {
-        fun tempUiDetails(temp: Int?): TemperatureUiDetails =
-            when {
-                (temp in -100..-31) -> VerySuperMegaCold
-                (temp in -30..-21) -> VerySuperCold
-                (temp in -20..-11) -> VeryCold
-                (temp in -10..-1) -> Cold
-                (temp in 0..9) -> ColdOk
-                (temp in 10..14) -> WarmSpring
-                (temp in 15..19) -> Warm
-                (temp in 20..24) -> WarmSummer
-                (temp in 25..29) -> Hot
-                (temp in 30..34) -> VeryHot
-                (temp in 35..39) -> VerySuperHot
-                (temp in 40..100) -> VerySuperMegaHot
+        fun tempUiDetails(
+            temp: Int,
+            tempUnit: String,
+        ): TemperatureUiDetails {
+            var tempC = temp
+            if (tempUnit == "°F") {
+                tempC = (temp.minus(32)) * 5 / 9
+            }
+
+            return when {
+                (tempC in -100..-31) -> VerySuperMegaCold
+                (tempC in -30..-21) -> VerySuperCold
+                (tempC in -20..-11) -> VeryCold
+                (tempC in -10..-1) -> Cold
+                (tempC in 0..9) -> ColdOk
+                (tempC in 10..14) -> WarmSpring
+                (tempC in 15..19) -> Warm
+                (tempC in 20..24) -> WarmSummer
+                (tempC in 25..29) -> Hot
+                (tempC in 30..34) -> VeryHot
+                (tempC in 35..39) -> VerySuperHot
+                (tempC in 40..100) -> VerySuperMegaHot
 
                 else -> DefaultExpression
             }
+        }
     }
 }

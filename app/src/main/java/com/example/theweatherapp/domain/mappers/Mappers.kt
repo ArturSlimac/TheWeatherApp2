@@ -126,7 +126,7 @@ fun WeatherModel.toCurrentTemperatureItem(): CurrentTemperatureItem {
     val tempUnit = this.current_units?.temperature_2m ?: ""
     val apparentTemp = this.current?.apparent_temperature?.toInt() ?: 0
     val apparentTempUnit = this.current_units?.apparent_temperature ?: ""
-    val tempDetails = TemperatureUiDetails.tempUiDetails(temp)
+    val tempDetails = TemperatureUiDetails.tempUiDetails(temp, tempUnit)
 
     return CurrentTemperatureItem(
         temperature2m = Pair(temp, tempUnit),
@@ -158,7 +158,7 @@ fun WeatherModel.toShortWeatherOverview(): ShortWeatherOverview {
     val temperature2mUnit = this.current_units?.temperature_2m ?: ""
     val apparentTemperature = this.current?.apparent_temperature?.toInt() ?: 0
     val apparentTemperatureUnit = this.current_units?.apparent_temperature ?: ""
-    val tempDetails = TemperatureUiDetails.tempUiDetails(temperature2m)
+    val tempDetails = TemperatureUiDetails.tempUiDetails(temperature2m, temperature2mUnit)
 
     return ShortWeatherOverview(
         apparentTemperature = Pair(apparentTemperature, apparentTemperatureUnit),

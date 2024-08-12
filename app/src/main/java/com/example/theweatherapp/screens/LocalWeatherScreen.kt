@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.NavController
 import com.example.theweatherapp.domain.mappers.toCurrentTemperatureItem
 import com.example.theweatherapp.domain.mappers.toCurrentWeatherItem
@@ -64,13 +64,16 @@ fun SharedTransitionScope.LocalWeatherScreen(
             },
         )
 
-    LaunchedEffect(Unit) {
+    LifecycleResumeEffect(Unit) {
         when (
             PackageManager.PERMISSION_GRANTED ==
                 ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
         ) {
             true -> localWeatherViewModel.fetchWeather()
             false -> locationPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        onPauseOrDispose {
         }
     }
 

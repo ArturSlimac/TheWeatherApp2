@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import com.example.theweatherapp.domain.formaters.formatDate
 import com.example.theweatherapp.domain.mappers.toShortWeatherOverview
 import com.example.theweatherapp.domain.model.weather.WeatherModel
+import com.example.theweatherapp.ui.components.AbsolutErrorBox
 import com.example.theweatherapp.ui.components.BottomNavigationBar
 import com.example.theweatherapp.ui.components.CircularIndicator
 import com.example.theweatherapp.ui.components.top_bars.TopSearchBar
@@ -80,12 +81,12 @@ fun SharedTransitionScope.SavedCitiesScreen(
             BottomNavigationBar(currentDestination = NavigationDestination.SavedCities, navController = navController)
         },
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize().padding(innerPadding).padding(top = 16.dp)) {
-            when (savedCitiesWeatherState) {
-                is Response.Loading -> {
-                    CircularIndicator()
-                }
-                is Response.Success -> {
+        when (savedCitiesWeatherState) {
+            is Response.Loading -> {
+                CircularIndicator(modifier = Modifier.padding(innerPadding))
+            }
+            is Response.Success -> {
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding).padding(top = 16.dp)) {
                     val weatherModels = (savedCitiesWeatherState as Response.Success<List<WeatherModel>>).data
 
                     weatherModels?.let {
@@ -113,8 +114,10 @@ fun SharedTransitionScope.SavedCitiesScreen(
                         }
                     }
                 }
-                is Response.Failure -> {
-                }
+            }
+            is Response.Failure -> {
+                val errorMessage = (savedCitiesWeatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
+                AbsolutErrorBox(modifier = Modifier.padding(innerPadding), snackbarHostState, errorMessage)
             }
         }
     }

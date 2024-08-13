@@ -11,6 +11,16 @@ import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
 import com.example.theweatherapp.domain.model.weather.WeatherEntity
 import com.example.theweatherapp.utils.Converters
 
+/**
+ * The main Room database for the application, storing weather data and related entities.
+ *
+ * This database contains tables for weather data, including current weather, hourly forecasts,
+ * their associated units, and city information. It also includes type converters to handle
+ * custom data types.
+ *
+ * @property version The version of the database.
+ * @property entities The entities that define the tables within the database.
+ */
 @Database(
     entities = [
         WeatherEntity::class,
@@ -21,13 +31,20 @@ import com.example.theweatherapp.utils.Converters
         CityItemEntity::class,
     ],
     version = 1,
-    // autoMigrations = [
-    //   AutoMigration(from = 2, to = 3),
-    // ],
 )
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase : RoomDatabase() {
+    /**
+     * Provides access to the [WeatherDao] for performing database operations related to weather data.
+     *
+     * @return The [WeatherDao] instance.
+     */
     abstract fun weatherDao(): WeatherDao
 
+    /**
+     * Provides access to the [CityDao] for performing database operations related to city data.
+     *
+     * @return The [CityDao] instance.
+     */
     abstract fun cityDao(): CityDao
 }

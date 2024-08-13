@@ -32,6 +32,16 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Implementation of the [WeatherRepository] interface that interacts with the network and local database
+ * to manage weather data.
+ *
+ * @param weatherService The service interface for fetching weather data from the API.
+ * @param weatherDao DAO for accessing and manipulating weather data in the local database.
+ * @param cityDao DAO for accessing and manipulating city data in the local database.
+ * @param cityRepository Repository for fetching city data.
+ * @param locationRepository Repository for accessing location data.
+ */
 @Singleton
 class WeatherRepositoryImpl
     @Inject
@@ -42,6 +52,9 @@ class WeatherRepositoryImpl
         private val cityRepository: CityRepository,
         private val locationRepository: LocationRepository,
     ) : WeatherRepository {
+        /**
+         * @see WeatherRepository.getWeather
+         */
         override fun getWeather(
             city: CityItemModel?,
             temperatureUnit: String,
@@ -72,6 +85,9 @@ class WeatherRepositoryImpl
                 }
             }.flowOn(Dispatchers.IO)
 
+        /**
+         * @see WeatherRepository.saveWeather
+         */
         override suspend fun saveWeather(weatherModel: WeatherModel) {
             val cityId = cityDao.insertCityItem(weatherModel.toCityItemEntity()!!).toInt()
 
@@ -91,6 +107,18 @@ class WeatherRepositoryImpl
             }
         }
 
+        /**
+         * Retrieves the city information based on the provided latitude and longitude.
+         *
+         * This method tries to find city information using the [CityRepository] based on the
+         * provided coordinates.
+         *
+         * @param latitude The latitude of the location.
+         * @param longitude The longitude of the location.
+         * @return A [CityItemModel] representing the city information.
+         *
+         * @throws CustomError.CityNotFound If the city information could not be found.
+         */
         private suspend fun getCity(
             latitude: Double,
             longitude: Double,
@@ -106,7 +134,7 @@ class WeatherRepositoryImpl
                             longitude = longitude,
                         )
                     cityRepository
-                        .getCity(latitude, longitude)
+                        .getCityByCoordinates(latitude, longitude)
                         .collect { response ->
                             if (response is Response.Success) {
                                 cityItem = response.data?.firstOrNull() ?: cityItem
@@ -118,6 +146,17 @@ class WeatherRepositoryImpl
                 }
             }
 
+        /**
+         * Fetches weather data from the API.
+         *
+         * @param latitude The latitude of the location.
+         * @param longitude The longitude of the location.
+         * @param temperatureUnit The unit of temperature to be used.
+         * @param windSpeedUnit The unit of wind speed to be used.
+         * @param timezone The timezone to be used.
+         * @param city The [CityItemModel] to associate with the weather data.
+         * @return A [WeatherModel] containing the fetched weather data.
+         */
         private suspend fun fetchWeatherFromApi(
             latitude: Double,
             longitude: Double,
@@ -130,6 +169,13 @@ class WeatherRepositoryImpl
                 .getWeather(latitude, longitude, temperatureUnit, windSpeedUnit, timezone)
                 .copy(city = city)
 
+        /**
+         * Handles exceptions that occur during API calls.
+         *
+         * This method emits appropriate error responses based on the exception type.
+         *
+         * @param e The [Exception] that was thrown.
+         */
         private suspend fun FlowCollector<Response<WeatherModel>>.handleException(e: Exception) {
             when (e) {
                 is SocketTimeoutException ->
@@ -145,6 +191,14 @@ class WeatherRepositoryImpl
             }
         }
 
+        /**
+         * Emits cached weather data if available.
+         *
+         * This method checks if there is cached weather data for the given city and emits it
+         * if it exists.
+         *
+         * @param city The [CityItemModel] for which to fetch cached weather data.
+         */
         private suspend fun FlowCollector<Response<WeatherModel>>.emitCachedWeatherIfAvailable(city: CityItemModel?) {
             if (city == null) {
                 return
@@ -155,6 +209,12 @@ class WeatherRepositoryImpl
             }
         }
 
+        /**
+         * Retrieves cached weather data for the given city.
+         *
+         * @param city The [CityItemModel] for which to fetch cached weather data.
+         * @return A [WeatherModel] containing the cached weather data, or `null` if not found.
+         */
         private suspend fun getCachedWeather(city: CityItemModel): WeatherModel? =
             weatherDao.getCachedWeather(city.name!!, city.country!!).firstOrNull()?.toWeatherModel()
     }

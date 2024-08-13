@@ -12,13 +12,20 @@ import com.example.theweatherapp.utils.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
+/**
+ * Implementation of [CityRepository] that handles city-related data operations.
+ * This class communicates with a remote API service and a local database (DAO) to fetch and manage city data.
+ *
+ * @property cityService The [CityService] used for making network requests to retrieve city data.
+ * @property cityDao The [CityDao] used for interacting with the local database.
+ * @property apiKey The API key required for making requests to the city API.
+ */
 class CityRepositoryImpl
     @Inject
     constructor(
@@ -26,14 +33,17 @@ class CityRepositoryImpl
         private val cityDao: CityDao,
         private val apiKey: String,
     ) : CityRepository {
-        override fun getCity(
+        /**
+         * @see CityRepository.getCityByCoordinates
+         */
+        override fun getCityByCoordinates(
             latitude: Double,
             longitude: Double,
         ): Flow<Response<CityModel>> =
             flow {
                 emit(Response.Loading)
                 try {
-                    val city = cityService.getCity(latitude, longitude, apiKey)
+                    val city = cityService.getCityByCoordinates(latitude, longitude, apiKey)
                     emit(Response.Success(city))
                 } catch (e: Exception) {
                     val errorResponse =
@@ -48,6 +58,9 @@ class CityRepositoryImpl
                 }
             }
 
+        /**
+         * @see CityRepository.getCitiesByName
+         */
         override fun getCitiesByName(name: String): Flow<Response<CityModel>> =
             flow {
                 try {
@@ -70,6 +83,9 @@ class CityRepositoryImpl
                 }
             }
 
+        /**
+         * @see CityRepository.getAllSavedCities
+         */
         override fun getAllSavedCities(): Flow<Response<CityModel>> =
             flow {
                 try {
@@ -88,9 +104,15 @@ class CityRepositoryImpl
                 }
             }
 
+        /**
+         * @see CityRepository.deleteCity
+         */
         override suspend fun deleteCity(city: CityItemModel) {
             cityDao.deleteCity(city.name!!, city.country!!)
         }
 
+        /**
+         * @see CityRepository.isCitySaved
+         */
         override suspend fun isCitySaved(city: CityItemModel): Boolean = cityDao.isCitySaved(city.name!!, city.country!!)
     }

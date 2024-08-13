@@ -24,7 +24,7 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.CityCard(
+fun SharedTransitionScope.ShortWeatherOverviewCard(
     animatedVisibilityScope: AnimatedVisibilityScope,
     overview: ShortWeatherOverview,
     onClick: () -> Unit,

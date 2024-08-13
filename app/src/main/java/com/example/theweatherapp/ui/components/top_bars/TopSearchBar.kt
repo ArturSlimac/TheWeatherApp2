@@ -1,6 +1,5 @@
 package com.example.theweatherapp.ui.components.top_bars
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +29,21 @@ import com.example.theweatherapp.ui.components.FoundListItem
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 import com.example.theweatherapp.utils.Response
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
+/**
+ * A composable function that displays a top search bar with the ability to search and select cities.
+ *
+ * The search bar allows users to input a search query, triggers a search action, and displays a list of
+ * found cities based on the search query. The UI changes dynamically based on the state of the search and
+ * the results.
+ *
+ * @param searchText The current text in the search bar.
+ * @param onSearchTextChange Callback function to handle changes to the search text.
+ * @param isSearching A boolean indicating whether the search bar is active.
+ * @param onToggleSearch Callback function to toggle the search bar's active state.
+ * @param foundCitiesState The current state of the search results, represented by a [Response] of [CityModel].
+ * @param onCitySelected Callback function triggered when a city is selected from the search results.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopSearchBar(
     searchText: String,

@@ -9,6 +9,13 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/**
+ * A composable function that displays a center-aligned top app bar with a title.
+ *
+ * This top bar is styled using the Material 3 design system and supports scroll behavior.
+ *
+ * @param title The text to be displayed as the title of the top app bar.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(title: String) {

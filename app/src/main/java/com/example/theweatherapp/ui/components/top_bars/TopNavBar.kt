@@ -22,6 +22,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import com.example.theweatherapp.domain.model.city.CityItemModel
 
+/**
+ * A composable function that displays a top navigation bar with shared transition animations.
+ *
+ * This top navigation bar shows the selected city's name, allows navigation back, and provides
+ * options to save or delete the city. The title is animated using shared element transitions.
+ *
+ * @param selectedCity The city item model representing the selected city.
+ * @param animatedVisibilityScope The scope that handles the visibility of animated components.
+ * @param animationKey A unique key used to identify and animate the shared element.
+ * @param onBackClick A callback function triggered when the back button (navigationIcon) is clicked.
+ * @param onSaveClick A callback function triggered when the save button is clicked.
+ * @param onDeleteClick A callback function triggered when the delete button is clicked.
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.TopNavBar(

@@ -34,17 +34,26 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
+import javax.inject.Qualifier
 import javax.inject.Singleton
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class WeatherApi
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CityApi
 
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModules {
     @Provides
-    @Named("WEATHER_API")
+    @WeatherApi
     fun provideWeatherAPI(): String = WEATHER_API
 
     @Provides
-    @Named("CITY_API")
+    @CityApi
     fun provideCityAPI(): String = CITY_API
 
     @Provides
@@ -52,38 +61,32 @@ class AppModules {
     fun provideNinjasApiKey(): String = NINJAS_API_KEY
 
     @Provides
-    @Named("WeatherRetrofit")
+    @WeatherApi
     fun provideWeatherRetrofit(
-        @Named("WEATHER_API") weatherApi: String,
-    ): Retrofit {
-        val client =
-            OkHttpClient
-                .Builder()
-                .addInterceptor(
-                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),
-                ).build()
-        return Retrofit
-            .Builder()
-            .baseUrl(weatherApi)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
-    }
+        @WeatherApi weatherApi: String,
+    ): Retrofit = createRetrofit(weatherApi)
 
     @Provides
-    @Named("CityRetrofit")
+    @CityApi
     fun provideCityRetrofit(
-        @Named("CITY_API") cityApi: String,
-    ): Retrofit {
+        @CityApi cityApi: String,
+    ): Retrofit = createRetrofit(cityApi)
+
+    private fun createRetrofit(baseUrl: String): Retrofit {
+        /*val loggingLevel =
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }*/
         val client =
             OkHttpClient
                 .Builder()
-                .addInterceptor(
-                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),
-                ).build()
+                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build()
         return Retrofit
             .Builder()
-            .baseUrl(cityApi)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
@@ -92,16 +95,17 @@ class AppModules {
     @Provides
     @Singleton
     fun provideWeatherService(
-        @Named("WeatherRetrofit") retrofit: Retrofit,
+        @WeatherApi retrofit: Retrofit,
     ): WeatherService = retrofit.create(WeatherService::class.java)
 
     @Provides
     @Singleton
     fun provideCityService(
-        @Named("CityRetrofit") retrofit: Retrofit,
+        @CityApi retrofit: Retrofit,
     ): CityService = retrofit.create(CityService::class.java)
 
     @Provides
+    @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context,
     ): WeatherDatabase =
@@ -113,12 +117,15 @@ class AppModules {
             ).build()
 
     @Provides
+    @Singleton
     fun provideWeatherDao(database: WeatherDatabase): WeatherDao = database.weatherDao()
 
     @Provides
+    @Singleton
     fun provideCityDao(database: WeatherDatabase): CityDao = database.cityDao()
 
     @Provides
+    @Singleton
     fun provideCityRepository(
         @Named("NINJAS_API_KEY") apiKey: String,
         cityService: CityService,
@@ -126,6 +133,7 @@ class AppModules {
     ): CityRepository = CityRepositoryImpl(apiKey = apiKey, cityService = cityService, cityDao = cityDao)
 
     @Provides
+    @Singleton
     fun provideWeatherRepository(
         weatherService: WeatherService,
         weatherDao: WeatherDao,
@@ -142,10 +150,12 @@ class AppModules {
         )
 
     @Provides
+    @Singleton
     fun provideLocationRepository(locationProviderClient: FusedLocationProviderClient): LocationRepository =
         LocationRepositoryImpl(locationProviderClient = locationProviderClient)
 
     @Provides
+    @Singleton
     fun provideLocationProvider(
         @ApplicationContext context: Context,
     ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)

@@ -113,7 +113,7 @@ fun SharedTransitionScope.DetailScreen(
 
             is Response.Failure -> {
                 val errorMessage = (weatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
-                AbsolutErrorBox(snackbarHostState, errorMessage)
+                AbsolutErrorBox(modifier = Modifier.padding(innerPadding), snackbarHostState, errorMessage)
             }
         }
     }

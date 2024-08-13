@@ -88,12 +88,12 @@ fun SharedTransitionScope.LocalWeatherScreen(
             }
         },
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-            when (weatherState) {
-                is Response.Loading -> {
-                    CircularIndicator()
-                }
-                is Response.Success -> {
+        when (weatherState) {
+            is Response.Loading -> {
+                CircularIndicator(modifier = Modifier.padding(innerPadding))
+            }
+            is Response.Success -> {
+                Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                     val weather = (weatherState as Response.Success<WeatherModel>).data
                     weather?.let {
                         cityName.value = weather.city?.name ?: ""
@@ -117,10 +117,10 @@ fun SharedTransitionScope.LocalWeatherScreen(
                         }
                     }
                 }
-                is Response.Failure -> {
-                    val errorMessage = (weatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
-                    AbsolutErrorBox(snackbarHostState, errorMessage)
-                }
+            }
+            is Response.Failure -> {
+                val errorMessage = (weatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
+                AbsolutErrorBox(modifier = Modifier.padding(innerPadding), snackbarHostState, errorMessage)
             }
         }
     }

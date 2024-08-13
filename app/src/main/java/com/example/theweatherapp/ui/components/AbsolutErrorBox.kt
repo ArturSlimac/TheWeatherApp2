@@ -16,10 +16,11 @@ import com.example.theweatherapp.R
 
 @Composable
 fun AbsolutErrorBox(
+    modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState,
     errorMessage: String,
 ) {
-    Box(modifier = Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
         Icon(
             painterResource(R.drawable.sentiment_very_dissatisfied_24dp_e8eaed_fill0_wght400_grad0_opsz24),
             contentDescription = null,

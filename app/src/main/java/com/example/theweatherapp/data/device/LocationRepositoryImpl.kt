@@ -13,12 +13,24 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Implementation of the [LocationRepository] interface that uses the Fused Location Provider API
+ * to retrieve location data. It can either provide the current location of the device or a location
+ * based on provided latitude and longitude.
+ *
+ * This class is marked as a [Singleton] and should be injected using dependency injection.
+ *
+ * @property locationProviderClient The [FusedLocationProviderClient] used to obtain the device's current location.
+ */
 @Singleton
 class LocationRepositoryImpl
     @Inject
     constructor(
         private val locationProviderClient: FusedLocationProviderClient,
     ) : LocationRepository {
+        /**
+         * @see LocationRepository.getLocation
+         */
         override suspend fun getLocation(
             latitude: Double?,
             longitude: Double?,
@@ -32,6 +44,14 @@ class LocationRepositoryImpl
                 }
             }
 
+        /**
+         * Retrieves the current location of the device using the Fused Location Provider API.
+         *
+         * This method is called internally when either latitude or longitude is `null` in the [getLocation] method.
+         *
+         * @return A [Location] object representing the current location of the device.
+         * @throws CustomError.LocationUnavailable if the location could not be determined.
+         */
         @SuppressLint("MissingPermission")
         private suspend fun getCurrentLocation(): Location =
             withContext(Dispatchers.IO) {

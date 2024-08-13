@@ -80,14 +80,7 @@ fun SharedTransitionScope.LocalWeatherScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
-            BottomNavigationBar(currentDestination = NavigationDestination.LocalWeather) {
-                when (it) {
-                    is NavigationDestination.LocalWeather -> {}
-                    is NavigationDestination.SavedCities -> navController.navigate(NavigationDestination.SavedCities.route)
-                    is NavigationDestination.UserSettings -> navController.navigate(NavigationDestination.UserSettings.route)
-                    is NavigationDestination.WeatherDetails -> {}
-                }
-            }
+            BottomNavigationBar(currentDestination = NavigationDestination.LocalWeather, navController = navController)
         },
         topBar = {
             if (weatherState is Response.Success) {

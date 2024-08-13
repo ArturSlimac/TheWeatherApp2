@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
 import com.example.theweatherapp.ui.navigation.NavigationDestination
 import com.example.theweatherapp.ui.navigation.NavigationDestination.LocalWeather
 import com.example.theweatherapp.ui.navigation.NavigationDestination.SavedCities
@@ -16,7 +17,7 @@ import com.example.theweatherapp.ui.navigation.NavigationDestination.UserSetting
 @Composable
 fun BottomNavigationBar(
     currentDestination: NavigationDestination,
-    onNavigate: (NavigationDestination) -> Unit,
+    navController: NavController,
 ) {
     NavigationBar(
         containerColor = Color.Transparent,
@@ -41,7 +42,7 @@ fun BottomNavigationBar(
                     )
                 },
                 selected = currentDestination == destination,
-                onClick = { onNavigate(destination) },
+                onClick = { destination.navigate(navController) },
                 colors =
                     NavigationBarItemDefaults.colors(
                         selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,

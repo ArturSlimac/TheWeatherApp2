@@ -48,14 +48,7 @@ fun UserSettingsScreen(
             TopBar("Settings")
         },
         bottomBar = {
-            BottomNavigationBar(currentDestination = NavigationDestination.UserSettings) {
-                when (it) {
-                    is NavigationDestination.LocalWeather -> navController.navigate(NavigationDestination.LocalWeather.route)
-                    is NavigationDestination.SavedCities -> navController.navigate(NavigationDestination.SavedCities.route)
-                    is NavigationDestination.UserSettings -> {}
-                    is NavigationDestination.WeatherDetails -> {}
-                }
-            }
+            BottomNavigationBar(currentDestination = NavigationDestination.UserSettings, navController = navController)
         },
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {

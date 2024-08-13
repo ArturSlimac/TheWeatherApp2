@@ -27,8 +27,8 @@ import com.example.theweatherapp.domain.mappers.toShortWeatherOverview
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.ui.components.BottomNavigationBar
 import com.example.theweatherapp.ui.components.CircularIndicator
-import com.example.theweatherapp.ui.components.weather_cards.CityCard
 import com.example.theweatherapp.ui.components.top_bars.TopSearchBar
+import com.example.theweatherapp.ui.components.weather_cards.ShortWeatherOverviewCard
 import com.example.theweatherapp.ui.navigation.NavigationDestination
 import com.example.theweatherapp.utils.Response
 import com.example.theweatherapp.viewmodel.SavedCitiesViewModel
@@ -77,14 +77,7 @@ fun SharedTransitionScope.SavedCitiesScreen(
             )
         },
         bottomBar = {
-            BottomNavigationBar(currentDestination = NavigationDestination.SavedCities) {
-                when (it) {
-                    is NavigationDestination.LocalWeather -> navController.navigate(NavigationDestination.LocalWeather.route)
-                    is NavigationDestination.SavedCities -> {}
-                    is NavigationDestination.UserSettings -> navController.navigate(NavigationDestination.UserSettings.route)
-                    is NavigationDestination.WeatherDetails -> {}
-                }
-            }
+            BottomNavigationBar(currentDestination = NavigationDestination.SavedCities, navController = navController)
         },
     ) { innerPadding ->
         Box(modifier = Modifier.fillMaxSize().padding(innerPadding).padding(top = 16.dp)) {
@@ -109,7 +102,7 @@ fun SharedTransitionScope.SavedCitiesScreen(
 
                         LazyColumn(state = listState) {
                             itemsIndexed(weatherModels) { index, weatherModel ->
-                                CityCard(
+                                ShortWeatherOverviewCard(
                                     overview = weatherModel.toShortWeatherOverview(),
                                     animatedVisibilityScope = animatedVisibilityScope,
                                 ) {

@@ -7,9 +7,9 @@ import com.example.theweatherapp.domain.errors.ErrorCode
 import com.example.theweatherapp.domain.mappers.toCityItemEntity
 import com.example.theweatherapp.domain.mappers.toCurrentEntity
 import com.example.theweatherapp.domain.mappers.toCurrentUnitsEntity
-import com.example.theweatherapp.domain.mappers.toEntity
 import com.example.theweatherapp.domain.mappers.toHourlyEntity
 import com.example.theweatherapp.domain.mappers.toHourlyUnitsEntity
+import com.example.theweatherapp.domain.mappers.toWeatherEntity
 import com.example.theweatherapp.domain.mappers.toWeatherModel
 import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.weather.WeatherModel
@@ -91,7 +91,7 @@ class WeatherRepositoryImpl
         override suspend fun saveWeather(weatherModel: WeatherModel) {
             val cityId = cityDao.insertCityItem(weatherModel.toCityItemEntity()!!).toInt()
 
-            val weatherId = weatherDao.insertWeather(weatherModel.toEntity(cityId)).toInt()
+            val weatherId = weatherDao.insertWeather(weatherModel.toWeatherEntity(cityId)).toInt()
 
             weatherModel.current?.let {
                 weatherDao.insertCurrentWeather(weatherModel.toCurrentEntity(weatherId)!!)

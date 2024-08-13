@@ -22,12 +22,7 @@ data class WeatherEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val cityId: Int,
-    val latitude: Double?,
-    val longitude: Double?,
     val timezone: String?,
     val timezoneAbbreviation: String?,
-    val utcOffsetSeconds: Int?,
-    val elevation: Int?,
-    val generationTimeMs: Double?,
     val createdAt: Long = System.currentTimeMillis(),
 )

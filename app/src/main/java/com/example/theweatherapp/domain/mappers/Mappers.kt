@@ -23,15 +23,10 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
 
-fun WeatherModel.toEntity(cityId: Int): WeatherEntity =
+fun WeatherModel.toWeatherEntity(cityId: Int): WeatherEntity =
     WeatherEntity(
-        latitude = this.latitude,
-        longitude = this.longitude,
         timezone = this.timezone,
         timezoneAbbreviation = this.timezone_abbreviation,
-        utcOffsetSeconds = this.utc_offset_seconds,
-        elevation = this.elevation,
-        generationTimeMs = this.generationtime_ms,
         cityId = cityId,
     )
 
@@ -171,13 +166,8 @@ fun WeatherModel.toShortWeatherOverview(): ShortWeatherOverview {
 fun WeatherWithDetails.toWeatherModel(): WeatherModel =
     WeatherModel(
         lastSync = Date(this.weather.createdAt),
-        latitude = this.weather.latitude,
-        longitude = this.weather.longitude,
         timezone = this.weather.timezone,
         timezone_abbreviation = this.weather.timezoneAbbreviation,
-        elevation = this.weather.elevation,
-        generationtime_ms = this.weather.generationTimeMs,
-        utc_offset_seconds = this.weather.utcOffsetSeconds,
         current =
             this.currentWeather?.let {
                 CurrentModel(

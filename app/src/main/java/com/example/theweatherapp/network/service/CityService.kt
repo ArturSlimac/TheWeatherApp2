@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface CityService {
     @GET("v1/reversegeocoding")
-    suspend fun getCity(
+    suspend fun getCityByCoordinates(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
         @Header("X-Api-Key") apiKey: String,

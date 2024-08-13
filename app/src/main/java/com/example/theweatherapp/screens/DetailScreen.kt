@@ -71,7 +71,7 @@ fun SharedTransitionScope.DetailScreen(
         }
     }
 
-    val key = selectedCity!!.name!!
+    val key = selectedCity!!.name
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -90,13 +90,13 @@ fun SharedTransitionScope.DetailScreen(
                     ),
                 title = {
                     Text(
-                        text = selectedCity!!.name!!,
+                        text = selectedCity!!.name,
                         style = MaterialTheme.typography.headlineSmall,
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         textAlign = TextAlign.Center,
                         modifier =
                             Modifier.sharedElement(
-                                state = rememberSharedContentState(key = "city/${selectedCity!!.name!!}/$key"),
+                                state = rememberSharedContentState(key = "city/${selectedCity!!.name}/$key"),
                                 animatedVisibilityScope = animatedVisibilityScope,
                                 boundsTransform = { _, _ -> tween(durationMillis = 1000) },
                             ),

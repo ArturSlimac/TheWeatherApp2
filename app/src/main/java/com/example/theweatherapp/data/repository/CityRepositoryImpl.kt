@@ -44,6 +44,7 @@ class CityRepositoryImpl
                 emit(Response.Loading)
                 try {
                     val city = cityService.getCityByCoordinates(latitude, longitude, apiKey)
+
                     emit(Response.Success(city))
                 } catch (e: Exception) {
                     val errorResponse =
@@ -108,11 +109,11 @@ class CityRepositoryImpl
          * @see CityRepository.deleteCity
          */
         override suspend fun deleteCity(city: CityItemModel) {
-            cityDao.deleteCity(city.name!!, city.country!!)
+            cityDao.deleteCity(city.name, city.country)
         }
 
         /**
          * @see CityRepository.isCitySaved
          */
-        override suspend fun isCitySaved(city: CityItemModel): Boolean = cityDao.isCitySaved(city.name!!, city.country!!)
+        override suspend fun isCitySaved(city: CityItemModel): Boolean = cityDao.isCitySaved(city.name, city.country)
     }

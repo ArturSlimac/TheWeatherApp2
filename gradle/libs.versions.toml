@@ -21,6 +21,7 @@ dataStore="1.1.1"
 composeNavigation = "2.8.0-beta06"
 serializationJson = "1.6.3"
 composeAnimation = "1.7.0-alpha07"
+dokka ="1.9.20"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -74,6 +75,8 @@ androidx-compose-animation = { group = "androidx.compose.animation", name = "ani
 #Lifecycle
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
 
+#Dokka
+android-documentation-plugin = {group="org.jetbrains.dokka",name="android-documentation-plugin", version.ref="dokka"}
 
 
 [plugins]
@@ -82,3 +85,4 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
 dagger = {id= "com.google.dagger.hilt.android", version.ref = "daggerV"}
 kotlin-serialization = {id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+dokka = {id="org.jetbrains.dokka", version.ref="dokka"}

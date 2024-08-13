@@ -13,7 +13,7 @@ data class CityItemEntity(
     val id: Int = 0,
     val country: String,
     val name: String,
-    val state: String?,
+    val state: String,
     val latitude: Double?,
     val longitude: Double?,
 )

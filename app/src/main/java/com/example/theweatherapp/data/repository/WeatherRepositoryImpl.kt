@@ -127,9 +127,6 @@ class WeatherRepositoryImpl
                 try {
                     var cityItem =
                         CityItemModel(
-                            country = "Unknown",
-                            name = "Unknown",
-                            state = "Unknown",
                             latitude = latitude,
                             longitude = longitude,
                         )
@@ -216,5 +213,5 @@ class WeatherRepositoryImpl
          * @return A [WeatherModel] containing the cached weather data, or `null` if not found.
          */
         private suspend fun getCachedWeather(city: CityItemModel): WeatherModel? =
-            weatherDao.getCachedWeather(city.name!!, city.country!!).firstOrNull()?.toWeatherModel()
+            weatherDao.getCachedWeather(city.name, city.country).firstOrNull()?.toWeatherModel()
     }

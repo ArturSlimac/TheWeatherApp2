@@ -90,9 +90,9 @@ fun WeatherModel.toCityItemEntity(): CityItemEntity? =
         CityItemEntity(
             latitude = it.latitude,
             longitude = it.longitude,
-            name = it.name!!,
+            name = it.name,
             state = it.state,
-            country = it.country!!,
+            country = it.country,
         )
     }
 

@@ -3,7 +3,7 @@ package com.example.theweatherapp.data.repository
 import com.example.theweatherapp.data.local.CityDao
 import com.example.theweatherapp.domain.errors.CustomError
 import com.example.theweatherapp.domain.errors.ErrorCode
-import com.example.theweatherapp.domain.mappers.toModel
+import com.example.theweatherapp.domain.mappers.toCityItemModel
 import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.city.CityModel
 import com.example.theweatherapp.domain.repository.CityRepository
@@ -95,7 +95,7 @@ class CityRepositoryImpl
                     val cityModel =
                         CityModel().apply {
                             addAll(
-                                cityEntities.map { it.toModel() },
+                                cityEntities.map { it.toCityItemModel() },
                             )
                         }
 

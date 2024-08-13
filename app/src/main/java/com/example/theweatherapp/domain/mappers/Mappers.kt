@@ -1,6 +1,6 @@
 package com.example.theweatherapp.domain.mappers
 
-import com.example.theweatherapp.domain.model.WeatherWithDetails
+import com.example.theweatherapp.domain.model.WeatherCityAllTogether
 import com.example.theweatherapp.domain.model.city.CityItemEntity
 import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.helpers.CurrentTemperatureItem
@@ -163,7 +163,7 @@ fun WeatherModel.toShortWeatherOverview(): ShortWeatherOverview {
     )
 }
 
-fun WeatherWithDetails.toWeatherModel(): WeatherModel =
+fun WeatherCityAllTogether.toWeatherModel(): WeatherModel =
     WeatherModel(
         lastSync = Date(this.weather.createdAt),
         timezone = this.weather.timezone,
@@ -222,7 +222,7 @@ fun WeatherWithDetails.toWeatherModel(): WeatherModel =
             },
     )
 
-fun CityItemEntity.toModel() =
+fun CityItemEntity.toCityItemModel() =
     CityItemModel(
         country = country,
         name = name,

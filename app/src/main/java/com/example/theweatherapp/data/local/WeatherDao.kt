@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.theweatherapp.domain.model.WeatherWithDetails
+import com.example.theweatherapp.domain.model.WeatherCityAllTogether
 import com.example.theweatherapp.domain.model.weather.CurrentEntity
 import com.example.theweatherapp.domain.model.weather.CurrentUnitsEntity
 import com.example.theweatherapp.domain.model.weather.HourlyEntity
@@ -28,7 +28,7 @@ interface WeatherDao {
      *
      * @param name The name of the city for which to retrieve the weather data.
      * @param country The country of the city for which to retrieve the weather data.
-     * @return A [Flow] emitting a [WeatherWithDetails] object containing the weather data and its details,
+     * @return A [Flow] emitting a [WeatherCityAllTogether] object containing the weather data and its details,
      * or `null` if no data is found for the specified city.
      */
     @Transaction
@@ -36,7 +36,7 @@ interface WeatherDao {
     fun getCachedWeather(
         name: String,
         country: String,
-    ): Flow<WeatherWithDetails?>
+    ): Flow<WeatherCityAllTogether?>
 
     /**
      * Inserts the main weather data into the database.

@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.theweatherapp.domain.errors.CustomError
-import com.example.theweatherapp.domain.model.city.CityItemModel
 import com.example.theweatherapp.domain.model.weather.WeatherModel
 import com.example.theweatherapp.domain.repository.SettingsRepository
 import com.example.theweatherapp.domain.repository.WeatherRepository
@@ -29,13 +28,12 @@ class LocalWeatherViewModel
             _weatherState.value = Response.Failure(CustomError.LocationUnavailable)
         }
 
-        fun fetchWeather(city: CityItemModel? = null) {
+        fun fetchWeather() {
             viewModelScope.launch {
                 val windSpeedUnit = settingsRepository.getWindSpeedUnit().first()
                 val temperatureUnit = settingsRepository.getTemperatureUnit().first()
                 weatherRepository
                     .getWeather(
-                        city = city,
                         windSpeedUnit = windSpeedUnit.unit,
                         timezone = "Europe/London",
                         temperatureUnit = temperatureUnit.unit,

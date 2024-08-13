@@ -17,7 +17,12 @@ sealed class NavigationDestination(
     val filledIcon: ImageVector,
     val label: String,
 ) {
-    data object LocalWeather : NavigationDestination("local_weather", Icons.Outlined.LocationOn, Icons.Filled.LocationOn, "Local")
+    data object LocalWeather : NavigationDestination(
+        "local_weather",
+        Icons.Outlined.LocationOn,
+        Icons.Filled.LocationOn,
+        "Local",
+    )
 
     data object SavedCities : NavigationDestination(
         "saved_cities",
@@ -26,7 +31,17 @@ sealed class NavigationDestination(
         "Saved",
     )
 
-    data object UserSettings : NavigationDestination("user_settings", Icons.Outlined.Settings, Icons.Filled.Settings, "Settings")
+    data object UserSettings : NavigationDestination(
+        "user_settings",
+        Icons.Outlined.Settings,
+        Icons.Filled.Settings,
+        "Settings",
+    )
 
-    data object WeatherDetails : NavigationDestination("weather_detail", Icons.Outlined.Done, Icons.Filled.Done, "")
+    data object WeatherDetails : NavigationDestination(
+        "weather_detail",
+        Icons.Outlined.Done,
+        Icons.Filled.Done,
+        "",
+    )
 }

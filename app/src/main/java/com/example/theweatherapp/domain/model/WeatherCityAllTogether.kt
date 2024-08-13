@@ -9,7 +9,7 @@ import com.example.theweatherapp.domain.model.weather.HourlyEntity
 import com.example.theweatherapp.domain.model.weather.HourlyUnitsEntity
 import com.example.theweatherapp.domain.model.weather.WeatherEntity
 
-data class WeatherWithDetails(
+data class WeatherCityAllTogether(
     @Embedded val weather: WeatherEntity,
     @Relation(
         parentColumn = "id",

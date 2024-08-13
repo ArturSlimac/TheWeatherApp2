@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CircularIndicator() {
-    Box(modifier = Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.TopCenter) {
+fun CircularIndicator(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.TopCenter) {
         CircularProgressIndicator(
             color = MaterialTheme.colorScheme.tertiary,
         )

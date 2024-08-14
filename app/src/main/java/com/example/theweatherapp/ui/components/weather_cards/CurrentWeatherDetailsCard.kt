@@ -24,13 +24,19 @@ import com.example.theweatherapp.domain.model.helpers.CurrentWeatherItem
 import com.example.theweatherapp.domain.model.helpers.WeatherType
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
+/**
+ * A composable function that displays detailed current weather information in a card format.
+ * The card includes weather icon, humidity, pressure, and wind speed, arranged in a structured layout.
+ *
+ * @param currentWeatherItem The data model [CurrentWeatherItem] containing the current weather details, such as humidity, pressure, wind speed, and weather type.
+ */
 @Composable
 fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
     Card(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .aspectRatio( 2f)
+                .aspectRatio(2f)
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 16.dp),
         colors =
@@ -50,7 +56,7 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                     painterResource(currentWeatherItem.weatherType.dayWeatherIcon),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    //modifier = Modifier.width(100.dp)
+                    // modifier = Modifier.width(100.dp)
                 )
                 Text(
                     style = MaterialTheme.typography.titleLarge,

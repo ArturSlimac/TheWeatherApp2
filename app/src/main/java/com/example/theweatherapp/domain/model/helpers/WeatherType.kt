@@ -4,6 +4,13 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.example.theweatherapp.R
 
+/**
+ * A sealed class representing various weather types, each with a specific title and icons for both day and night.
+ *
+ * @property weatherTitle The resource ID [StringRes] for the string representing the title of the weather (e.g., "Clear Sky").
+ * @property dayWeatherIcon The resource ID [DrawableRes] for the drawable icon representing the weather during the day.
+ * @property nightWeatherIcon The resource ID [DrawableRes] for the drawable icon representing the weather during the night.
+ */
 sealed class WeatherType(
     @StringRes val weatherTitle: Int,
     @DrawableRes val dayWeatherIcon: Int,
@@ -171,7 +178,16 @@ sealed class WeatherType(
         nightWeatherIcon = R.drawable.ic_thunder,
     )
 
+    /**
+     * A companion object for the [WeatherType] class that provides a method to map WMO standard weather codes to specific [WeatherType] objects.
+     */
     companion object {
+        /**
+         * Maps a WMO (World Meteorological Organization) weather code to a corresponding [WeatherType].
+         *
+         * @param code The WMO weather code as an [Int].
+         * @return The corresponding [WeatherType] for the given code. Defaults to [ClearSky] if the code is not recognized.
+         */
         fun fromWmoStandard(code: Int?): WeatherType =
             when (code) {
                 0 -> ClearSky

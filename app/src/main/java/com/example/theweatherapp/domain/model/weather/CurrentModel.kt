@@ -9,4 +9,5 @@ data class CurrentModel(
     val time: String? = null,
     val weather_code: Int? = null,
     val wind_speed_10m: Double? = null,
+    val is_day: Int? = null,
 )

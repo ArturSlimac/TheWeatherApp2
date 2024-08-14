@@ -22,4 +22,5 @@ data class HourlyUnitsEntity(
     val temperature_2m: String?,
     val time: String?,
     val weather_code: String?,
+    val is_day: String?,
 )

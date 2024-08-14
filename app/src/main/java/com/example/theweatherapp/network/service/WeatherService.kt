@@ -22,7 +22,7 @@ interface WeatherService {
      * @return A [WeatherModel] containing the weather forecast data for the specified location.
      */
     @GET(
-        "v1/forecast?current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m,weather_code&forecast_days=1",
+        "v1/forecast?current=temperature_2m,is_day,relative_humidity_2m,apparent_temperature,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m,is_day,weather_code&forecast_days=1",
     )
     suspend fun getWeather(
         @Query("latitude") latitude: Double,

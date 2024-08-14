@@ -53,7 +53,12 @@ fun CurrentWeatherDetailsCard(currentWeatherItem: CurrentWeatherItem) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
-                    painterResource(currentWeatherItem.weatherType.dayWeatherIcon),
+                    painter =
+                        if (currentWeatherItem.isDay) {
+                            painterResource(currentWeatherItem.weatherType.dayWeatherIcon)
+                        } else {
+                            painterResource(currentWeatherItem.weatherType.nightWeatherIcon)
+                        },
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     // modifier = Modifier.width(100.dp)
@@ -121,10 +126,11 @@ fun CurrentWeatherDetailsCardPreview() {
     TheWeatherAppTheme {
         CurrentWeatherDetailsCard(
             CurrentWeatherItem(
-                Pair(555.0, "ddd"),
-                Pair(44.0, "%"),
-                Pair(5.0, "m/s"),
-                WeatherType.fromWmoStandard(3),
+                pressure = Pair(555.0, "ddd"),
+                humidity = Pair(44.0, "%"),
+                windSpeed = Pair(5.0, "m/s"),
+                weatherType = WeatherType.fromWmoStandard(3),
+                isDay = false,
             ),
         )
     }

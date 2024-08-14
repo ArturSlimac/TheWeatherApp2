@@ -37,6 +37,7 @@ fun WeatherModel.toHourlyUnitsEntity(weatherId: Int): HourlyUnitsEntity? =
             temperature_2m = it.temperature_2m,
             time = it.time,
             weather_code = it.weather_code,
+            is_day = it.is_day,
         )
     }
 
@@ -47,6 +48,7 @@ fun WeatherModel.toHourlyEntity(weatherId: Int): HourlyEntity? =
             time = it.time,
             temperature_2m = it.temperature_2m,
             weather_code = it.weather_code,
+            is_day = it.is_day,
         )
     }
 
@@ -62,6 +64,7 @@ fun WeatherModel.toCurrentUnitsEntity(weatherId: Int): CurrentUnitsEntity? =
             pressure_msl = it.pressure_msl,
             interval = it.interval,
             wind_speed_10m = it.wind_speed_10m,
+            is_day = it.is_day,
         )
     }
 
@@ -77,6 +80,7 @@ fun WeatherModel.toCurrentEntity(weatherId: Int): CurrentEntity? =
             pressure_msl = it.pressure_msl,
             interval = it.interval,
             wind_speed_10m = it.wind_speed_10m,
+            is_day = it.is_day,
         )
     }
 
@@ -94,12 +98,14 @@ fun WeatherModel.toCityItemEntity(): CityItemEntity? =
 fun WeatherModel.toWeatherForecastItems(): List<WeatherForecastItem> {
     val temperatures = this.hourly?.temperature_2m ?: emptyList()
     val times = this.hourly?.time ?: emptyList()
+    val isDays = this.hourly?.is_day?.map { it == 1 } ?: emptyList()
     val weatherTypes = this.hourly?.weather_code ?: emptyList()
     val tempUnit = this.hourly_units?.temperature_2m ?: ""
     val timeUnit = this.hourly_units?.time ?: ""
     val currentTime = LocalTime.now()
 
-    return temperatures.zip(times).zip(weatherTypes).mapNotNull { (tempTime, weatherType) ->
+    return temperatures.zip(times).zip(isDays).zip(weatherTypes).mapNotNull { (tempTimeIsDay, weatherType) ->
+        val (tempTime, isDay) = tempTimeIsDay
         val (temp, time) = tempTime
         val timeOnlyString = time.substringAfter('T')
         val timeOnly = LocalTime.parse(timeOnlyString, DateTimeFormatter.ofPattern("HH:mm"))
@@ -108,7 +114,13 @@ fun WeatherModel.toWeatherForecastItems(): List<WeatherForecastItem> {
             WeatherForecastItem(
                 temperature = Pair(temp.toInt(), tempUnit),
                 time = Pair(timeOnly.format(dateTimeFormatter), timeUnit),
-                weatherIcon = WeatherType.fromWmoStandard(weatherType).dayWeatherIcon,
+                weatherIcon =
+                    if (isDay) {
+                        WeatherType.fromWmoStandard(weatherType).dayWeatherIcon
+                    } else {
+                        WeatherType.fromWmoStandard(weatherType).nightWeatherIcon
+                    },
+                isDay = isDay,
             )
         } else {
             null
@@ -138,12 +150,14 @@ fun WeatherModel.toCurrentWeatherItem(): CurrentWeatherItem {
     val pressure = this.current?.pressure_msl ?: 0.0
     val pressureUnit = this.current_units?.pressure_msl ?: ""
     val wt = this.current?.weather_code
+    val isDay = this.current?.is_day == 1
 
     return CurrentWeatherItem(
         pressure = Pair(pressure, pressureUnit),
         humidity = Pair(humidity, humidityUnit),
         windSpeed = Pair(windSpeed, windSpeedUnit),
         weatherType = WeatherType.fromWmoStandard(wt),
+        isDay = isDay,
     )
 }
 
@@ -198,6 +212,7 @@ fun WeatherCityAllTogether.toWeatherModel(): WeatherModel =
                     weather_code = it.weather_code,
                     time = it.time,
                     temperature_2m = it.temperature_2m,
+                    is_day = it.is_day,
                 )
             },
         city =

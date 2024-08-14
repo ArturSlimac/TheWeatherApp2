@@ -62,16 +62,21 @@ fun WeatherForecastCarouselPreview() {
                     temperature = Pair(25, "C"),
                     time = Pair("14:00", "UTC"),
                     weatherIcon = R.drawable.ic_rainy,
+                    isDay = true,
                 ),
                 WeatherForecastItem(
                     temperature = Pair(20, "C"),
                     time = Pair("15:00", "UTC"),
-                    weatherIcon = R.drawable.ic_cloudy_day,
+                    weatherIcon = R.drawable.ic_cloudy_night,
+                    isDay = false,
+
                 ),
                 WeatherForecastItem(
                     temperature = Pair(18, "C"),
                     time = Pair("16:00", "UTC"),
-                    weatherIcon = R.drawable.ic_thunder,
+                    weatherIcon = R.drawable.ic_thunder_night,
+                    isDay = false,
+
                 ),
             ),
         )

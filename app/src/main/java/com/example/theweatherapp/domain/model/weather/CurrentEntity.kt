@@ -27,4 +27,5 @@ data class CurrentEntity(
     val time: String?,
     val weather_code: Int?,
     val wind_speed_10m: Double?,
+    val is_day: Int?,
 )

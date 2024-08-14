@@ -16,6 +16,17 @@ import com.example.theweatherapp.R
 import com.example.theweatherapp.domain.model.helpers.WeatherForecastItem
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
+/**
+ * Composable function that displays a horizontal carousel of weather forecast cards.
+ *
+ * @param items A list of [WeatherForecastItem] objects representing the weather forecast for different times.
+ * Each item in the list should contain data such as temperature, time, and weather icon.
+ *
+ * This composable creates a card with a horizontal scrolling list of weather forecast items.
+ * Each item in the carousel is represented by a [WeatherForecastCard] that shows the temperature, time, and a weather icon.
+ * The card’s background color is set to transparent, allowing for custom backgrounds or overlays.
+ *
+ */
 @Composable
 fun WeatherForecastCarousel(items: List<WeatherForecastItem>) {
     Card(

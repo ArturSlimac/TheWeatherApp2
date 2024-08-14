@@ -1,8 +1,5 @@
 package com.example.theweatherapp.ui.components
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -16,7 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.theweatherapp.domain.model.city.CityItemModel
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalSharedTransitionApi::class)
+/**
+ * A composable function that displays an item in a list with a clickable interaction.
+ * This is used to represent a city item in a list format with an icon and text.
+ *
+ * @param item A [CityItemModel] representing the city to be displayed. It includes the city name
+ * and country which are shown in the list item.
+ * @param onItemSelected A lambda function to be called when the list item is clicked. This allows
+ * for handling the click action, such as navigating to a detail view or performing another action.
+ *
+ */
 @Composable
 fun FoundListItem(
     item: CityItemModel,
@@ -26,7 +32,6 @@ fun FoundListItem(
         modifier =
             Modifier.clickable(
                 onClick = {
-                    // Click action if required when not in selection mode
                     onItemSelected()
                 },
             ),
@@ -40,7 +45,6 @@ fun FoundListItem(
             Text(
                 text = "${item.name}, ${item.country}",
                 style = MaterialTheme.typography.bodyLarge,
-
             )
         },
         leadingContent = {
@@ -52,17 +56,17 @@ fun FoundListItem(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun FoundListItemPreview() {
- /*   FoundListItem(
+    FoundListItem(
         CityItemModel(
             "BE",
             "Sint-Niklaas",
             longitude = 12.2,
             latitude = 12.2,
-            state = null,
+            state = "",
         ),
         {},
-    )*/
+    )
 }

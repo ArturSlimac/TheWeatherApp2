@@ -40,9 +40,12 @@ import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
  * A composable function that displays the current temperature in a card with an animated gradient background.
  * The card supports shared element transitions if [animatedVisibilityScope] is provided.
  *
- * @param animatedVisibilityScope The scope used to handle shared element transitions. If null, no transition is applied.
- * @param currentTemperatureItem The data model containing the current temperature and UI details.
+ * @param animatedVisibilityScope The scope [AnimatedVisibilityScope] used to handle shared element transitions. If null, no transition is applied.
+ * @param currentTemperatureItem The [CurrentTemperatureItem] data model containing the current temperature and UI details.
  * @param key An optional key used to identify the shared element for transition animations.
+ *
+ *  * @see SharedTransitionScope
+ *  * @see AnimatedVisibilityScope
  */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable

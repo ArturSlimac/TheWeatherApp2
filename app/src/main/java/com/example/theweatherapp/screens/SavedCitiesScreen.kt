@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -102,12 +102,13 @@ fun SharedTransitionScope.SavedCitiesScreen(
                         }
 
                         LazyColumn(state = listState) {
-                            itemsIndexed(weatherModels) { index, weatherModel ->
+                            items(weatherModels) { weatherModel ->
                                 ShortWeatherOverviewCard(
                                     overview = weatherModel.toShortWeatherOverview(),
+                                    key = weatherModel.city!!.name,
                                     animatedVisibilityScope = animatedVisibilityScope,
                                 ) {
-                                    savedCitiesViewModel.onCitySelected(weatherModel.city!!, weatherModel)
+                                    savedCitiesViewModel.onCitySelected(weatherModel.city, weatherModel)
                                     navController.navigate(NavigationDestination.WeatherDetails.route)
                                 }
                             }
@@ -116,7 +117,8 @@ fun SharedTransitionScope.SavedCitiesScreen(
                 }
             }
             is Response.Failure -> {
-                val errorMessage = (savedCitiesWeatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
+                val errorMessage =
+                    (savedCitiesWeatherState as Response.Failure).e?.message ?: "Something went wrong. Please try again later"
                 AbsolutErrorBox(modifier = Modifier.padding(innerPadding), snackbarHostState, errorMessage)
             }
         }

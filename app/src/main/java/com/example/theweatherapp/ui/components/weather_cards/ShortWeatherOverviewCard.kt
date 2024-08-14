@@ -22,15 +22,29 @@ import androidx.compose.ui.unit.dp
 import com.example.theweatherapp.domain.model.helpers.ShortWeatherOverview
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
+/**
+ * A composable function that displays a short weather overview in a card layout with shared transition animations.
+ *
+ * @param animatedVisibilityScope The scope [AnimatedVisibilityScope] used for the animated visibility within the shared transition.
+ * @param overview The [ShortWeatherOverview] data containing weather information such as city name, temperature, and apparent temperature.
+ * @param key A unique key used to identify this card and its shared elements during transitions.
+ * @param onClick A lambda function to be executed when the card is clicked.
+ *
+ * This card uses shared transitions to animate its content when entering or leaving the screen. The card is clickable
+ * and triggers the provided [onClick] action when tapped. The card displays the city name, the current temperature,
+ * and the "feels like" temperature.
+ *
+ * @see SharedTransitionScope
+ * @see AnimatedVisibilityScope
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.ShortWeatherOverviewCard(
     animatedVisibilityScope: AnimatedVisibilityScope,
     overview: ShortWeatherOverview,
+    key: String,
     onClick: () -> Unit,
 ) {
-    val key = overview.cityName
-
     Card(
         modifier =
             Modifier

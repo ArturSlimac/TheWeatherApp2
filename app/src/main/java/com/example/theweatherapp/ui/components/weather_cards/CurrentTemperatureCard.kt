@@ -33,8 +33,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.theweatherapp.domain.model.helpers.CurrentTemperatureItem
+import com.example.theweatherapp.domain.model.helpers.TemperatureUiDetails
 import com.example.theweatherapp.ui.theme.TheWeatherAppTheme
 
+/**
+ * A composable function that displays the current temperature in a card with an animated gradient background.
+ * The card supports shared element transitions if [animatedVisibilityScope] is provided.
+ *
+ * @param animatedVisibilityScope The scope used to handle shared element transitions. If null, no transition is applied.
+ * @param currentTemperatureItem The data model containing the current temperature and UI details.
+ * @param key An optional key used to identify the shared element for transition animations.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.CurrentTemperatureCard(
@@ -176,16 +185,18 @@ fun SharedTransitionScope.CurrentTemperatureCard(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 @Preview
-fun CurrentTemperatureCardPreview() {
+fun SharedTransitionScope.CurrentTemperatureCardPreview() {
     TheWeatherAppTheme {
-        /*CurrentTemperatureCard(
-            CurrentTemperatureItem(
-                Pair(32, "C"),
-                Pair(31, "C"),
-                TemperatureUiDetails.tempUiDetails(32),
-            ),
-        )*/
+        CurrentTemperatureCard(
+            currentTemperatureItem =
+                CurrentTemperatureItem(
+                    Pair(32, "C"),
+                    Pair(31, "C"),
+                    TemperatureUiDetails.tempUiDetails(32, "C"),
+                ),
+        )
     }
 }

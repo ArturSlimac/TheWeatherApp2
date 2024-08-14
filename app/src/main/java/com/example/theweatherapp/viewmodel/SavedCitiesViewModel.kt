@@ -195,7 +195,7 @@ class SavedCitiesViewModel
                                 }
                             }
                             is Response.Failure -> {
-                                // Handle failure for specific city if needed
+                                Response.Failure(response.e)
                             }
                             else -> {}
                         }

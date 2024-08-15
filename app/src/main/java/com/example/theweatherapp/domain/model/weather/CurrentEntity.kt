@@ -2,6 +2,7 @@ package com.example.theweatherapp.domain.model.weather
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -13,6 +14,9 @@ import androidx.room.PrimaryKey
             childColumns = ["weatherId"],
             onDelete = ForeignKey.CASCADE,
         ),
+    ],
+    indices = [
+        Index(value = ["weatherId"]),
     ],
 )
 data class CurrentEntity(

@@ -31,6 +31,7 @@ import com.example.theweatherapp.utils.Converters
         CityItemEntity::class,
     ],
     version = 1,
+    exportSchema = false,
 )
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase : RoomDatabase() {

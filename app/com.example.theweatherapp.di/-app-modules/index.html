@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>AppModules</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            app
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":app:dokkaHtml/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="app::com.example.theweatherapp.di/AppModules///PointingToDeclaration//492899073">
+  <div class="breadcrumbs"><a href="../../../index.html">app</a><span class="delimiter">/</span><a href="../index.html">com.example.theweatherapp.di</a><span class="delimiter">/</span><span class="current">AppModules</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>App</span><wbr></wbr><span><span>Modules</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Module///PointingToDeclaration/"><span class="token annotation builtin">Module</span></span></div></div><span class="token keyword">class </span><a href="index.html">AppModules</a></div><p class="paragraph">Dagger module that provides dependencies for the entire application. This module is installed in the SingletonComponent, meaning the provided dependencies will have a singleton lifespan and be available throughout the app.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="392124087%2FConstructors%2F492899073" anchor-label="AppModules" id="392124087%2FConstructors%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-app-modules.html"><span>App</span><wbr></wbr><span><span>Modules</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="392124087%2FConstructors%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1684881199%2FFunctions%2F492899073" anchor-label="provideCityAPI" id="1684881199%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-city-a-p-i.html"><span>provide</span><wbr></wbr><span>City</span><wbr></wbr><span><span>API</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1684881199%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div></div><span class="token keyword">fun </span><a href="provide-city-a-p-i.html"><span class="token function">provideCityAPI</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Provides the base URL for the city API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="288769550%2FFunctions%2F492899073" anchor-label="provideCityDao" id="288769550%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-city-dao.html"><span>provide</span><wbr></wbr><span>City</span><wbr></wbr><span><span>Dao</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="288769550%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-city-dao.html"><span class="token function">provideCityDao</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">database<span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-weather-database/index.html">WeatherDatabase</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-city-dao/index.html">CityDao</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.data.local/-city-dao/index.html">CityDao</a> for accessing city data in the database.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1912481934%2FFunctions%2F492899073" anchor-label="provideCityRepository" id="1912481934%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-city-repository.html"><span>provide</span><wbr></wbr><span>City</span><wbr></wbr><span><span>Repository</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1912481934%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-city-repository.html"><span class="token function">provideCityRepository</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Named///PointingToDeclaration/"><span class="token annotation builtin">Named</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;NINJAS_API_KEY&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span> </span>apiKey<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">cityService<span class="token operator">: </span><a href="../../com.example.theweatherapp.network.service/-city-service/index.html">CityService</a><span class="token punctuation">, </span></span><span class="parameter ">cityDao<span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-city-dao/index.html">CityDao</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.domain.repository/-city-repository/index.html">CityRepository</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.domain.repository/-city-repository/index.html">CityRepository</a> for managing city data.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="713813030%2FFunctions%2F492899073" anchor-label="provideCityRetrofit" id="713813030%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-city-retrofit.html"><span>provide</span><wbr></wbr><span>City</span><wbr></wbr><span><span>Retrofit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="713813030%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div></div><span class="token keyword">fun </span><a href="provide-city-retrofit.html"><span class="token function">provideCityRetrofit</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">cityApi<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Retrofit///PointingToDeclaration/">Retrofit</span></div><div class="brief "><p class="paragraph">Creates and provides a Retrofit instance configured for the city API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-999611406%2FFunctions%2F492899073" anchor-label="provideCityService" id="-999611406%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-city-service.html"><span>provide</span><wbr></wbr><span>City</span><wbr></wbr><span><span>Service</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-999611406%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-city-service.html"><span class="token function">provideCityService</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">retrofit<span class="token operator">: </span><span data-unresolved-link="retrofit2/Retrofit///PointingToDeclaration/">Retrofit</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.network.service/-city-service/index.html">CityService</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.network.service/-city-service/index.html">CityService</a> for interacting with the city API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1585937062%2FFunctions%2F492899073" anchor-label="provideDatabase" id="1585937062%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-database.html"><span>provide</span><wbr></wbr><span><span>Database</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1585937062%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-database.html"><span class="token function">provideDatabase</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-weather-database/index.html">WeatherDatabase</a></div><div class="brief "><p class="paragraph">Provides the application's database using Room.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1610915808%2FFunctions%2F492899073" anchor-label="provideDataStore" id="-1610915808%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-data-store.html"><span>provide</span><wbr></wbr><span>Data</span><wbr></wbr><span><span>Store</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1610915808%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-data-store.html"><span class="token function">provideDataStore</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/datastore/core/DataStore.html">DataStore</a><span class="token operator">&lt;</span><a href="https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/Preferences.html">Preferences</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Provides the DataStore for managing app preferences.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1891646193%2FFunctions%2F492899073" anchor-label="provideLocationProvider" id="1891646193%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-location-provider.html"><span>provide</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Provider</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1891646193%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-location-provider.html"><span class="token function">provideLocationProvider</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.android.gms.location/FusedLocationProviderClient///PointingToDeclaration/">FusedLocationProviderClient</span></div><div class="brief "><p class="paragraph">Provides the <span data-unresolved-link="com.google.android.gms.location/FusedLocationProviderClient///PointingToDeclaration/">FusedLocationProviderClient</span> for location services.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1029006398%2FFunctions%2F492899073" anchor-label="provideLocationRepository" id="-1029006398%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-location-repository.html"><span>provide</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Repository</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1029006398%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-location-repository.html"><span class="token function">provideLocationRepository</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">locationProviderClient<span class="token operator">: </span><span data-unresolved-link="com.google.android.gms.location/FusedLocationProviderClient///PointingToDeclaration/">FusedLocationProviderClient</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.domain.repository/-location-repository/index.html">LocationRepository</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.domain.repository/-location-repository/index.html">LocationRepository</a> for managing location data.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-907849618%2FFunctions%2F492899073" anchor-label="provideNinjasApiKey" id="-907849618%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-ninjas-api-key.html"><span>provide</span><wbr></wbr><span>Ninjas</span><wbr></wbr><span>Api</span><wbr></wbr><span><span>Key</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-907849618%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Named///PointingToDeclaration/"><span class="token annotation builtin">Named</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;NINJAS_API_KEY&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">fun </span><a href="provide-ninjas-api-key.html"><span class="token function">provideNinjasApiKey</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Provides the API key for the Ninjas API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1924282326%2FFunctions%2F492899073" anchor-label="provideSettingsRepository" id="1924282326%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-settings-repository.html"><span>provide</span><wbr></wbr><span>Settings</span><wbr></wbr><span><span>Repository</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1924282326%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-settings-repository.html"><span class="token function">provideSettingsRepository</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">dataStore<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/datastore/core/DataStore.html">DataStore</a><span class="token operator">&lt;</span><a href="https://developer.android.com/reference/kotlin/androidx/datastore/preferences/core/Preferences.html">Preferences</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.domain.repository/-settings-repository/index.html">SettingsRepository</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.domain.repository/-settings-repository/index.html">SettingsRepository</a> for managing app settings.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1491816426%2FFunctions%2F492899073" anchor-label="provideWeatherAPI" id="-1491816426%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-weather-a-p-i.html"><span>provide</span><wbr></wbr><span>Weather</span><wbr></wbr><span><span>API</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1491816426%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div></div><span class="token keyword">fun </span><a href="provide-weather-a-p-i.html"><span class="token function">provideWeatherAPI</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Provides the base URL for the weather API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1006362997%2FFunctions%2F492899073" anchor-label="provideWeatherDao" id="1006362997%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-weather-dao.html"><span>provide</span><wbr></wbr><span>Weather</span><wbr></wbr><span><span>Dao</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1006362997%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-weather-dao.html"><span class="token function">provideWeatherDao</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">database<span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-weather-database/index.html">WeatherDatabase</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-weather-dao/index.html">WeatherDao</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.data.local/-weather-dao/index.html">WeatherDao</a> for accessing weather data in the database.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="47881008%2FFunctions%2F492899073" anchor-label="provideWeatherRepository" id="47881008%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-weather-repository.html"><span>provide</span><wbr></wbr><span>Weather</span><wbr></wbr><span><span>Repository</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="47881008%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-weather-repository.html"><span class="token function">provideWeatherRepository</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">weatherService<span class="token operator">: </span><a href="../../com.example.theweatherapp.network.service/-weather-service/index.html">WeatherService</a><span class="token punctuation">, </span></span><span class="parameter ">weatherDao<span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-weather-dao/index.html">WeatherDao</a><span class="token punctuation">, </span></span><span class="parameter ">cityDao<span class="token operator">: </span><a href="../../com.example.theweatherapp.data.local/-city-dao/index.html">CityDao</a><span class="token punctuation">, </span></span><span class="parameter ">cityRepository<span class="token operator">: </span><a href="../../com.example.theweatherapp.domain.repository/-city-repository/index.html">CityRepository</a><span class="token punctuation">, </span></span><span class="parameter ">locationRepository<span class="token operator">: </span><a href="../../com.example.theweatherapp.domain.repository/-location-repository/index.html">LocationRepository</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.domain.repository/-weather-repository/index.html">WeatherRepository</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.domain.repository/-weather-repository/index.html">WeatherRepository</a> for managing weather data.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-789212851%2FFunctions%2F492899073" anchor-label="provideWeatherRetrofit" id="-789212851%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-weather-retrofit.html"><span>provide</span><wbr></wbr><span>Weather</span><wbr></wbr><span><span>Retrofit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-789212851%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div></div><span class="token keyword">fun </span><a href="provide-weather-retrofit.html"><span class="token function">provideWeatherRetrofit</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">weatherApi<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="retrofit2/Retrofit///PointingToDeclaration/">Retrofit</span></div><div class="brief "><p class="paragraph">Creates and provides a Retrofit instance configured for the weather API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="631233945%2FFunctions%2F492899073" anchor-label="provideWeatherService" id="631233945%2FFunctions%2F492899073" data-filterable-set=":app:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":app:dokkaHtml/release" data-filterable-set=":app:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="provide-weather-service.html"><span>provide</span><wbr></wbr><span>Weather</span><wbr></wbr><span><span>Service</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="631233945%2FFunctions%2F492899073"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":app:dokkaHtml/release"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="dagger/Provides///PointingToDeclaration/"><span class="token annotation builtin">Provides</span></span></div><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="javax.inject/Singleton///PointingToDeclaration/"><span class="token annotation builtin">Singleton</span></span></div></div><span class="token keyword">fun </span><a href="provide-weather-service.html"><span class="token function">provideWeatherService</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">retrofit<span class="token operator">: </span><span data-unresolved-link="retrofit2/Retrofit///PointingToDeclaration/">Retrofit</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../com.example.theweatherapp.network.service/-weather-service/index.html">WeatherService</a></div><div class="brief "><p class="paragraph">Provides the <a href="../../com.example.theweatherapp.network.service/-weather-service/index.html">WeatherService</a> for interacting with the weather API.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

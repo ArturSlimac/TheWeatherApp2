@@ -14,6 +14,15 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * [ViewModel] for managing and providing weather data to the LocalWeather screen.
+ *
+ * This ViewModel fetches weather data from a repository, manages the state of the weather data,
+ * and handles cases where permissions are denied. It uses Hilt for dependency injection.
+ *
+ * @property weatherRepository A [WeatherRepository] for fetching and saving weather data.
+ * @property settingsRepository A [SettingsRepository] for retrieving user settings such as temperature and wind speed units.
+ */
 @HiltViewModel
 class LocalWeatherViewModel
     @Inject
@@ -21,13 +30,32 @@ class LocalWeatherViewModel
         private val weatherRepository: WeatherRepository,
         private val settingsRepository: SettingsRepository,
     ) : ViewModel() {
+        /**
+         * Holds the current state of the weather data.
+         *
+         * This state is updated with different [Response] types such as [Response.Loading], [Response.Success],
+         * or [Response.Failure]. It can be observed by the UI to react to changes in the weather data.
+         */
         private val _weatherState = mutableStateOf<Response<WeatherModel>>(Response.Loading)
         val weatherState: State<Response<WeatherModel>> = _weatherState
 
+        /**
+         * Updates the weather state to indicate that location permissions were denied.
+         *
+         * This method sets the state to [Response.Failure] with a specific [CustomError] indicating
+         * that the location is unavailable.
+         */
         fun onPermissionDenied() {
             _weatherState.value = Response.Failure(CustomError.LocationUnavailable)
         }
 
+        /**
+         * Fetches the weather data from the repository and updates the weather state.
+         *
+         * This method retrieves the user's preferred units for wind speed and temperature from the settings repository,
+         * then fetches the weather data from the weather repository. The fetched weather data is saved if the response
+         * is successful.
+         */
         fun fetchWeather() {
             viewModelScope.launch {
                 val windSpeedUnit = settingsRepository.getWindSpeedUnit().first()

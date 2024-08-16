@@ -2,22 +2,17 @@ package com.example.theweatherapp.viewmodel.test
 
 import app.cash.turbine.test
 import com.example.theweatherapp.domain.repository.SettingsRepository
+import com.example.theweatherapp.test_helpers.MainDispatcherRule
 import com.example.theweatherapp.utils.Const
 import com.example.theweatherapp.viewmodel.SettingsViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.verify
@@ -112,17 +107,4 @@ class SettingsViewModelTest {
                 cancelAndIgnoreRemainingEvents()
             }
         }
-}
-
-@OptIn(ExperimentalCoroutinesApi::class)
-class MainDispatcherRule(
-    private val testDispatcher: TestDispatcher = kotlinx.coroutines.test.StandardTestDispatcher(),
-) : TestWatcher() {
-    override fun starting(description: Description) {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    override fun finished(description: Description) {
-        Dispatchers.resetMain() // reset the main dispatcher to the original Main dispatcher
-    }
 }

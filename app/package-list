@@ -96,7 +96,7 @@ $dokka.location:com.example.theweatherapp.domain.mappers//toWeatherForecastItems
 $dokka.location:com.example.theweatherapp.domain.mappers//toWeatherModel/com.example.theweatherapp.domain.model.WeatherCityAllTogether#/PointingToDeclaration/app/com.example.theweatherapp.domain.mappers/to-weather-model.html
 $dokka.location:com.example.theweatherapp.domain.model.city////PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/index.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity///PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/index.html
-$dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/CityItemEntity/#kotlin.Int#kotlin.String#kotlin.String#kotlin.String#kotlin.Double?#kotlin.Double?/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/-city-item-entity.html
+$dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/CityItemEntity/#kotlin.Int#kotlin.String#kotlin.String#kotlin.String?#kotlin.Double?#kotlin.Double?/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/-city-item-entity.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/country/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/country.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/id/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/id.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/latitude/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/latitude.html
@@ -104,7 +104,7 @@ $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/longi
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/name/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/name.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemEntity/state/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-entity/state.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemModel///PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-model/index.html
-$dokka.location:com.example.theweatherapp.domain.model.city/CityItemModel/CityItemModel/#kotlin.String#kotlin.String#kotlin.String#kotlin.Double?#kotlin.Double?#kotlin.Boolean/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-model/-city-item-model.html
+$dokka.location:com.example.theweatherapp.domain.model.city/CityItemModel/CityItemModel/#kotlin.String#kotlin.String#kotlin.String?#kotlin.Double?#kotlin.Double?#kotlin.Boolean/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-model/-city-item-model.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemModel/country/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-model/country.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemModel/isSaved/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-model/is-saved.html
 $dokka.location:com.example.theweatherapp.domain.model.city/CityItemModel/latitude/#/PointingToDeclaration/app/com.example.theweatherapp.domain.model.city/-city-item-model/latitude.html

@@ -44,7 +44,6 @@ class CityRepositoryImpl
                 emit(Response.Loading)
                 try {
                     val city = cityService.getCityByCoordinates(latitude, longitude, apiKey)
-
                     emit(Response.Success(city))
                 } catch (e: Exception) {
                     val errorResponse =

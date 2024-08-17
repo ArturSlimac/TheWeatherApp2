@@ -161,8 +161,8 @@ class SavedCitiesViewModel
                 if (isSaved) {
                     city.apply { this.isSaved = true }
                 }
-                shouldFetchWeather = true
             }
+            shouldFetchWeather = true
         }
 
         /**
@@ -257,7 +257,8 @@ class SavedCitiesViewModel
                             is Response.Failure -> {
                                 _savedCitiesWeatherState.value = Response.Failure(response.e)
                             }
-                            else -> {}
+                            else -> {
+                            }
                         }
                     }
                 } catch (e: Exception) {

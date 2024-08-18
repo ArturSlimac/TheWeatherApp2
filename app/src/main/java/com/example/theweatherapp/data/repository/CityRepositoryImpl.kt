@@ -17,6 +17,7 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Implementation of [CityRepository] that handles city-related data operations.
@@ -26,6 +27,7 @@ import javax.inject.Inject
  * @property cityDao The [CityDao] used for interacting with the local database.
  * @property apiKey The API key required for making requests to the city API.
  */
+@Singleton
 class CityRepositoryImpl
     @Inject
     constructor(

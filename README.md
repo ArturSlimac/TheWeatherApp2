@@ -1,6 +1,6 @@
 # The simple weather app
 
-## This is a simple weather app that allows you to:
+## 1. This is a simple weather app that allows you to:
 
 - Fetch weather data from your current location.
 - Search for weather information in different cities.
@@ -213,11 +213,16 @@ theweatherapp
 The app integrates various libraries to support functionality and ease of development:
 
 - **AndroidX**: For modern Android components including `ViewModel`, and `Navigation`.
+- **AndroidX Compose Animation**: Provides animation support for Compose.
+- **DataStore**: For user settings prefs.
 - **Retrofit**: Manages network requests and API interactions.
 - **Room**: Provides local database operations and data persistence.
 - **Dagger/Hilt**: Handles Dependency Injection, managing object creation and lifecycle.
 - **Coroutines**: Facilitates asynchronous programming and background task management.
 - **Material Design**: Implements Material Design components and theming.
+- **JUnit**: Framework for unit testing.
+- **Mockito**: Framework for mocking in tests.
+- **Turbine**: Testing library for Kotlin Flow.
 
 ### Design Patterns
 

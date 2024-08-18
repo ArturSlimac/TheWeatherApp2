@@ -28,25 +28,21 @@
 
 The Local Weather screen provides real-time weather information for your current location. It displays temperature, humidity, wind speed, and atmospheric pressure.
 
-<img src="screenshots/local_weather.png" alt="Local Weather Screen" style="max-width: 250px;"/>
-
 ### Saved Cities
 
 The Saved Cities screen allows you to view and manage cities that you have saved as favorites. You can quickly access weather information for these cities.
-
-<img src="screenshots/saved_cities.png" alt="Local Weather Screen" style="max-width: 250px;"/>
 
 ### Detail Screen
 
 The Detail Screen provides an in-depth view of the weather for a selected city. It includes detailed forecasts, weather conditions, and additional data.
 
-<img src="screenshots/detail_screen.png" alt="Local Weather Screen" style="max-width: 250px;"/>
-
 ### Settings
 
 The Settings screen lets you customize your app experience. You can adjust units of measurement.
 
-<img src="screenshots/settings.png" alt="Local Weather Screen" style="max-width: 250px;"/>
+| **Local Weather**                                      | **Saved Cities**                                     | **Detail Screen**                               | **Settings**                                 |
+| ------------------------------------------------------ | ---------------------------------------------------- | ----------------------------------------------- | -------------------------------------------- |
+| ![Local Weather Screen](screenshots/local_weather.png) | ![Saved Cities Screen](screenshots/saved_cities.png) | ![Detail Screen](screenshots/detail_screen.png) | ![Settings Screen](screenshots/settings.png) |
 
 ## 4. Installation
 

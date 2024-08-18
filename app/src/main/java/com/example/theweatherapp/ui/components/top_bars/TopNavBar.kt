@@ -50,7 +50,7 @@ fun SharedTransitionScope.TopNavBar(
         scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
         colors =
             TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                containerColor = MaterialTheme.colorScheme.surface,
                 scrolledContainerColor = Color.Transparent,
             ),
         title = {

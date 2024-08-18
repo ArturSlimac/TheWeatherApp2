@@ -101,6 +101,7 @@ To set up the project locally, follow these simple steps:
 ### Overview
 
 This weather app utilizes the **Model-View-ViewModel (MVVM)** architecture pattern.
+The documentation is available [here](https://arturslimac.github.io/TheWeatherApp2/).
 
 ### Project Structure
 
